@@ -1,23 +1,14 @@
 # wdc_project
 
-## Project setup
+## 启动项目
 ```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
+前端: npm run serve
+后端：npm start
 ```
 
-### Compiles and minifies for production
+## 交互
 ```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
+需要同时启动前端和后端才行
 ```
 
 ### Customize configuration

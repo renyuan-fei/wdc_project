@@ -1,0 +1,14 @@
+自定义的axios接口
+
+axios基础使用：
+
+axios({
+method: 'get',
+url: 'http://localhost:8080',
+params: {
+name: ''
+}
+}).then(function (response) {请求成功的函数}).catch(function (error) {请求失败的函数})
+
+
+官网: https://axios-http.com/zh/

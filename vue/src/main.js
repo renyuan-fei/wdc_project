@@ -4,10 +4,13 @@ import App from './App.vue'
 
 //导入axios
 import axios from "axios";
-import VueAxios from 'vue-axios'
+import VueAxios from 'vue-axios';
 
 //导入封装的AXIOS
 // import AXIOS from './http/AXIOS/API'
+
+//导入全局样式
+import './assets/css/global.css'
 
 //Element Plus
 import ElementPlus from 'element-plus'
@@ -19,6 +22,7 @@ const app = createApp(App)
 //注册组件
 app.use(ElementPlus)
 app.use(VueAxios,axios);
+app.config.globalProperties.$axios = axios
 
 //----------------------------------------------------------------------------------------------------------------------
 //注册路由

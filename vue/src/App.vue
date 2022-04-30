@@ -1,16 +1,25 @@
 <template>
-  <div>MY_PROJECT</div>
+  <div id="main">
+    <LOGIN></LOGIN>
+  </div>
 </template>
 
 <script>
 
+import TEST from './components/TEST(vue--express)'
+import LOGIN from './components/LOGIN'
+
 export default {
   name: 'App',
   components: {
+    // eslint-disable-next-line vue/no-unused-components
+    TEST,
+    // eslint-disable-next-line vue/no-unused-components
+    LOGIN
   }
 }
 </script>
 
-<style>
+<style lang="less">
 
 </style>

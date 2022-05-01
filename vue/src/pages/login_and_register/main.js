@@ -9,8 +9,11 @@ import VueAxios from 'vue-axios';
 //导入封装的AXIOS
 // import AXIOS from './http/AXIOS/API'
 
+//导入路由
+import router from '../../router/router'
+
 //导入全局样式
-import './assets/css/global.css'
+import '../../assets/css/global.css'
 
 //Element Plus
 import ElementPlus from 'element-plus'
@@ -26,8 +29,8 @@ app.config.globalProperties.$axios = axios
 
 //----------------------------------------------------------------------------------------------------------------------
 //注册路由
-
+app.use(router)
 
 
 //----------------------------------------------------------------------------------------------------------------------
-app.mount('#app')
+app.mount('#login')

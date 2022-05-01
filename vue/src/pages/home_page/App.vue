@@ -1,21 +1,19 @@
 <template>
   <div id="main">
-    <LOGIN></LOGIN>
+<!--用于显示页面 默认：index组件-->
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 
-import TEST from './components/TEST(vue--express)'
-import LOGIN from './components/LOGIN'
+import INDEX from '../../components/HOME'
 
 export default {
   name: 'App',
   components: {
     // eslint-disable-next-line vue/no-unused-components
-    TEST,
-    // eslint-disable-next-line vue/no-unused-components
-    LOGIN
+    INDEX
   }
 }
 </script>

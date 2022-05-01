@@ -374,6 +374,7 @@ export default {
   background-color: darkseagreen;
   height: 1287px;
 
+  background-image: url('../assets/cross.png');
 
   img {
     width: 100px;

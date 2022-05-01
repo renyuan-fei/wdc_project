@@ -1,6 +1,6 @@
 <template>
   <div id="login_box">
-    <div class="login_box">
+    <div v-bind:class="{'login_box':is_login,'register_box':!is_login}">
       <el-container>
         <el-header></el-header>
         <!--            登录页面-->
@@ -62,10 +62,12 @@
                           placeholder="confirm your password"></el-input>
               </el-form-item>
 
-              <el-form-item prop="render">
+              <el-form-item>
                 <div style="margin:15px 0; width:300px">
-                  <el-radio v-model="register_data.render" label="1" border>Man</el-radio>
-                  <el-radio v-model="register_data.render" label="2" border>Woman</el-radio>
+                  <el-radio-group v-model="register_data.gender" >
+                    <el-radio :label="1" border>Male</el-radio>
+                    <el-radio :label="2" border>Female</el-radio>
+                  </el-radio-group>
                 </div>
               </el-form-item>
 
@@ -86,6 +88,8 @@
 </template>
 
 <script>
+import {ElMessage} from "element-plus";
+
 export default {
   name: "LOGIN",
   data()
@@ -107,7 +111,7 @@ export default {
 
         email: '',
 
-        gender: '',
+        gender: 1,
       },
       login_rule: {
 
@@ -126,9 +130,46 @@ export default {
           {min: 1, max: 20, message: "lastname is invalid", trigger: "blur"}],
 
         username: [{required: true, message: "please input your username", trigger: "blur"},
-          {min: 3, max: 20, message: "Username is invalid", trigger: "blur"}],
+          {min: 3, max: 20, message: "Username is invalid", trigger: "blur"},
+          {
+            validator: function (rule, value, callback)
+            {
+              that.axios({
+                methods: 'get',
+                url: 'http://localhost:3000/verify',
+                params:
+                    {
+                      username: value,
+                    }
+              }).then(function (response)
+              {
+                console.log(response)
 
-        render: [{required: true, message: "please choose your render", trigger: "blur"}],
+                if (response.data === 1)
+                {
+                  console.log('该用户名可用')
+
+                  that.is_usable = true
+
+                  callback()
+                } else
+                {
+                  console.log('该用名不可用')
+
+                  //设置为不可用
+                  that.is_usable = false
+
+                  callback(new Error('the username has been registered'))
+                }
+
+              }).catch(function (error)
+              {
+                console.log(error.message)
+              })
+            }, trigger: 'blur'
+          }],
+
+        // render: [{required: true, message: "please choose your render", trigger: "change"}],
 
         password: [{required: true, message: "please input your password", trigger: "blur"},
           {min: 3, max: 20, message: "invalid password", trigger: "blur"}],
@@ -169,13 +210,21 @@ export default {
           }]
       },
 
+      //判断用户名是否可用
+      is_usable: false,
+
+      //切换登录和注册页面
       is_login: true,
     }
 
   },
   methods: {
+
+
     login_account()
     {
+      let that = this;
+
       //表单预验证
       this.$refs.login_from.validate((valid) =>
       {
@@ -183,23 +232,52 @@ export default {
 
         if (!valid)
         {
+          //账号或密码没有填写，或填写格式错误
+          ElMessage({
+            message: 'Incomplete username or password',
+            type: 'warning',
+          })
           return;
         } else
         {
-          this.axios({
+          that.axios({
             methods: 'get',
             url: 'http://localhost:3000/login',
             params: this.login_data
           }).then(function (response)
           {
+            if (response.data === 1)
+            {
+              //登录成功提示
+              ElMessage({
+                message: 'login successful',
+                type: 'success',
+              })
+
+              //用户页面跳转
+            } else if (response.data === 2)
+            {
+              //登录成功提示
+              ElMessage({
+                message: 'login successful',
+                type: 'success',
+              })
+
+              //管理员后台跳转
+            } else
+            {
+              //发送提示，用户名或密码错误
+              //登录失败提示
+              ElMessage({
+                message: 'Incorrect username or password',
+                type: 'error',
+              })
+            }
             console.log(response.data)
 
-            //跳转到内容页面
           }).catch(function (error)
           {
             console.log(error.message)
-
-            //发送提示，用户名或密码错误
           })
         }
       })
@@ -213,72 +291,74 @@ export default {
 
         if (!valid)
         {
+          //有信息未填写或填写错误
+          ElMessage({
+            message: 'Information is missing or incorrect',
+            type: 'warning',
+          })
           return;
         } else
         {
-          console.log(that.register_data)
-          console.log(that.register_data.username)
-
-          this.axios({
+          that.axios({
             methods: 'get',
-            url: 'http://localhost:3000/verify',
+            url: 'http://localhost:3000/register',
             params:
                 {
+                  first_name: that.register_data.first_name,
+                  last_name: that.register_data.last_name,
+
                   username: that.register_data.username,
+                  password: that.register_data.password,
+
+                  email: that.register_data.email,
+
+                  gender: that.register_data.gender,
                 }
           }).then(function (response)
           {
-            console.log(response)
-
-            if (response.data !== -1)
+            if (response.data === 1)
             {
-              that.axios({
-                methods: 'get',
-                url: 'http://localhost:3000/register',
-                params:
-                    {
-                      first_name: that.register_data.first_name,
-                      last_name: that.register_data.last_name,
+              console.log('注册成功')
 
-                      username: that.register_data.username,
-                      password: that.register_data.password,
-
-                      email: that.register_data.email,
-
-                      gender: that.register_data.gender,
-                    }
-              }).then(function (response)
-              {
-                if (response.data === 1)
-                {
-                  console.log('注册成功')
-
-                  //跳转到登录页面
-                  that.is_login = true
-
-                  //自动填充账号
-                  that.login_data.username = that.register_data.username
-                } else
-                {
-                  console.log('注册失败')
-
-                  //重新加载页面
-                }
-              }).catch(function (error)
-              {
-                console.log(error.message)
-
-                console.log('注册失败')
-                //重新加载页面
+              //注册成功提示
+              ElMessage({
+                message: 'registration success',
+                type: 'success',
               })
+
+              //跳转到登录页面
+              that.is_login = true
+
+              //自动填充账号
+              that.login_data.username = that.register_data.username
+
+              //原有密码清空
+              that.login_data.password = ''
+
+              //清空注册列表
+              that.register_data.username = ''
+              that.register_data.password = ''
+              that.register_data.confirm_password = ''
+              that.register_data.first_name = ''
+              that.register_data.last_name = ''
+              that.register_data.email = ''
+              that.register_data.gender = ''
             } else
             {
-              console.log('该用名不可用')
-            }
+              console.log('注册失败')
 
+              //重新加载页面
+              ElMessage({
+                message: 'registration failed, please try again later',
+                type: 'warning',
+              })
+            }
           }).catch(function (error)
           {
             console.log(error.message)
+
+            console.log('注册失败')
+            //重新加载页面
           })
         }
       })
@@ -308,6 +388,20 @@ export default {
 .login_box {
   width: 450px;
   height: 600px;
+  //background-color:antiquewhite;
+  border-radius: 5px;
+
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  transform: translate(-50%, -50%);
+}
+
+.register_box {
+  width: 450px;
+  height: 850px;
   //background-color:antiquewhite;
   border-radius: 5px;
 

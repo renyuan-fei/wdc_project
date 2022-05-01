@@ -22,7 +22,7 @@ router.get('/verify',(req,res) =>
         {
             if (results.length === 0)
             {
-                console.log('该用户不存可，可以注册')
+                console.log('该用户不存在，可以注册')
                 res.send('1')
             }
             else

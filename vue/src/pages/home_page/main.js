@@ -14,6 +14,7 @@ import router from '../../router/router'
 
 //导入全局样式
 import '../../assets/css/global.css'
+// import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 //Element Plus
 import ElementPlus from 'element-plus'
@@ -26,6 +27,8 @@ const app = createApp(App)
 app.use(ElementPlus)
 app.use(VueAxios,axios);
 app.config.globalProperties.$axios = axios
+
+
 
 //----------------------------------------------------------------------------------------------------------------------
 //注册路由

@@ -25,6 +25,8 @@ router.get('/login', function (req, res)
         //查询成功
         else
         {
+            let ret = {}
+
             if (result.length === 1)
             {
                 console.log('查询结果:', result[0].password)
@@ -46,11 +48,18 @@ router.get('/login', function (req, res)
                             if (result.length === 1)
                             {
                                 console.log('管理员: ', username, '   登录成功')
-                                res.send('2')
+
+                                ret.result = '2'
+                                ret.token = 'ok'
+
+                                res.send(ret)
                             } else
                             {
                                 console.log('普通用户: ', username, '   登录成功')
-                                res.send('1')
+                                ret.result = '1'
+                                ret.token = 'ok'
+
+                                res.send(ret)
                             }
                         }
                     })

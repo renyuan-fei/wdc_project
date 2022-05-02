@@ -1,12 +1,13 @@
 <template>
   <div id="login_box">
+    <TOP_BAR></TOP_BAR>
     <div v-bind:class="{'login_box':is_login,'register_box':!is_login}">
       <el-container>
         <el-header></el-header>
         <!--            登录页面-->
         <el-main v-show="is_login">
           <el-card class="login_size">
-            <img src="../assets/tree.png"><br>
+            <img src="../assets/tree.png" alt="tree"><br>
             <el-form :model="login_data" :rules="login_rule" ref="login_from">
 
               <el-form-item prop="username">
@@ -35,7 +36,7 @@
         <!--            注册页面-->
         <el-main v-show="!is_login">
           <el-card class="register_size">
-            <img src="../assets/tree.png"><br>
+            <img src="../assets/tree.png" alt="tree"><br>
             <el-form :model="register_data" :rules="register_rule" ref="register_from">
               <el-form-item prop="first_name">
                 <el-input style="margin-top:15px" v-model="register_data.first_name" placeholder="firstname"></el-input>
@@ -64,12 +65,16 @@
 
               <el-form-item>
                 <div style="margin:15px 0; width:300px">
-                  <el-radio-group v-model="register_data.gender" >
+                  <el-radio-group v-model="register_data.gender">
                     <el-radio :label="1" border>Male</el-radio>
                     <el-radio :label="2" border>Female</el-radio>
                   </el-radio-group>
                 </div>
               </el-form-item>
+
+              <!--              <el-divider style="margin-bottom:30px;">-->
+              <!--                <el-icon><star-filled/></el-icon>-->
+              <!--              </el-divider>-->
 
               <hr style="margin-bottom:30px;">
 
@@ -88,10 +93,16 @@
 </template>
 
 <script>
+import TOP_BAR from './TOP_BAR'
 import {ElMessage} from "element-plus";
+import {useRouter} from "vue-router";
 
 export default {
   name: "LOGIN",
+  components:
+      {
+        TOP_BAR
+      },
   data()
   {
     let that = this;
@@ -209,6 +220,25 @@ export default {
             trigger: "blur"
           }]
       },
+      setup()
+      {
+        const router = useRouter();
+
+        function goto(path)
+        {
+          router.push({
+            path:path,
+            params:
+                {
+                  data:this.login_data
+                }
+          });
+        }
+
+        return {
+          goto  //一定要要放在return里才能在模板上面使用
+        }
+      },
 
       //判断用户名是否可用
       is_usable: false,
@@ -237,7 +267,6 @@ export default {
             message: 'Incomplete username or password',
             type: 'warning',
           })
-          return;
         } else
         {
           that.axios({
@@ -246,16 +275,27 @@ export default {
             params: this.login_data
           }).then(function (response)
           {
-            if (response.data === 1)
+            console.log(response)
+
+            if (response.data.result === "1")
             {
+
               //登录成功提示
               ElMessage({
                 message: 'login successful',
                 type: 'success',
               })
 
+              //存放token
+              window.sessionStorage.setItem("token",response.data.token)
+
+              console.log(response.data.token)
+
               //用户页面跳转
-            } else if (response.data === 2)
+              return that.$router.push('/user')
+
+              // console.log(that.$route)
+            } else if (response.data.result === "2")
             {
               //登录成功提示
               ElMessage({
@@ -273,7 +313,6 @@ export default {
                 type: 'error',
               })
             }
-            console.log(response.data)
 
           }).catch(function (error)
           {
@@ -296,7 +335,6 @@ export default {
             message: 'Information is missing or incorrect',
             type: 'warning',
           })
-          return;
         } else
         {
           that.axios({
@@ -371,8 +409,8 @@ export default {
 
 #login_box {
   text-align: center;
-  background-color: darkseagreen;
-  height: 1287px;
+  background-color: #B4E197;
+  height: 1297px;
 
   background-image: url('../assets/cross.png');
 

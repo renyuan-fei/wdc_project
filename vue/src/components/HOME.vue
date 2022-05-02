@@ -1,30 +1,40 @@
 <template>
   <div id="home">
+    <TOP_BAR></TOP_BAR>
     <el-container>
       <el-header>
-        <div></div>
       </el-header>
       <el-main>
         <div class="button_box">
           <el-button class="button" type="primary" round size="large" @click="goto">START</el-button>
         </div>
       </el-main>
-      <el-footer></el-footer>
+      <el-footer>
+        <!--        <div class="right"></div>-->
+      </el-footer>
     </el-container>
+    <div class="bottom_bar">
+    </div>
   </div>
 </template>
 
 <script>
+
 import {useRouter} from 'vue-router';
+import TOP_BAR from './TOP_BAR'
 
 export default {
   name: "INDEX",
   data()
   {
     return {
-      data: 'INDEX',
+
     }
   },
+  components:
+      {
+        TOP_BAR
+      },
   setup()
   {
     const router = useRouter();
@@ -44,35 +54,63 @@ export default {
 <style lang="less" scoped>
 
 #home {
-  background-color: darkseagreen;
+  //background-color: #B4E197;
+  background-image: linear-gradient(#E9EFC0, #4E944F);
 
-  height: 1287px;
+  height: 1297px;
 
-  background-image: url('../assets/cross.png');
+  //background-image: url('../assets/cross.png');
+}
 
-  .button_box {
-    width: 200px;
-    height: 100px;
-    //background-color:antiquewhite;
-    border-radius: 5px;
+.button_box {
+  width: 200px;
+  height: 100px;
+  //background-color:antiquewhite;
+  border-radius: 5px;
 
-    position: absolute;
+  position: absolute;
 
-    left: 50%;
-    top: 50%;
+  left: 50%;
+  top: 50%;
 
-    transform: translate(-50%, -50%);
-  }
+  transform: translate(-50%, -50%);
+}
 
-  .button {
-    text-align: center;
+.bottom_bar {
+  position: absolute;
+
+  //background-color: #E4E9BE;
+
+  //background-image: linear-gradient(#83BD75,#4E944F);
+
+  width: 100%;
+  height: 200px;
+
+  bottom: 0;
+}
+
+.button {
+  //background-image: linear-gradient(#83BD75,#B4E197);
+
+  background-color: #E6BA95;
+
+  color: #FAFDD6;
+
+  border: 0;
+
+  text-align: center;
 
 
-    font-size: 40px;
+  font-size: 40px;
 
-    height: 100px;
-    width: 200px
-  }
+  height: 100px;
+  width: 200px
+}
+
+.button:hover {
+  background-color: #FAFDD6;
+
+  color: #E6BA95;
 }
 
 </style>

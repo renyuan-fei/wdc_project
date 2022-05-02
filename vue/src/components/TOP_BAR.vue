@@ -6,30 +6,36 @@
         <img src="./tree.png" width="80" height="80" alt="tree">
       </el-menu-item>
 
-      <el-menu-item class="item" index="2">
+      <el-menu-item class="item" index="2" @click="this.$router.push('/home')">
         <el-icon>
           <home-filled/>
         </el-icon>
         HOME
       </el-menu-item>
 
-      <el-menu-item class="item" index="3">
+      <el-menu-item class="item" index="3" @click="this.$router.push('/user')">
         <el-icon>
           <calendar/>
         </el-icon>
         MY PLAN
       </el-menu-item>
 
-      <el-menu-item class="item" index="4">
+      <el-menu-item class="item" index="4" @click="this.$router.push('/user')">
         <el-icon>
           <user-filled/>
         </el-icon>
         MY ACCOUNT &nbsp;&nbsp;&nbsp;
-        <el-avatar :size="50"> user</el-avatar>
-
-<!--        <el-dropdown-menu>-->
-<!--          <el-dropdown-item>sign out</el-dropdown-item>-->
-<!--        </el-dropdown-menu>-->
+        <el-dropdown @visible-change="menu_list">
+    <span class="el-dropdown-link">
+      <el-avatar :size="50"> user</el-avatar>
+    </span>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item v-if="is_login" @click="this.$router.push('/login')">login account</el-dropdown-item>
+              <el-dropdown-item v-else @click="sign_out">sign out</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
 
       </el-menu-item>
 
@@ -38,6 +44,9 @@
 </template>
 
 <script>
+import { ElMessage, ElMessageBox } from 'element-plus'
+
+
 import {HomeFilled} from '@element-plus/icons-vue';
 import {Calendar} from '@element-plus/icons-vue';
 import {UserFilled} from '@element-plus/icons-vue';
@@ -52,6 +61,60 @@ export default {
         UserFilled,
         // ArrowDown
       },
+  data()
+  {
+    return {
+      is_login: true,
+    }
+  },
+  methods:
+      {
+        sign_out()
+        {
+          const token = window.sessionStorage.getItem('token')
+
+          ElMessageBox.confirm(
+              'Are you sure you want to log out',
+              'Warning',
+              {
+                confirmButtonText: 'OK',
+                cancelButtonText: 'Cancel',
+                type: 'warning',
+              }
+          ).then(() =>
+          {
+            if (token)
+            {
+              //清空token
+              window.sessionStorage.clear()
+
+              //跳转到主页面
+              this.$router.push('/home')
+
+              //提示退出登录的信息
+              ElMessage({
+                message: 'successfully logged out',
+                type: 'warning',
+              })
+            }
+          })
+        },
+        menu_list()
+        {
+          console.log('触发事件')
+
+          const token = window.sessionStorage.getItem('token')
+
+          if (token)
+          {
+            this.is_login = false;
+          }
+          else
+          {
+            this.is_login = true;
+          }
+        }
+      }
 }
 </script>
 

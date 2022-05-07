@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
+import { ElMessage } from 'element-plus'
 
 const route = [
     // {
@@ -51,6 +52,11 @@ router.beforeEach((to,from,next) =>
     //当没有token时，强制跳转到login
     if (!token)
     {
+        ElMessage({
+            message: 'Please log in to access',
+            type: 'warning',
+        })
+
         console.log('未登录')
 
         return next('/login');

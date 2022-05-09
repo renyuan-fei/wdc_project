@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="前端+后端" type="js.build_tools.npm" editBeforeRun="true" singleton="true">
+  <configuration default="false" name="前端+后端" type="js.build_tools.npm" editBeforeRun="true" singleton="false">
     <package-json value="$PROJECT_DIR$/express/package.json" />
     <command value="run" />
     <scripts>

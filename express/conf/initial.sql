@@ -16,8 +16,9 @@ create table if not exists user
 # 测试用数据
 insert into user(first_name, last_name, username, password, gender, email) value
     ('a', 'b', 'user1', 'a1', 'man', '123456789@gmail.com'),
-    ('aa', 'bb', 'user2', 'a2','woman', '123456789@gmail.com'),
-    ('aaa', 'bbb', 'user3', 'a3','woman', '123456789@gmail.com');
+    ('aa', 'bb', 'user2', 'a2', 'woman', '123456789@gmail.com'),
+    ('aa', 'bb', 'user2', 'a2', 'woman', '123456789@gmail.com'),
+    ('aaa', 'bbb', 'test', '123', 'woman', '123456789@gmail.com');
 
 # 管理员列表
 create table if not exists Administrator

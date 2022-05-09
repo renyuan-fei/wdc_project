@@ -2,25 +2,25 @@
   <div id="top_bar">
     <el-menu mode="horizontal" class="top_bar">
 
-      <span class="logo" index="1">
+      <span class="logo">
         <img src="./tree.png" width="80" height="80" alt="tree">
       </span>
 
-      <el-menu-item class="home" index="2" @click="this.$router.push('/home')">
+      <el-menu-item class="home" index="1" @click="this.$router.push('/home')">
         <el-icon>
           <home-filled/>
         </el-icon>
         HOME
       </el-menu-item>
 
-      <el-menu-item class="plan" index="3" @click="this.$router.push('/user')">
+      <el-menu-item class="plan" index="2" @click="this.$router.push('/user')">
         <el-icon>
           <calendar/>
         </el-icon>
-        MY PLAN
+        CALENDAR
       </el-menu-item>
 
-      <el-menu-item class="account" index="4" @click="this.$router.push('/user')">
+      <el-menu-item class="account" index="3" @click="this.$router.push('/user')">
         <el-icon>
           <user-filled/>
         </el-icon>

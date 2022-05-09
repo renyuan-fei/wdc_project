@@ -8,7 +8,7 @@
         <el-main v-show="is_login">
           <el-card class="login_size">
             <img src="../assets/tree.png" alt="tree"><br>
-            <el-form :model="login_data" :rules="login_rule" ref="login_from">
+            <el-form ref="login_form" :model="login_data" :rules="login_rule">
 
               <el-form-item prop="username">
                 <el-input style="margin-top:15px" v-model="login_data.username" placeholder="username"></el-input>
@@ -256,7 +256,7 @@ export default {
       let that = this;
 
       //表单预验证
-      this.$refs.login_from.validate((valid) =>
+      this.$refs.login_form.validate((valid) =>
       {
         console.log(valid)
 

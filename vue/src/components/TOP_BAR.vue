@@ -2,25 +2,25 @@
   <div id="top_bar">
     <el-menu mode="horizontal" class="top_bar">
 
-      <el-menu-item class="item" index="1">
+      <span class="logo" index="1">
         <img src="./tree.png" width="80" height="80" alt="tree">
-      </el-menu-item>
+      </span>
 
-      <el-menu-item class="item" index="2" @click="this.$router.push('/home')">
+      <el-menu-item class="home" index="2" @click="this.$router.push('/home')">
         <el-icon>
           <home-filled/>
         </el-icon>
         HOME
       </el-menu-item>
 
-      <el-menu-item class="item" index="3" @click="this.$router.push('/user')">
+      <el-menu-item class="plan" index="3" @click="this.$router.push('/user')">
         <el-icon>
           <calendar/>
         </el-icon>
         MY PLAN
       </el-menu-item>
 
-      <el-menu-item class="item" index="4" @click="this.$router.push('/user')">
+      <el-menu-item class="account" index="4" @click="this.$router.push('/user')">
         <el-icon>
           <user-filled/>
         </el-icon>
@@ -120,14 +120,36 @@ export default {
 
 <style lang="less" scoped>
 
+*
+{
+  margin: 0;
+  padding: 0;
+}
+
 .top_bar {
   background-color: #A2B38B;
   //background-image: linear-gradient(#E9EFC0,#B4E197);
   height: 80px;
 }
 
-.item {
-  width: 25%;
+.logo
+{
+  text-align: center;
+  width:10%;
 }
 
+.home
+{
+  width:25%;
+}
+
+.plan
+{
+  width:25%;
+}
+
+.account
+{
+  width:40%;
+}
 </style>

@@ -1,8 +1,5 @@
 <template>
-  <div id="main">
-<!--用于显示页面 默认：index组件-->
     <router-view></router-view>
-  </div>
 </template>
 
 <script>

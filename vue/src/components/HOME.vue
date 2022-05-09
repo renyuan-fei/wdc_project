@@ -1,21 +1,17 @@
 <template>
-  <div id="home">
-    <TOP_BAR></TOP_BAR>
-    <el-container>
-      <el-header>
-      </el-header>
-      <el-main>
-        <div class="button_box">
-          <el-button class="button" type="primary" round size="large" @click="goto">START</el-button>
-        </div>
-      </el-main>
-      <el-footer>
-        <!--        <div class="right"></div>-->
-      </el-footer>
-    </el-container>
-    <div class="bottom_bar">
-    </div>
-  </div>
+  <el-container id="home">
+    <el-header style="height:80px;">
+      <TOP_BAR></TOP_BAR>
+    </el-header>
+    <el-main>
+      <div class="button_box">
+        <el-button class="button" type="primary" round size="large" @click="goto">START</el-button>
+      </div>
+    </el-main>
+    <el-footer>
+      <!--        <div class="right"></div>-->
+    </el-footer>
+  </el-container>
 </template>
 
 <script>
@@ -27,9 +23,7 @@ export default {
   name: "INDEX",
   data()
   {
-    return {
-
-    }
+    return {}
   },
   components:
       {
@@ -41,7 +35,7 @@ export default {
 
     function goto()
     {
-      router.push("/login");
+      router.push("/user");
     }
 
     return {
@@ -54,10 +48,15 @@ export default {
 <style lang="less" scoped>
 
 #home {
+  *
+  {
+    margin:0;
+    padding:0;
+  }
   //background-color: #B4E197;
   background-image: linear-gradient(#E9EFC0, #4E944F);
 
-  height: 1297px;
+  height: 100%;
 
   //background-image: url('../assets/cross.png');
 }

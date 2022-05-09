@@ -19,11 +19,16 @@ import '../../assets/css/global.css'
 //Element Plus
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
+import * as ELIcons from "@element-plus/icons-vue";
 //----------------------------------------------------------------------------------------------------------------------
 //创建Vue主体
 const app = createApp(App)
 //----------------------------------------------------------------------------------------------------------------------
 //注册组件
+for (let iconName in ELIcons) {
+    app.component(iconName, ELIcons[iconName])
+}
+
 app.use(ElementPlus)
 app.use(VueAxios,axios);
 app.config.globalProperties.$axios = axios

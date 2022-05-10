@@ -5,10 +5,10 @@
     </el-header>
     <el-container style="margin-top:20px;">
 
-      <el-row style="width:37%">
-        <el-col :span="5"></el-col>
+      <el-row style="width:34%">
+        <el-col :span="7"></el-col>
         <el-col :span="10">
-          <el-aside style="text-align: center; border-radius:30px;" width="200px">
+          <el-aside style="text-align: center; border-radius:30px;" width="180px">
             <el-menu
                 class="el-menu-vertical-demo"
                 default-active="1"
@@ -45,10 +45,10 @@
             </el-menu>
           </el-aside>
         </el-col>
-        <el-col :span="9"></el-col>
+        <el-col :span="7"></el-col>
       </el-row>
 
-      <el-main style="width:63%">
+      <el-main style="width:66%">
         <el-row style="margin-top:10%">
           <el-col :span="14">
 
@@ -116,7 +116,7 @@ export default {
 .user-container {
   background-color: #B4E197;
   background-image: url('../assets/cross.png');
-  height: 100%
+  height: 1297px;
 }
 
 </style>

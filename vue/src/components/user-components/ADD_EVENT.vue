@@ -83,15 +83,15 @@
 
       <el-form-item label="Calendar state">
         <el-radio-group v-model="form_data.state">
-          <el-radio :label="1">work &nbsp;<el-icon>
+          <el-radio :label="0">work &nbsp;<el-icon>
             <school/>
           </el-icon>
           </el-radio>
-          <el-radio :label="2">rest &nbsp;<el-icon>
+          <el-radio :label="1">rest &nbsp;<el-icon>
             <coffee-cup/>
           </el-icon>
           </el-radio>
-          <el-radio :label="3">other &nbsp;<el-icon>
+          <el-radio :label="2">other &nbsp;<el-icon>
             <more/>
           </el-icon>
           </el-radio>
@@ -161,7 +161,7 @@ export default {
 
             address: [{required: true, message: "please enter address", trigger: "blur"}],
 
-            //begin大于当前日期
+            //begin大于当前日期 //发送到后端验证时间是否冲突
             begin_time: [{required: true, message: "Please select a start time", trigger: "blur"},
               {
                 validator: function (rule, value, callback)
@@ -180,7 +180,7 @@ export default {
                 }
               }],
 
-            //end大于当前日期，end大于begin
+            //end大于当前日期，end大于begin //发送到后端验证时间是否冲突
             end_time: [{required: true, message: "Please choose a end time", trigger: "blur"},
               {
                 validator: function (rule, value, callback)

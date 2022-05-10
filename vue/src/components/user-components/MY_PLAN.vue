@@ -15,7 +15,8 @@
       </div>
     </template>
 
-      <el-table :data="tableData" style="width: 100%">
+      <div class="table-box">
+        <el-table :data="tableData" style="width: 100%">
 
         <el-table-column label="Start" width="230">
           <template #default="scope">
@@ -54,8 +55,8 @@
           <template #default="scope">
             <el-popconfirm title="Are you sure to delete this?" @confirm="Delete(scope.$index, scope.row)">
               <template #reference>
-                <el-button size="small" type="danger">
-                  Delete
+                <el-button circle size="default" type="danger">
+                  <el-icon><delete/></el-icon>
                 </el-button>
               </template>
             </el-popconfirm>
@@ -63,6 +64,7 @@
         </el-table-column>
 
       </el-table>
+      </div>
 
     </el-card>
     <ADD_EVENT v-show="is_add" :data="is_add" @changedata="change_data"></ADD_EVENT>
@@ -73,20 +75,24 @@
 <script>
 import ADD_EVENT from './ADD_EVENT'
 
-import {Clock} from "@element-plus/icons-vue";
+import {Clock, Delete} from "@element-plus/icons-vue";
 
 export default {
   name: "MY_PLAN",
   component:
       {
-        Clock
+        Clock,
+        Delete
+      },
+  props:
+      {
+        user: String
       },
   mounted()
   {
-    console.log('页面渲染完成')
+    console.log('MY_PLAN')
 
     //axios请求后端
-    console.log('开始请求后端数据进行渲染')
 
     //将数据存入table data
   },
@@ -98,6 +104,7 @@ export default {
       MY_STATE: ['work', 'rest', 'other'],
       STATE_COLOR: ["danger", "success", "warning"],
 
+      //临时用(temp)
       tableData: [
         {
           event_id: 'a',
@@ -144,6 +151,34 @@ export default {
           state: 2,
           note: 'my test',
         },
+        {
+          event_id: 'e',
+          start_time: '2016-05-03',
+          end_time: '2016-05-03',
+          title: 'test',
+          address: 'No. 189, Grove St, Los Angeles',
+          state: 2,
+          note: 'my test',
+        },
+        {
+          event_id: 'e',
+          start_time: '2016-05-03',
+          end_time: '2016-05-03',
+          title: 'test',
+          address: 'No. 189, Grove St, Los Angeles',
+          state: 2,
+          note: 'my test',
+        }, {
+          event_id: 'e',
+          start_time: '2016-05-03',
+          end_time: '2016-05-03',
+          title: 'test',
+          address: 'No. 189, Grove St, Los Angeles',
+          state: 2,
+          note: 'my test',
+        },
+
+
       ]
 
     }
@@ -193,10 +228,25 @@ export default {
 
   text-align: center;
 
+  position: relative;
+
+  .table-box {
+    width: 95%;
+    height: 88%;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+  }
+
   .card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+
+  .el-table {
+    flex: 1;
+    overflow-y: auto;
   }
 }
 

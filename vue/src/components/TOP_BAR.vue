@@ -13,7 +13,7 @@
         HOME
       </el-menu-item>
 
-      <el-menu-item class="plan" index="2" @click="this.$router.push('/user')">
+      <el-menu-item class="plan" index="2" @click="this.$router.push('/calendar')">
         <el-icon>
           <calendar/>
         </el-icon>
@@ -27,7 +27,7 @@
         MY ACCOUNT &nbsp;&nbsp;&nbsp;
         <el-dropdown @visible-change="menu_list">
     <span class="el-dropdown-link">
-      <el-avatar :size="50"> user</el-avatar>
+      <el-avatar :size="50">{{ username }}</el-avatar>
     </span>
           <template #dropdown>
             <el-dropdown-menu>
@@ -54,6 +54,21 @@ import {UserFilled} from '@element-plus/icons-vue';
 
 export default {
   name: "top_bar",
+  props:
+      {
+        user: String
+      },
+  mounted()
+  {
+    //向前端请求用户数据
+    console.log('TOP_BAR')
+    let temp = window.sessionStorage.getItem('username')
+
+    if (temp)
+    {
+      this.username = temp
+    }
+  },
   components:
       {
         HomeFilled,
@@ -64,6 +79,7 @@ export default {
   data()
   {
     return {
+      username: 'user',
       is_login: true,
     }
   },

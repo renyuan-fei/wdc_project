@@ -95,7 +95,7 @@
 <script>
 import TOP_BAR from './TOP_BAR'
 import {ElMessage} from "element-plus";
-import {useRouter} from "vue-router";
+// import {useRouter} from "vue-router";
 
 export default {
   name: "LOGIN",
@@ -209,7 +209,7 @@ export default {
             //邮箱验证
             validator: function (rule, value, callback)
             {
-              if (/^\w{1,64}@[a-z0-9\\-]{1,256}(\.[a-z]{2,6}){1,2}$/i.test(value) === false)
+              if (/^\w{1,64}@[a-z\d\\-]{1,256}(\.[a-z]{2,6}){1,2}$/i.test(value) === false)
               {
                 callback(new Error("Email format error"));
               } else
@@ -219,25 +219,6 @@ export default {
             },
             trigger: "blur"
           }]
-      },
-      setup()
-      {
-        const router = useRouter();
-
-        function goto(path)
-        {
-          router.push({
-            path:path,
-            params:
-                {
-                  data:this.login_data
-                }
-          });
-        }
-
-        return {
-          goto  //一定要要放在return里才能在模板上面使用
-        }
       },
 
       //判断用户名是否可用
@@ -287,12 +268,17 @@ export default {
               })
 
               //存放token
-              window.sessionStorage.setItem("token",response.data.token)
+              window.sessionStorage.setItem("token", response.data.token)
 
               console.log(response.data.token)
 
+              //存放登录的用户名
+              window.sessionStorage.setItem("username", that.login_data.username)
+
+              console.log(that.login_data.username)
+
               //用户页面跳转
-              return that.$router.push('/user')
+              return that.$router.push({path: '/user'})
 
               // console.log(that.$route)
             } else if (response.data.result === "2")

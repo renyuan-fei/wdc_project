@@ -19,12 +19,17 @@ const route = [
     {
         path: '/login',
         name: 'login',
-        component: ()=> import('../components/LOGIN')
+        component: () => import('../components/LOGIN')
     },
     {
         path: '/user',
         name: 'user',
-        component: ()=> import('../components/USER')
+        component: () => import('../components/USER')
+    },
+    {
+        path: '/calendar',
+        name: 'calendar',
+        component: () => import('../components/CALENDAR')
     },
 ]
 
@@ -47,7 +52,7 @@ router.beforeEach((to,from,next) =>
     //获取token
     const token = window.sessionStorage.getItem('token');
 
-    console.log(token)
+    // console.log(token)
 
     //当没有token时，强制跳转到login
     if (!token)

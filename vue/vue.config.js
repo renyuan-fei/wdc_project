@@ -40,6 +40,13 @@ module.exports = defineConfig({
                     template: 'public/main_page.html',
                     filename: 'main_page.html',
                     title: 'user page'
+                },
+            calendar:
+                {
+                    entry: 'src/pages/calendar/main.js',
+                    template: 'public/calendar.html',
+                    filename: 'calendar.html',
+                    title: 'calendar'
                 }
         }
 

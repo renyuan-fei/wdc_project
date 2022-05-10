@@ -1,5 +1,5 @@
 <template>
-  <el-container class="user-container">
+  <el-container id="user-container">
     <el-header style="height:80px">
       <TOP_BAR></TOP_BAR>
     </el-header>
@@ -53,15 +53,15 @@
           <el-col :span="14">
 
             <span v-show="choose === 1">
-            <MY_PLAN></MY_PLAN>
+            <MY_PLAN :user="data"></MY_PLAN>
             </span>
 
             <span v-show="choose === 2">
-            <MY_GROUP></MY_GROUP>
+            <MY_GROUP :user="data"></MY_GROUP>
             </span>
 
             <span v-show="choose === 3">
-            <SETTING></SETTING>
+            <SETTING :user="data"></SETTING>
             </span>
 
           </el-col>
@@ -81,8 +81,15 @@ import SETTING from "./user-components/SETTING"
 import TOP_BAR from './TOP_BAR'
 import {Setting, Avatar} from "@element-plus/icons-vue";
 
+// import { useRoute } from 'vue-router'
+
 export default {
   name: "USER",
+  mounted()
+  {
+    console.log('USER')
+    console.log('username: ', this.data)
+  },
   components:
       {
         Avatar,
@@ -101,6 +108,8 @@ export default {
     return {
       isCollapse: false,
       choose: 1,
+      //用于向后端请求数据
+      data: window.sessionStorage.getItem('username')
     }
   }
 }
@@ -113,7 +122,7 @@ export default {
   padding: 0;
 }
 
-.user-container {
+#user-container {
   background-color: #B4E197;
   background-image: url('../assets/cross.png');
   height: 1297px;

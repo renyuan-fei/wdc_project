@@ -255,7 +255,9 @@ export default {
 }
 
 #add_event {
-  margin: 0;
+  margin-top: 5%;
+  margin-left: 10%;
+
   padding: 0;
 
   width: 600px;

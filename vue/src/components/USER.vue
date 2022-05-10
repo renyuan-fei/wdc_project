@@ -12,7 +12,7 @@
             <el-menu
                 class="el-menu-vertical-demo"
                 default-active="1"
-                style="border-radius:20%; margin-top:200px"
+                style="border-radius:20%; margin-top:100%"
             >
 
               <el-menu-item index="1" style="height:80px; border-radius:40% 40% 0 0" @click="choose=1">
@@ -48,8 +48,8 @@
         <el-col :span="9"></el-col>
       </el-row>
 
-      <el-main style="width:60%">
-        <el-row style="margin-top:200px">
+      <el-main style="width:63%">
+        <el-row style="margin-top:10%">
           <el-col :span="14">
 
             <span v-show="choose === 1">

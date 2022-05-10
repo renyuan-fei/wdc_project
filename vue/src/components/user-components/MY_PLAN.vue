@@ -14,13 +14,8 @@
 
       </div>
     </template>
-      <el-table :data="tableData" style="width: 100%">
-        <el-table-column label="start" prop="start_time" width="120"/>
-        <el-table-column label="end" prop="end_time" width="120"/>
-        <el-table-column label="Name" prop="title" width="120"/>
-        <el-table-column label="Address" prop="address" width="120"/>
-        <el-table-column label="state" prop="state" width="120"/>
-      </el-table>
+
+
 
     </el-card>
     <ADD_EVENT v-show="is_add" :data="is_add" @changedata="change_data"></ADD_EVENT>
@@ -37,28 +32,7 @@ export default {
   {
     return {
       is_add: false,
-      tableData: [
-        {
-          date: '2016-05-03',
-          name: 'Tom',
-          address: 'No. 189, Grove St, Los Angeles',
-        },
-        {
-          date: '2016-05-02',
-          name: 'Tom',
-          address: 'No. 189, Grove St, Los Angeles',
-        },
-        {
-          date: '2016-05-04',
-          name: 'Tom',
-          address: 'No. 189, Grove St, Los Angeles',
-        },
-        {
-          date: '2016-05-01',
-          name: 'Tom',
-          address: 'No. 189, Grove St, Los Angeles',
-        },
-      ]
+      tableData: []
 
     }
   },

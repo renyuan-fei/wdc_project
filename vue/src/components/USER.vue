@@ -85,6 +85,14 @@ export default {
   name: "USER",
   mounted()
   {
+    //请求后端关于 user 的所有数据
+
+
+    //个人信息
+    //日常安排
+    // /get_information post
+
+
     console.log('USER')
     console.log('username: ', this.data)
   },
@@ -125,7 +133,8 @@ export default {
 #user-container {
   background-color: #B4E197;
   background-image: url('../assets/cross.png');
-  height: 1287px;
+  height: 100%;
+  min-height: 1287px;
 }
 
 

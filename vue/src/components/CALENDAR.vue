@@ -120,7 +120,8 @@ export default {
 
   background-color: #B4E197;
   background-image: url('../assets/cross.png');
-  height: 1287px;
+  height: 100%;
+  min-height: 1287px;
 }
 
 .calendar {

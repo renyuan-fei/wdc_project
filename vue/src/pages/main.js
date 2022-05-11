@@ -10,10 +10,10 @@ import VueAxios from 'vue-axios';
 // import AXIOS from './http/AXIOS/API'
 
 //导入路由
-import router from '../../router/router'
+import router from '../router/router'
 
 //导入全局样式
-import '../../assets/css/global.css'
+import '../assets/css/global.css'
 // import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 //Element Plus
@@ -21,20 +21,26 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import * as ELIcons from '@element-plus/icons-vue'
 
+// const instance = axios.create({
+//     baseURL: '/api',
+// });
 
 //----------------------------------------------------------------------------------------------------------------------
 //创建Vue主体
 const app = createApp(App)
 //----------------------------------------------------------------------------------------------------------------------
 //注册组件
-for (let iconName in ELIcons) {
+for (let iconName in ELIcons)
+{
     app.component(iconName, ELIcons[iconName])
 }
 
 app.use(ElementPlus)
-app.use(VueAxios,axios);
+app.use(VueAxios, axios);
+//http://localhost:3000/
+//https://renyuan-fei-code50-71182846-jjjppq54gfpgj-3000.githubpreview.dev/
+axios.defaults.baseURL = 'http://localhost:3000';
 app.config.globalProperties.$axios = axios
-
 
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -43,4 +49,4 @@ app.use(router)
 
 
 //----------------------------------------------------------------------------------------------------------------------
-app.mount('#home')
+app.mount('#app')

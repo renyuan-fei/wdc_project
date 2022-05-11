@@ -48,15 +48,16 @@ export default {
 <style lang="less" scoped>
 
 #home {
-  *
-  {
-    margin:0;
-    padding:0;
+  * {
+    margin: 0;
+    padding: 0;
   }
+
   //background-color: #B4E197;
   background-image: linear-gradient(#E9EFC0, #4E944F);
 
-  height: 100%;
+  height: 1287px;
+  min-height: 100%;
 
   //background-image: url('../assets/cross.png');
 }

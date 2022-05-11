@@ -137,7 +137,8 @@ export default {
                   {
                     callback();
                   }
-                }
+                },
+                trigger: "blur"
               }],
 
             //end大于当前日期，end大于begin //发送到后端验证时间是否冲突
@@ -154,7 +155,8 @@ export default {
                   {
                     callback();
                   }
-                }
+                },
+                trigger: "blur"
               }],
           },
     }
@@ -180,6 +182,9 @@ export default {
               })
             } else
             {
+              // 添加事件
+              // /add_event get
+
               // that.axios({
               //   methods: 'get',
               //   url: 'http://localhost:3000/',

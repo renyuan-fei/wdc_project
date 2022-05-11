@@ -65,7 +65,8 @@ export default {
                   {
                     callback();
                   }
-                }
+                },
+                trigger: "blur"
               }],
 
             confirm_new_password: [{required: true, message: "please input your new password again", trigger: "blur"},
@@ -79,7 +80,8 @@ export default {
                   {
                     callback();
                   }
-                }
+                },
+                trigger: "blur"
               }],
           },
     }
@@ -103,6 +105,8 @@ export default {
           )
 
           //向后端发送请求
+          // /rest_password get
+
 
           //返回修成功则打印提示
           ElMessage({

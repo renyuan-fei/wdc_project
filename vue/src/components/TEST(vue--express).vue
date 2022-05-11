@@ -27,7 +27,7 @@ export default {
 
       await axios({
         methods: 'get',
-        url: 'http://localhost:3000/test'
+        url: '/test'
       }).then(function (response)
       {
         that.data = response.data

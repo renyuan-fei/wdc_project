@@ -139,7 +139,7 @@ export default {
             {
               that.axios({
                 methods: 'get',
-                url: 'http://localhost:3000/verify',
+                url: '/verify',
                 params:
                     {
                       username: value,
@@ -244,7 +244,7 @@ export default {
         {
           that.axios({
             methods: 'get',
-            url: 'http://localhost:3000/login',
+            url: '/login',
             params: this.login_data
           }).then(function (response)
           {
@@ -317,7 +317,7 @@ export default {
         {
           that.axios({
             methods: 'get',
-            url: 'http://localhost:3000/register',
+            url: '/register',
             params:
                 {
                   first_name: that.register_data.first_name,
@@ -388,7 +388,8 @@ export default {
 #login_box {
   text-align: center;
   background-color: #B4E197;
-  height: 1287px;
+  height: 100%;
+  min-height: 1287px;
 
   background-image: url('../assets/cross.png');
 

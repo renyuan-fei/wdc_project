@@ -14,7 +14,7 @@ const route = [
     {
         path: '/home',
         name: 'home',
-        component: ()=> import('../components/HOME')
+        component: () => import('../components/HOME'),
     },
     {
         path: '/login',
@@ -34,7 +34,7 @@ const route = [
 ]
 
 const router = createRouter({
-    history: createWebHashHistory(),
+    history: createWebHashHistory(process.env.BASE_URL),
     routes: route
 });
 

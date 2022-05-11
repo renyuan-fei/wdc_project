@@ -115,9 +115,12 @@ export default {
 }
 
 #calendar-container {
+  width: 100%;
+  min-width: 1200px;
+
   background-color: #B4E197;
   background-image: url('../assets/cross.png');
-  height: 1297px;
+  height: 1287px;
 }
 
 .calendar {

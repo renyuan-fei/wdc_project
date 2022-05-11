@@ -1,7 +1,7 @@
 <template>
-  <span>
+  <span id="my_plan">
 <!--    <el-button @click="is_add = !is_add">切换(临时)</el-button>-->
-    <el-card v-show="!is_add" id="my_plan">
+    <el-card v-show="!is_add" class="my_plan">
 
     <template #header>
       <div class="card-header">
@@ -217,7 +217,7 @@ export default {
 
 <style lang="less" scoped>
 
-#my_plan {
+.my_plan {
   margin: 0;
   padding: 0;
 
@@ -228,7 +228,7 @@ export default {
 
   text-align: center;
 
-  position: relative;
+  position: absolute;
 
   .table-box {
     width: 95%;

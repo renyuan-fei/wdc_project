@@ -1,76 +1,74 @@
 <template>
-  <el-container id="user-container">
-    <el-header style="height:80px">
+  <div id="user-container">
+
+    <div class="top">
       <TOP_BAR></TOP_BAR>
-    </el-header>
-    <el-container style="margin-top:20px;">
+    </div>
 
-      <el-row style="width:34%">
-        <el-col :span="7"></el-col>
-        <el-col :span="10">
-          <el-aside style="text-align: center; border-radius:30px;" width="180px">
-            <el-menu
-                class="el-menu-vertical-demo"
-                default-active="1"
-                style="border-radius:20%; margin-top:100%"
-            >
+    <div class="center-div part2">
 
-              <el-menu-item index="1" style="height:80px; border-radius:40% 40% 0 0" @click="choose=1">
-                <el-icon>
-                  <list/>
-                </el-icon>
-                <template #title>
-                  <span>MY PLAN</span>
-                </template>
-              </el-menu-item>
+      <div class="part2-1">
 
-              <el-menu-item index="2" style="height:80px" @click="choose=2">
-                <el-icon>
-                  <avatar/>
-                </el-icon>
-                <template #title>
-                  <span>MY GROUP</span>
-                </template>
-              </el-menu-item>
+        <div class="menu-box">
 
-              <el-menu-item index="3" style="height:80px; border-radius:0 0 40% 40%" @click="choose=3">
-                <el-icon>
-                  <setting/>
-                </el-icon>
-                <template #title>
-                  <span>SETTING</span>
-                </template>
-              </el-menu-item>
+          <el-menu class="menu" default-active="1">
 
-            </el-menu>
-          </el-aside>
-        </el-col>
-        <el-col :span="7"></el-col>
-      </el-row>
+            <el-menu-item index="1" style=" border-radius:40% 40% 0 0" @click="choose=1">
+              <el-icon>
+                <list/>
+              </el-icon>
+              <template #title>
+                <span>MY PLAN</span>
+              </template>
+            </el-menu-item>
 
-      <el-main style="width:66%">
-        <el-row style="margin-top:10%">
-          <el-col :span="14">
+            <el-menu-item index="2" style="" @click="choose=2">
+              <el-icon>
+                <avatar/>
+              </el-icon>
+              <template #title>
+                <span>MY GROUP</span>
+              </template>
+            </el-menu-item>
 
-            <span v-show="choose === 1">
+            <el-menu-item index="3" style=" border-radius:0 0 40% 40%" @click="choose=3">
+              <el-icon>
+                <setting/>
+              </el-icon>
+              <template #title>
+                <span>SETTING</span>
+              </template>
+            </el-menu-item>
+
+          </el-menu>
+
+        </div>
+
+      </div>
+
+      <div class="part2-2">
+
+        <div class="main-box">
+
+          <span v-show="choose === 1">
             <MY_PLAN :user="data"></MY_PLAN>
-            </span>
+          </span>
 
-            <span v-show="choose === 2">
+          <span v-show="choose === 2">
             <MY_GROUP :user="data"></MY_GROUP>
-            </span>
+          </span>
 
-            <span v-show="choose === 3">
+          <span v-show="choose === 3">
             <SETTING :user="data"></SETTING>
-            </span>
+          </span>
 
-          </el-col>
-          <el-col :span="10"></el-col>
-        </el-row>
-      </el-main>
+        </div>
 
-    </el-container>
-  </el-container>
+      </div>
+
+    </div>
+
+  </div>
 </template>
 
 <script>
@@ -92,15 +90,21 @@ export default {
   },
   components:
       {
+        // eslint-disable-next-line vue/no-unused-components
         Avatar,
+        // eslint-disable-next-line vue/no-unused-components
         Setting,
+        // eslint-disable-next-line vue/no-unused-components
         TOP_BAR,
 
 
         // eslint-disable-next-line vue/no-unused-components
         ADD_EVENT,
+        // eslint-disable-next-line vue/no-unused-components
         MY_GROUP,
+        // eslint-disable-next-line vue/no-unused-components
         MY_PLAN,
+        // eslint-disable-next-line vue/no-unused-components
         SETTING,
       },
   data()
@@ -117,15 +121,86 @@ export default {
 
 <style lang="less" scoped>
 
-* {
-  margin: 0;
-  padding: 0;
-}
 
 #user-container {
   background-color: #B4E197;
   background-image: url('../assets/cross.png');
-  height: 1297px;
+  height: 1287px;
 }
+
+
+.top {
+  height: 80px;
+  background-color: #333333;
+}
+
+
+.center-div {
+  margin: 0 auto;
+}
+
+.part2 {
+  position: relative;
+
+  width: 100%;
+  min-width: 1200px;
+  height: 1207px;
+  //background-color: green;
+}
+
+
+.part2-1 {
+  position: absolute;
+
+  width: 30%;
+  height: 100%;
+  //background-color: #ffa500;
+
+  float: left;
+}
+
+.part2-2 {
+  position: absolute;
+
+  left: 30%;
+
+  width: 70%;
+  height: 100%;
+  //background-color: #87ceeb;
+
+  float: left;
+}
+
+
+.menu-box {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  //background: red;
+  left: 28%;
+  top: 30%;
+}
+
+.menu {
+  margin: 0 auto;
+
+  width: 160px;
+
+  min-width: 160px;
+
+  border-radius: 20px;
+
+  top: 20%;
+}
+
+.main-box {
+  position: absolute;
+  width: 800px;
+  height: 800px;
+  //background: red;
+  left: 5%;
+  top: 10%;
+}
+
 
 </style>

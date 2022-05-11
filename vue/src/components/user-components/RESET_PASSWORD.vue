@@ -121,7 +121,7 @@ export default {
   height: 450px;
   width: 400px;
 
-  margin-top: 5%;
+  margin-top: 20%;
   margin-left: 20%;
 
   border-radius: 20px;

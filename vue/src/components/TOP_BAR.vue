@@ -1,50 +1,90 @@
 <template>
   <div id="top_bar">
-    <el-menu mode="horizontal" class="top_bar">
-
-      <span class="logo">
+    <span class="logo">
         <img src="./tree.png" width="80" height="80" alt="tree">
       </span>
-
-      <el-menu-item class="home" index="1" @click="this.$router.push('/home')">
+    <ul>
+      <li class="home Pointer" @click="this.$router.push('/home')">
         <el-icon>
           <home-filled/>
         </el-icon>
         HOME
-      </el-menu-item>
+      </li>
 
-      <el-menu-item class="plan" index="2" @click="this.$router.push('/calendar')">
+      <li class="plan Pointer" @click="this.$router.push('/calendar')">
         <el-icon>
           <calendar/>
         </el-icon>
         CALENDAR
-      </el-menu-item>
+      </li>
 
-      <el-menu-item class="account" index="3" @click="this.$router.push('/user')">
+      <li class="account Pointer" @click="this.$router.push('/user')">
         <el-icon>
           <user-filled/>
         </el-icon>
-        MY ACCOUNT &nbsp;&nbsp;&nbsp;
-        <el-dropdown @visible-change="menu_list">
-    <span class="el-dropdown-link">
-      <el-avatar :size="50">{{ username }}</el-avatar>
-    </span>
+        MY ACCOUNT
+
+        <el-dropdown>
+
+        <span class="avatar" @mouseout="!is_show" @mouseover="!is_show">
+          {{ username }}
+        </span>
+
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item v-if="is_login" @click="this.$router.push('/login')">login account</el-dropdown-item>
               <el-dropdown-item v-else @click="sign_out">sign out</el-dropdown-item>
             </el-dropdown-menu>
           </template>
+
         </el-dropdown>
+      </li>
+    </ul>
+    <!--    <el-menu mode="horizontal" class="top_bar">-->
 
-      </el-menu-item>
+    <!--      <span class="logo">-->
+    <!--        <img src="./tree.png" width="80" height="80" alt="tree">-->
+    <!--      </span>-->
 
-    </el-menu>
+    <!--      <el-menu-item class="home" index="1" @click="this.$router.push('/home')">-->
+    <!--            <el-icon>-->
+    <!--              <home-filled/>-->
+    <!--            </el-icon>-->
+    <!--            HOME-->
+    <!--      </el-menu-item>-->
+
+    <!--      <el-menu-item class="plan" index="2" @click="this.$router.push('/calendar')">-->
+    <!--            <el-icon>-->
+    <!--              <calendar/>-->
+    <!--            </el-icon>-->
+    <!--            CALENDAR-->
+    <!--      </el-menu-item>-->
+
+    <!--      <el-menu-item class="account" index="3" @click="this.$router.push('/user')">-->
+    <!--            <el-icon>-->
+    <!--              <user-filled/>-->
+    <!--            </el-icon>-->
+    <!--            MY ACCOUNT &nbsp;&nbsp;&nbsp;-->
+    <!--            <el-dropdown @visible-change="menu_list">-->
+    <!--        <span class="el-dropdown-link">-->
+    <!--          <el-avatar :size="50">{{ username }}</el-avatar>-->
+    <!--        </span>-->
+    <!--              <template #dropdown>-->
+    <!--                <el-dropdown-menu>-->
+    <!--                  <el-dropdown-item v-if="is_login" @click="this.$router.push('/login')">login account</el-dropdown-item>-->
+    <!--                  <el-dropdown-item v-else @click="sign_out">sign out</el-dropdown-item>-->
+    <!--                </el-dropdown-menu>-->
+    <!--              </template>-->
+    <!--            </el-dropdown>-->
+
+    <!--      </el-menu-item>-->
+
+    <!--    </el-menu>-->
   </div>
 </template>
 
 <script>
-import { ElMessage, ElMessageBox } from 'element-plus'
+import {ElMessage, ElMessageBox} from 'element-plus'
 
 
 import {HomeFilled} from '@element-plus/icons-vue';
@@ -71,8 +111,11 @@ export default {
   },
   components:
       {
+        // eslint-disable-next-line vue/no-unused-components
         HomeFilled,
+        // eslint-disable-next-line vue/no-unused-components
         Calendar,
+        // eslint-disable-next-line vue/no-unused-components
         UserFilled,
         // ArrowDown
       },
@@ -80,7 +123,8 @@ export default {
   {
     return {
       username: 'user',
-      is_login: true,
+      is_login: !window.sessionStorage.getItem('token'),
+      is_show: false,
     }
   },
   methods:
@@ -115,57 +159,85 @@ export default {
             }
           })
         },
-        menu_list()
-        {
-          console.log('触发事件')
-
-          const token = window.sessionStorage.getItem('token')
-
-          if (token)
-          {
-            this.is_login = false;
-          }
-          else
-          {
-            this.is_login = true;
-          }
-        }
       }
 }
 </script>
 
 <style lang="less" scoped>
 
-*
-{
+* {
   margin: 0;
   padding: 0;
 }
 
-.top_bar {
+#top_bar {
   background-color: #A2B38B;
   //background-image: linear-gradient(#E9EFC0,#B4E197);
   height: 80px;
+  width: 100%;
+  min-width: 1200px;
+
+  position: relative;
 }
 
-.logo
-{
+ul {
+  list-style: none;
+}
+
+#top_bar li {
+  float: left;
+
   text-align: center;
-  width:10%;
+  line-height: 80px;
 }
 
-.home
-{
-  width:25%;
+
+#top_bar li:hover {
+  background-color: white;
 }
 
-.plan
-{
-  width:25%;
+
+.Pointer {
+  cursor: pointer;
 }
 
-.account
-{
-  width:40%;
+
+.logo {
+  text-align: center;
+  width: 10%;
+
+  float: left;
+
+  position: relative;
+}
+
+.home {
+  width: 25%;
+
+  position: relative;
+}
+
+.plan {
+  width: 25%;
+
+  position: relative;
+}
+
+.account {
+  width: 40%;
+
+  position: relative;
+}
+
+.avatar {
+  color: white;
+
+  display: inline-block;
+  margin-top: 15px;
+  line-height: 45px;
+  height: 45px;
+  width: 45px;
+  border-radius: 50%;
+  background-color: gray;
 }
 </style>

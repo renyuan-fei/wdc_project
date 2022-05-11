@@ -35,47 +35,7 @@
         />
       </el-form-item>
 
-      <!--      <el-form-item label="Begin" prop="begin_date">-->
-      <!--        <el-col :span="11">-->
-      <!--          <el-date-picker-->
-      <!--              v-model="form_data.begin_date"-->
-      <!--              type="date"-->
-      <!--              placeholder="Pick a date"-->
-      <!--              style="width: 100%"-->
-      <!--          />-->
-      <!--        </el-col>-->
-      <!--        <el-col :span="2" class="text-center">-->
-      <!--          <span class="text-gray-500">-</span>-->
-      <!--        </el-col>-->
-      <!--        <el-col :span="11">-->
-      <!--          <el-time-picker-->
-      <!--              v-model="form_data.begin_time"-->
-      <!--              placeholder="Pick a time"-->
-      <!--              style="width: 100%"-->
-      <!--          />-->
-      <!--        </el-col>-->
-      <!--      </el-form-item>-->
 
-      <!--      <el-form-item label="End" prop="end_date">-->
-      <!--        <el-col :span="11">-->
-      <!--          <el-date-picker-->
-      <!--              v-model="form_data.end_date"-->
-      <!--              type="date"-->
-      <!--              placeholder="Pick a date"-->
-      <!--              style="width: 100%"-->
-      <!--          />-->
-      <!--        </el-col>-->
-      <!--        <el-col :span="2" class="text-center">-->
-      <!--          <span class="text-gray-500">-</span>-->
-      <!--        </el-col>-->
-      <!--        <el-col :span="11">-->
-      <!--          <el-time-picker-->
-      <!--              v-model="form_data.end_time"-->
-      <!--              placeholder="Pick a time"-->
-      <!--              style="width: 100%"-->
-      <!--          />-->
-      <!--        </el-col>-->
-      <!--      </el-form-item>-->
 
       <el-form-item label="Repeat">
         <el-switch v-model="form_data.repeat"/>
@@ -256,7 +216,7 @@ export default {
 
 #add_event {
   margin-top: 5%;
-  margin-left: 10%;
+  margin-left: 5%;
 
   padding: 0;
 

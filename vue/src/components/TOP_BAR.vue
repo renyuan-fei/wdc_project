@@ -47,9 +47,7 @@
 import {ElMessage, ElMessageBox} from 'element-plus'
 
 
-import {HomeFilled} from '@element-plus/icons-vue';
-import {Calendar} from '@element-plus/icons-vue';
-import {UserFilled} from '@element-plus/icons-vue';
+import {Calendar, HomeFilled, UserFilled} from '@element-plus/icons-vue';
 // import {ArrowDown} from '@element-plus/icons-vue';
 
 export default {
@@ -153,7 +151,10 @@ ul {
 
 
 #top_bar li:hover {
-  background-color: white;
+  background-color: #FCFFE7;
+
+  border-bottom: 5px solid #E6BA95;
+  border-radius: 0 0 10px 10px;
 }
 
 
@@ -193,11 +194,14 @@ ul {
   color: white;
 
   display: inline-block;
-  margin-top: 15px;
-  line-height: 45px;
-  height: 45px;
-  width: 45px;
+  margin-top: 8px;
+  margin-left: 10px;
+  line-height: 55px;
+  height: 55px;
+  width: 55px;
   border-radius: 50%;
   background-color: gray;
+
+  border: 2px solid #E9EFC0;
 }
 </style>

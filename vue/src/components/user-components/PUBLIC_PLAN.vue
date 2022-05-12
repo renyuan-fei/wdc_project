@@ -51,13 +51,13 @@
           </template>
         </el-table-column>
 
-        <el-table-column label="Drop">
+        <el-table-column label="Accept">
           <template #default="scope">
             <el-popconfirm title="Are you sure to Add this?" @confirm="Add(scope.$index, scope.row)">
               <template #reference>
                 <el-button circle size="default">
                   <el-icon size="default">
-                    <circle-plus-filled />
+                    <circle-plus-filled/>
                   </el-icon>
                 </el-button>
               </template>

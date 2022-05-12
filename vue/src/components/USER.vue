@@ -247,7 +247,6 @@ export default {
 }
 
 
-
 #container {
   position: fixed;
 

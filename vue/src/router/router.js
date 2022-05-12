@@ -1,5 +1,5 @@
-import { createRouter, createWebHashHistory } from 'vue-router';
-import { ElMessage } from 'element-plus'
+import {createRouter, createWebHashHistory} from 'vue-router';
+import {ElMessage} from 'element-plus'
 
 const route = [
     // {
@@ -27,10 +27,30 @@ const route = [
         component: () => import('../components/USER'),
         redirect: 'my_plan',
         children: [
-            {path:'/my_plan',name:'my_plan',component: ()=> import('../components/user-components/MY_PLAN'), props:true},
-            {path:'/all_plan',name:'all_plan',component: ()=> import('../components/user-components/ALL_PLAN'), props:true},
-            {path:'/my_group',name:'my_group',component: ()=> import('../components/user-components/MY_GROUP'), props:true},
-            {path:'/my_detail',name:'my_detail',component: ()=> import('../components/user-components/SETTING'), props:true},
+            {
+                path: '/my_plan',
+                name: 'my_plan',
+                component: () => import('../components/user-components/MY_PLAN'),
+                props: true
+            },
+            {
+                path: '/all_plan',
+                name: 'public_plan',
+                component: () => import('../components/user-components/PUBLIC_PLAN'),
+                props: true
+            },
+            {
+                path: '/management',
+                name: 'management',
+                component: () => import('../components/user-components/MANAGEMENT'),
+                props: true
+            },
+            {
+                path: '/my_detail',
+                name: 'my_detail',
+                component: () => import('../components/user-components/SETTING'),
+                props: true
+            },
         ]
     },
     {

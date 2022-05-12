@@ -4,7 +4,7 @@
     <template #header>
       <div class="card-header">
 
-        <span style="font-weight: bold; font-size:20px;"> ALL  PLAN </span>
+        <span style="font-weight: bold; font-size:20px;"> PUBLIC  PLAN </span>
 
         <img src="../../assets/像素_仙人掌.png" alt="img" class="image">
 
@@ -72,10 +72,14 @@
 </template>
 
 <script>
-import {Clock, Check,CirclePlusFilled} from "@element-plus/icons-vue";
+import {Check, CirclePlusFilled, Clock} from "@element-plus/icons-vue";
 
 export default {
   name: "ALL_PLAN",
+  mounted()
+  {
+    console.log(this.$route.params.public_plan)
+  },
   components:
       {
         // eslint-disable-next-line vue/no-unused-components

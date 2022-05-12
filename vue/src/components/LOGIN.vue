@@ -280,6 +280,11 @@ export default {
 
               console.log(that.login_data.username)
 
+              //存放登录的用户权限信息
+              window.sessionStorage.setItem("permissions", '1')
+
+              console.log('普通用户')
+
               //用户页面跳转
               return that.$router.push({path: '/user'})
 
@@ -292,7 +297,23 @@ export default {
                 type: 'success',
               })
 
+              //存放token
+              window.sessionStorage.setItem("token", response.data.token)
+
+              console.log(response.data.token)
+
+              //存放登录的用户名
+              window.sessionStorage.setItem("username", that.login_data.username)
+
+              console.log(that.login_data.username)
+
+              //存放登录的用户权限信息
+              window.sessionStorage.setItem("permissions", '2')
+
+              console.log('管理员')
+
               //管理员后台跳转
+              return that.$router.push({path: '/user'})
             } else
             {
               //发送提示，用户名或密码错误

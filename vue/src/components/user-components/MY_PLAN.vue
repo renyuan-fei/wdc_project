@@ -6,9 +6,11 @@
     <template #header>
       <div class="card-header">
 
-        <span style="font-weight: bold; font-size:20px;"> MY  PLAN </span>
+        <span v-if="is_user" style="font-weight: bold; font-size:20px;"> MY  PLAN </span>
+        <span v-else style="font-weight: bold; font-size:20px;"> ADMIN  PLAN </span>
 
-        <img src="../../assets/像素_旗帜.png" alt="img" class="image">
+        <img v-if="is_user" alt="img" class="image" src="../../assets/像素_旗帜.png">
+        <img v-else alt="img" class="image" src="../../assets/像素_武器.png">
 
         <el-button circle class="button" @click="is_add = !is_add">
           <el-icon><plus/></el-icon>
@@ -90,7 +92,7 @@
 <script>
 import ADD_EVENT from './ADD_EVENT'
 
-import {Clock, Delete, StarFilled, Star, School, OfficeBuilding} from "@element-plus/icons-vue";
+import {Clock, Delete, OfficeBuilding, School, Star, StarFilled} from "@element-plus/icons-vue";
 
 export default {
   name: "MY_PLAN",
@@ -106,6 +108,15 @@ export default {
   mounted()
   {
     console.log('MY_PLAN')
+
+    //获取权限信息
+    let permissions = window.sessionStorage.getItem('permissions')
+
+    if (permissions === '2')
+    {
+      this.is_user = false
+    }
+
     console.log(this.$route.params.user_plan)
 
     //axios请求后端
@@ -116,6 +127,7 @@ export default {
   {
     return {
       is_add: false,
+      is_user: true,
 
       MY_STATE: ['work', 'rest', 'other'],
       STATE_COLOR: ["danger", "success", "warning"],

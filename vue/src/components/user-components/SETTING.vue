@@ -42,14 +42,11 @@ import RESET_PASSWORD from "@/components/user-components/RESET_PASSWORD";
 
 export default {
   name: "ADD_EVENT",
-  props:
-      {
-        user: String
-      },
   mounted()
   {
     //向后端请求用户信息
     console.log('SETTING')
+    console.log(this.$route.params.user_detail)
 
     if (this.user)
     {

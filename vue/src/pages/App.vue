@@ -1,5 +1,5 @@
 <template>
-    <router-view></router-view>
+  <router-view></router-view>
 </template>
 
 <script>
@@ -13,11 +13,38 @@ export default {
     // eslint-disable-next-line vue/no-unused-components
     INDEX,
     // eslint-disable-next-line vue/no-unused-components
-    TESTVueExpress
-  }
+    TESTVueExpress,
+  },
+  data()
+  {
+    return {
+
+    }
+  },
+  methods:
+      {
+
+      }
 }
 </script>
 
 <style lang="less">
+
+#container {
+  position: fixed;
+
+  background-color: #B4E197;
+  background-image: url('../assets/cross.png');
+
+  height: 100%;
+  min-height: 1287px;
+
+  width: 100%;
+  min-width: 1400px;
+}
+
+.center-div {
+  margin: 0 auto;
+}
 
 </style>

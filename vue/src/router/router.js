@@ -24,7 +24,14 @@ const route = [
     {
         path: '/user',
         name: 'user',
-        component: () => import('../components/USER')
+        component: () => import('../components/USER'),
+        redirect: 'my_plan',
+        children: [
+            {path:'/my_plan',name:'my_plan',component: ()=> import('../components/user-components/MY_PLAN'), props:true},
+            {path:'/all_plan',name:'all_plan',component: ()=> import('../components/user-components/ALL_PLAN'), props:true},
+            {path:'/my_group',name:'my_group',component: ()=> import('../components/user-components/MY_GROUP'), props:true},
+            {path:'/my_detail',name:'my_detail',component: ()=> import('../components/user-components/SETTING'), props:true},
+        ]
     },
     {
         path: '/calendar',

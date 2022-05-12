@@ -1,23 +1,49 @@
 <template>
-  <el-container id="home">
-    <el-header style="height:80px;">
+  <div id="container">
+
+    <div class="top">
       <TOP_BAR></TOP_BAR>
-    </el-header>
-    <el-main>
-      <div class="button_box">
-        <el-button class="button" type="primary" round size="large" @click="goto">START</el-button>
+    </div>
+
+    <div class="center-div part2">
+
+      <img src="../assets/像素_钻石.png" alt="img" class="image">
+
+      <div id="home">
+
+        <div class="title_box1">
+
+          WELCOME
+
+
+        </div>
+
+        <div class="title_box2">
+
+          START&nbsp;&nbsp;PLANNING&nbsp;&nbsp;YOUR&nbsp;&nbsp;LIFE
+
+        </div>
+
+        <div class="button_box">
+
+          <el-button class="button" round text @click="this.$router.push('/calendar')">
+            GET START &nbsp;
+            <el-icon>
+              <arrow-right-bold/>
+            </el-icon>
+          </el-button>
+
+        </div>
+
       </div>
-    </el-main>
-    <el-footer>
-      <!--        <div class="right"></div>-->
-    </el-footer>
-  </el-container>
+    </div>
+
+  </div>
 </template>
 
 <script>
-
-import {useRouter} from 'vue-router';
-import TOP_BAR from './TOP_BAR'
+import TOP_BAR from '../components/TOP_BAR'
+import {ArrowRightBold} from "@element-plus/icons-vue";
 
 export default {
   name: "INDEX",
@@ -27,48 +53,21 @@ export default {
   },
   components:
       {
-        TOP_BAR
-      },
-  setup()
-  {
-    const router = useRouter();
-
-    function goto()
-    {
-      router.push("/user");
-    }
-
-    return {
-      goto  //一定要要放在return里才能在模板上面使用
-    }
-  }
+        TOP_BAR,
+        ArrowRightBold,
+      }
 }
 </script>
 
 <style lang="less" scoped>
 
 #home {
-  * {
-    margin: 0;
-    padding: 0;
-  }
-
-  //background-color: #B4E197;
-  background-image: linear-gradient(#E9EFC0, #4E944F);
-
-  height: 1287px;
-  min-height: 100%;
-
-  //background-image: url('../assets/cross.png');
-}
-
-.button_box {
-  width: 200px;
-  height: 100px;
-  //background-color:antiquewhite;
-  border-radius: 5px;
-
   position: absolute;
+  display: inline-block;
+  //background: red;
+
+  height: 600px;
+  width: 1000px;
 
   left: 50%;
   top: 50%;
@@ -76,41 +75,95 @@ export default {
   transform: translate(-50%, -50%);
 }
 
-.bottom_bar {
+.title_box1 {
+  font-size: 70px;
+  font-weight: bold;
+  color: #DEA057;
+
   position: absolute;
+  display: inline-block;
+  //background: blue;
 
-  //background-color: #E4E9BE;
-
-  //background-image: linear-gradient(#83BD75,#4E944F);
-
-  width: 100%;
   height: 200px;
+  width: 1000px;
 
-  bottom: 0;
+  text-align: center;
+  line-height: 370px;
+}
+
+.title_box2 {
+  font-size: 60px;
+  font-weight: bold;
+  color: #CE9461;
+
+  position: absolute;
+  display: inline-block;
+  //background: green;
+
+  height: 200px;
+  width: 1000px;
+
+  top: 200px;
+
+  text-align: center;
+  line-height: 200px;
+}
+
+.button_box {
+  position: absolute;
+  display: inline-block;
+  //background: yellow;
+
+  top: 400px;
+
+  height: 200px;
+  width: 1000px;
+
+  text-align: center;
+  line-height: 100px;
 }
 
 .button {
-  //background-image: linear-gradient(#83BD75,#B4E197);
+  width: 200px;
+  height: 80px;
 
-  background-color: #E6BA95;
+  background-color: #E0D8B0;
 
-  color: #FAFDD6;
+  border: none;
 
-  border: 0;
-
-  text-align: center;
-
-
-  font-size: 40px;
-
-  height: 100px;
-  width: 200px
+  font-weight: bold;
+  font-size:15px;
 }
 
 .button:hover {
-  background-color: #FAFDD6;
+  background-color: #FCFFE7;
+}
 
-  color: #E6BA95;
+
+#container {
+  position: fixed;
+
+  background-color: #B4E197;
+  background-image: url('../assets/cross.png');
+
+  height: 100%;
+  min-height: 1287px;
+
+  width: 100%;
+  min-width: 1400px;
+}
+
+.center-div {
+  margin: 0 auto;
+}
+
+.image {
+  position: absolute;
+
+  transform: translate(-50%, -50%);
+
+  left: 50%;
+  top: 30%;
 }
 
 </style>

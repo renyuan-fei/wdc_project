@@ -1,87 +1,98 @@
 <template>
-  <div id="login_box">
-    <TOP_BAR></TOP_BAR>
-    <div v-bind:class="{'login_box':is_login,'register_box':!is_login}">
-      <!--            登录页面-->
+  <div id="container">
 
-      <div v-show="is_login" class="login_box">
-        <img alt="tree" src="../assets/tree.png"><br>
-        <el-form ref="login_form" :model="login_data" :rules="login_rule">
+    <div class="top">
+      <TOP_BAR></TOP_BAR>
+    </div>
 
-          <el-form-item prop="username">
-            <el-input v-model="login_data.username" placeholder="username" style="margin-top:15px"></el-input>
-          </el-form-item>
+    <div class="center-div part2">
 
-          <el-form-item prop="password">
-            <el-input v-model="login_data.password" placeholder="password" show-password
-                      style="margin:15px 0"></el-input>
-          </el-form-item>
+      <div id="login_box">
+        <div v-bind:class="{'login_box':is_login,'register_box':!is_login}">
+          <!--            登录页面-->
 
-          <hr style="margin-bottom:30px;">
+          <div v-show="is_login" class="login_box">
+            <img alt="tree" src="../assets/像素_玫瑰花.png"><br>
+            <el-form ref="login_form" :model="login_data" :rules="login_rule">
 
-          <el-form-item>
-            <div>
-              No account?
-              <el-button type="text" @click="is_login = false">Signup</el-button>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <el-button class="login_button" type="primary" @click="login_account">login</el-button>
-            </div>
-          </el-form-item>
+              <el-form-item prop="username">
+                <el-input v-model="login_data.username" placeholder="username" style="margin-top:15px"></el-input>
+              </el-form-item>
 
-        </el-form>
+              <el-form-item prop="password">
+                <el-input v-model="login_data.password" placeholder="password" show-password
+                          style="margin:15px 0"></el-input>
+              </el-form-item>
+
+              <hr style="margin-bottom:30px;">
+
+              <el-form-item>
+                <div>
+                  No account?
+                  <el-button type="text" @click="is_login = false">Signup</el-button>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <el-button class="login_button" type="primary" @click="login_account">login</el-button>
+                </div>
+              </el-form-item>
+
+            </el-form>
+          </div>
+
+          <!--            注册页面-->
+
+          <div v-show="!is_login" class="register_box">
+            <img alt="tree" src="../assets/像素_玫瑰花.png"><br>
+            <el-form ref="register_from" :model="register_data" :rules="register_rule">
+              <el-form-item prop="first_name">
+                <el-input v-model="register_data.first_name" placeholder="firstname" style="margin-top:15px"></el-input>
+              </el-form-item>
+
+              <el-form-item prop="last_name">
+                <el-input v-model="register_data.last_name" placeholder="lastname" style="margin-top:15px"></el-input>
+              </el-form-item>
+
+              <el-form-item prop="username">
+                <el-input v-model="register_data.username" placeholder="username" style="margin-top:15px"></el-input>
+              </el-form-item>
+
+              <el-form-item prop="email">
+                <el-input v-model="register_data.email" placeholder="Email" style="margin-top:15px"></el-input>
+              </el-form-item>
+
+              <el-form-item prop="password">
+                <el-input v-model="register_data.password" placeholder="password" style="margin-top:15px"></el-input>
+              </el-form-item>
+
+              <el-form-item prop="confirm_password">
+                <el-input v-model="register_data.confirm_password" placeholder="confirm your password" show-password
+                          style="margin-top:15px"></el-input>
+              </el-form-item>
+
+              <el-form-item>
+                <div style="margin:15px 0; width:300px">
+                  <el-radio-group v-model="register_data.gender">
+                    <el-radio :label="1" border>Male</el-radio>
+                    <el-radio :label="2" border>Female</el-radio>
+                  </el-radio-group>
+                </div>
+              </el-form-item>
+
+              <hr style="margin-bottom:30px;">
+
+              <el-form-item>
+                <el-button type="text" @click="is_login = true">back</el-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;<el-button type="primary" @click="register_account">create your account</el-button>
+              </el-form-item>
+            </el-form>
+          </div>
+
+
+        </div>
       </div>
-
-      <!--            注册页面-->
-
-      <div v-show="!is_login" class="register_box">
-        <img alt="tree" src="../assets/tree.png"><br>
-        <el-form ref="register_from" :model="register_data" :rules="register_rule">
-          <el-form-item prop="first_name">
-            <el-input v-model="register_data.first_name" placeholder="firstname" style="margin-top:15px"></el-input>
-          </el-form-item>
-
-          <el-form-item prop="last_name">
-            <el-input v-model="register_data.last_name" placeholder="lastname" style="margin-top:15px"></el-input>
-          </el-form-item>
-
-          <el-form-item prop="username">
-            <el-input v-model="register_data.username" placeholder="username" style="margin-top:15px"></el-input>
-          </el-form-item>
-
-          <el-form-item prop="email">
-            <el-input v-model="register_data.email" placeholder="Email" style="margin-top:15px"></el-input>
-          </el-form-item>
-
-          <el-form-item prop="password">
-            <el-input v-model="register_data.password" placeholder="password" style="margin-top:15px"></el-input>
-          </el-form-item>
-
-          <el-form-item prop="confirm_password">
-            <el-input v-model="register_data.confirm_password" placeholder="confirm your password" show-password
-                      style="margin-top:15px"></el-input>
-          </el-form-item>
-
-          <el-form-item>
-            <div style="margin:15px 0; width:300px">
-              <el-radio-group v-model="register_data.gender">
-                <el-radio :label="1" border>Male</el-radio>
-                <el-radio :label="2" border>Female</el-radio>
-              </el-radio-group>
-            </div>
-          </el-form-item>
-
-          <hr style="margin-bottom:30px;">
-
-          <el-form-item>
-            <el-button type="text" @click="is_login = true">back</el-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;<el-button type="primary" @click="register_account">create your account</el-button>
-          </el-form-item>
-        </el-form>
-      </div>
-
 
     </div>
   </div>
+
 </template>
 
 <script>
@@ -387,11 +398,7 @@ export default {
 
 #login_box {
   text-align: center;
-  background-color: #B4E197;
-  height: 100%;
-  min-height: 1287px;
 
-  background-image: url('../assets/cross.png');
 
   img {
     width: 100px;
@@ -456,6 +463,24 @@ export default {
 .login_button {
   width: 80px;
   height: 35px
+}
+
+
+#container {
+  position: fixed;
+
+  background-color: #B4E197;
+  background-image: url('../assets/cross.png');
+
+  height: 100%;
+  min-height: 1287px;
+
+  width: 100%;
+  min-width: 1400px;
+}
+
+.center-div {
+  margin: 0 auto;
 }
 
 </style>

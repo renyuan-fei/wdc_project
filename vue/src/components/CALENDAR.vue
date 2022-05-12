@@ -1,9 +1,12 @@
 <template>
-  <el-container id="calendar-container">
-    <el-header style="height:80px">
+
+  <div id="container">
+
+    <div class="top">
       <TOP_BAR></TOP_BAR>
-    </el-header>
-    <el-main>
+    </div>
+
+    <div class="center-div part2">
 
       <el-card class="calendar">
 
@@ -35,11 +38,11 @@
 
           </template>
         </el-calendar>
-
       </el-card>
 
-    </el-main>
-  </el-container>
+    </div>
+  </div>
+
 </template>
 
 <script>
@@ -114,16 +117,6 @@ export default {
   color: #1989fa;
 }
 
-#calendar-container {
-  width: 100%;
-  min-width: 1200px;
-
-  background-color: #B4E197;
-  background-image: url('../assets/cross.png');
-  height: 100%;
-  min-height: 1287px;
-}
-
 .calendar {
   width: 1000px;
   height: 900px;
@@ -131,7 +124,7 @@ export default {
   position: absolute;
 
   left: 50%;
-  top: 620px;
+  top: 650px;
 
   transform: translate(-50%, -50%);
 
@@ -147,6 +140,24 @@ export default {
     font-weight: bold;
     font-size: 40px;
   }
+}
+
+
+#container {
+  position: fixed;
+
+  background-color: #B4E197;
+  background-image: url('../assets/cross.png');
+
+  height: 100%;
+  min-height: 1287px;
+
+  width: 100%;
+  min-width: 1400px;
+}
+
+.center-div {
+  margin: 0 auto;
 }
 
 </style>

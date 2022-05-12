@@ -1,5 +1,5 @@
 <template>
-  <div id="user-container">
+  <div id="container">
 
     <div class="top">
       <TOP_BAR></TOP_BAR>
@@ -13,16 +13,26 @@
 
           <el-menu class="menu" default-active="1">
 
-            <el-menu-item index="1" style=" border-radius:40% 40% 0 0" @click="choose=1">
+            <el-menu-item index="1" style=" border-radius:40% 40% 0 0"
+                          @click="this.$router.push({name:'my_plan',params:{user_plan:['#']}})">
               <el-icon>
-                <list/>
+                <checked />
               </el-icon>
               <template #title>
                 <span>MY PLAN</span>
               </template>
             </el-menu-item>
 
-            <el-menu-item index="2" style="" @click="choose=2">
+            <el-menu-item index="2" @click="this.$router.push({name:'all_plan',params:{all_plan:['#']}})">
+              <el-icon>
+                <list/>
+              </el-icon>
+              <template #title>
+                <span>ALL PLAN</span>
+              </template>
+            </el-menu-item>
+
+            <el-menu-item index="3" style="" @click="this.$router.push({name:'my_group',params:{user_group:['#']}})">
               <el-icon>
                 <avatar/>
               </el-icon>
@@ -31,7 +41,8 @@
               </template>
             </el-menu-item>
 
-            <el-menu-item index="3" style=" border-radius:0 0 40% 40%" @click="choose=3">
+            <el-menu-item index="4" style=" border-radius:0 0 40% 40%"
+                          @click="this.$router.push({name:'my_detail',params:{user_detail:['#']}})">
               <el-icon>
                 <setting/>
               </el-icon>
@@ -50,24 +61,13 @@
 
         <div class="main-box">
 
-          <span v-show="choose === 1">
-            <MY_PLAN :user="data"></MY_PLAN>
-          </span>
-
-          <span v-show="choose === 2">
-            <MY_GROUP :user="data"></MY_GROUP>
-          </span>
-
-          <span v-show="choose === 3">
-            <SETTING :user="data"></SETTING>
-          </span>
+          <router-view></router-view>
 
         </div>
 
       </div>
 
     </div>
-
   </div>
 </template>
 
@@ -77,7 +77,7 @@ import MY_GROUP from "./user-components/MY_GROUP"
 import MY_PLAN from "./user-components/MY_PLAN"
 import SETTING from "./user-components/SETTING"
 import TOP_BAR from './TOP_BAR'
-import {Setting, Avatar} from "@element-plus/icons-vue";
+import {Setting, Avatar, Checked} from "@element-plus/icons-vue";
 
 // import { useRoute } from 'vue-router'
 
@@ -114,6 +114,7 @@ export default {
         MY_PLAN,
         // eslint-disable-next-line vue/no-unused-components
         SETTING,
+        Checked
       },
   data()
   {
@@ -211,5 +212,23 @@ export default {
   top: 10%;
 }
 
+
+
+#container {
+  position: fixed;
+
+  background-color: #B4E197;
+  background-image: url('../assets/cross.png');
+
+  height: 100%;
+  min-height: 1287px;
+
+  width: 100%;
+  min-width: 1400px;
+}
+
+.center-div {
+  margin: 0 auto;
+}
 
 </style>

@@ -6,18 +6,22 @@
 
     <el-form ref="reset_form" :model="reset_data" :rules="reset_rule">
 
+      <el-form-item>
+        <img src="../../assets/像素_西瓜.png" alt="img" class="image">
+      </el-form-item>
+
       <el-form-item prop="new_password">
-        <el-input v-model="reset_data.new_password" placeholder="new password" style="margin-top:30px"></el-input>
+        <el-input v-model="reset_data.new_password" placeholder="new password" style="margin-top:80px;"></el-input>
       </el-form-item>
 
       <el-form-item prop="confirm_new_password">
         <el-input v-model="reset_data.confirm_new_password" placeholder="confirm your password" show-password
-                  style="margin-top:30px"></el-input>
+                  style="margin-top:20px;"></el-input>
       </el-form-item>
 
     </el-form>
 
-    <el-divider style="margin-top:60px; margin-bottom:60px;"/>
+    <el-divider style="margin-top:40px; margin-bottom:40px;"/>
 
     <el-row>
       <el-col :span=9></el-col>
@@ -129,6 +133,19 @@ export default {
   margin-left: 20%;
 
   border-radius: 20px;
+}
+
+.image
+{
+  position: absolute;
+
+  height:60px;
+  width:60px;
+
+  transform: translate(-50%, 0%);
+
+  left: 50%;
+  top: 100%;
 }
 
 </style>

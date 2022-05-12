@@ -40,46 +40,6 @@
         </el-dropdown>
       </li>
     </ul>
-    <!--    <el-menu mode="horizontal" class="top_bar">-->
-
-    <!--      <span class="logo">-->
-    <!--        <img src="./tree.png" width="80" height="80" alt="tree">-->
-    <!--      </span>-->
-
-    <!--      <el-menu-item class="home" index="1" @click="this.$router.push('/home')">-->
-    <!--            <el-icon>-->
-    <!--              <home-filled/>-->
-    <!--            </el-icon>-->
-    <!--            HOME-->
-    <!--      </el-menu-item>-->
-
-    <!--      <el-menu-item class="plan" index="2" @click="this.$router.push('/calendar')">-->
-    <!--            <el-icon>-->
-    <!--              <calendar/>-->
-    <!--            </el-icon>-->
-    <!--            CALENDAR-->
-    <!--      </el-menu-item>-->
-
-    <!--      <el-menu-item class="account" index="3" @click="this.$router.push('/user')">-->
-    <!--            <el-icon>-->
-    <!--              <user-filled/>-->
-    <!--            </el-icon>-->
-    <!--            MY ACCOUNT &nbsp;&nbsp;&nbsp;-->
-    <!--            <el-dropdown @visible-change="menu_list">-->
-    <!--        <span class="el-dropdown-link">-->
-    <!--          <el-avatar :size="50">{{ username }}</el-avatar>-->
-    <!--        </span>-->
-    <!--              <template #dropdown>-->
-    <!--                <el-dropdown-menu>-->
-    <!--                  <el-dropdown-item v-if="is_login" @click="this.$router.push('/login')">login account</el-dropdown-item>-->
-    <!--                  <el-dropdown-item v-else @click="sign_out">sign out</el-dropdown-item>-->
-    <!--                </el-dropdown-menu>-->
-    <!--              </template>-->
-    <!--            </el-dropdown>-->
-
-    <!--      </el-menu-item>-->
-
-    <!--    </el-menu>-->
   </div>
 </template>
 

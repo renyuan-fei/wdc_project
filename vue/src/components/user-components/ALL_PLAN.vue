@@ -1,44 +1,42 @@
 <template>
-  <span id="my_plan">
-
-    <el-card v-show="!is_add" class="my_plan">
+  <el-card v-show="!is_add" class="all_plan">
 
     <template #header>
       <div class="card-header">
 
-        <span style="font-weight: bold; font-size:20px;"> MY  PLAN </span>
+        <span style="font-weight: bold; font-size:20px;"> ALL  PLAN </span>
 
-        <img src="../../assets/像素_旗帜.png" alt="img" class="image">
-
-        <el-button circle class="button" @click="is_add = !is_add">
-          <el-icon><plus/></el-icon>
-        </el-button>
+        <img src="../../assets/像素_仙人掌.png" alt="img" class="image">
 
       </div>
     </template>
 
-      <div class="table-box">
-        <el-table :data="tableData" style="width: 100%">
+    <div class="table-box">
+      <el-table :data="tableData" style="width: 100%">
 
-        <el-table-column label="Start" width="200">
+        <el-table-column label="Start" width="230">
           <template #default="scope">
             <div style="display: flex; align-items: center">
-              <el-icon><clock/></el-icon>
+              <el-icon>
+                <clock/>
+              </el-icon>
               <span style="margin-left: 10px">{{ scope.row.start_time }}</span>
             </div>
           </template>
         </el-table-column>
 
-        <el-table-column label="End" width="200">
+        <el-table-column label="End" width="230">
           <template #default="scope">
             <div style="display: flex; align-items: center">
-              <el-icon><clock/></el-icon>
+              <el-icon>
+                <clock/>
+              </el-icon>
               <span style="margin-left: 10px">{{ scope.row.end_time }}</span>
             </div>
           </template>
         </el-table-column>
 
-        <el-table-column label="Title" width="150">
+        <el-table-column label="Title" width="200">
           <template #default="scope">
             <el-popover effect="light" placement="top" trigger="hover" width="auto">
               <template #default>
@@ -53,25 +51,14 @@
           </template>
         </el-table-column>
 
-          <el-table-column label="Type" width="130">
-          <template #default="scope">
-            <div style="display: flex; align-items: center">
-              <el-icon v-if="scope.row.type === 1" size="large">
-                <OfficeBuilding />
-              </el-icon >
-              <el-icon v-else size="large">
-                <star />
-              </el-icon>
-            </div>
-          </template>
-        </el-table-column>
-
         <el-table-column label="Drop">
           <template #default="scope">
-            <el-popconfirm title="Are you sure to delete this?" @confirm="Delete(scope.$index, scope.row)">
+            <el-popconfirm title="Are you sure to Add this?" @confirm="Add(scope.$index, scope.row)">
               <template #reference>
-                <el-button circle size="default" type="danger">
-                  <el-icon><delete/></el-icon>
+                <el-button circle size="default">
+                  <el-icon size="default">
+                    <circle-plus-filled />
+                  </el-icon>
                 </el-button>
               </template>
             </el-popconfirm>
@@ -79,39 +66,24 @@
         </el-table-column>
 
       </el-table>
-      </div>
+    </div>
 
-    </el-card>
-    <ADD_EVENT v-show="is_add" :data="is_add" @changedata="change_data"></ADD_EVENT>
-  </span>
-
+  </el-card>
 </template>
 
 <script>
-import ADD_EVENT from './ADD_EVENT'
-
-import {Clock, Delete, StarFilled, Star, School, OfficeBuilding} from "@element-plus/icons-vue";
+import {Clock, Check,CirclePlusFilled} from "@element-plus/icons-vue";
 
 export default {
-  name: "MY_PLAN",
-  component:
+  name: "ALL_PLAN",
+  components:
       {
+        // eslint-disable-next-line vue/no-unused-components
         Clock,
-        Delete,
-        StarFilled,
-        Star,
-        School,
-        OfficeBuilding
+        // eslint-disable-next-line vue/no-unused-components
+        Check,
+        CirclePlusFilled
       },
-  mounted()
-  {
-    console.log('MY_PLAN')
-    console.log(this.$route.params.user_plan)
-
-    //axios请求后端
-
-    //将数据存入table data
-  },
   data()
   {
     return {
@@ -128,56 +100,88 @@ export default {
           end_time: '2016-05-03',
           title: 'test',
           address: 'No. 189, Grove St, Los Angeles',
-          type: 1,
           state: 0,
           note: 'my test',
         },
         {
-          event_id: 'a',
+          event_id: 'b',
           start_time: '2016-05-03',
           end_time: '2016-05-03',
           title: 'test',
           address: 'No. 189, Grove St, Los Angeles',
-          type: 2,
           state: 1,
           note: 'my test',
         },
         {
-          event_id: 'a',
+          event_id: 'c',
           start_time: '2016-05-03',
           end_time: '2016-05-03',
           title: 'test',
           address: 'No. 189, Grove St, Los Angeles',
-          type: 1,
           state: 2,
           note: 'my test',
-        }
+        },
+        {
+          event_id: 'd',
+          start_time: '2016-05-03',
+          end_time: '2016-05-03',
+          title: 'test',
+          address: 'No. 189, Grove St, Los Angeles',
+          state: 0,
+          note: 'my test',
+        },
+        {
+          event_id: 'e',
+          start_time: '2016-05-03',
+          end_time: '2016-05-03',
+          title: 'test',
+          address: 'No. 189, Grove St, Los Angeles',
+          state: 2,
+          note: 'my test',
+        },
+        {
+          event_id: 'e',
+          start_time: '2016-05-03',
+          end_time: '2016-05-03',
+          title: 'test',
+          address: 'No. 189, Grove St, Los Angeles',
+          state: 2,
+          note: 'my test',
+        },
+        {
+          event_id: 'e',
+          start_time: '2016-05-03',
+          end_time: '2016-05-03',
+          title: 'test',
+          address: 'No. 189, Grove St, Los Angeles',
+          state: 2,
+          note: 'my test',
+        }, {
+          event_id: 'e',
+          start_time: '2016-05-03',
+          end_time: '2016-05-03',
+          title: 'test',
+          address: 'No. 189, Grove St, Los Angeles',
+          state: 2,
+          note: 'my test',
+        },
+
+
       ]
 
     }
   },
-  components:
-      {
-        OfficeBuilding,
-        ADD_EVENT
-      },
   methods:
       {
-        change_data(params)
-        {
-          console.log(params)
-          console.log(this.is_add)
-          this.is_add = params
-        },
-        Delete(index, row)
+        Add(index, row)
         {
           console.log(index, row.event_id)
 
-          //弹窗确认是否删除
+          //弹窗确认是否添加
 
-          //将event_id发向后端，然后删除该事件
+          //将event_id发向后端，然后添加该事件
 
-          //后端返回删除成功后，在本地删除
+          //后端返回添加成功后，在本地添加
           this.tableData.splice(index, 1);
 
           //刷新页面
@@ -185,13 +189,13 @@ export default {
 
           console.log(this.tableData)
         }
-      },
+      }
 }
 </script>
 
 <style lang="less" scoped>
 
-.my_plan {
+.all_plan {
   margin: 0;
   padding: 0;
 

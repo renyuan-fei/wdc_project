@@ -141,7 +141,7 @@ export default {
 
 
 #container {
-  position: fixed;
+  position: relative;
 
   background-color: #B4E197;
   background-image: url('../assets/cross.png');
@@ -150,7 +150,7 @@ export default {
   min-height: 1287px;
 
   width: 100%;
-  min-width: 1400px;
+  min-width: 1250px;
 }
 
 .center-div {

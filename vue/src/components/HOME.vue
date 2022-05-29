@@ -15,7 +15,6 @@
 
           WELCOME
 
-
         </div>
 
         <div class="title_box2">

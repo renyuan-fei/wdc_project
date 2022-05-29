@@ -8,16 +8,14 @@ import VueAxios from 'vue-axios';
 
 //导入封装的AXIOS
 // import AXIOS from './http/AXIOS/API'
-
 //导入路由
 import router from '../router/router'
 
 //导入全局样式
 import '../assets/css/global.css'
 // import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-
 //Element Plus
-import ElementPlus from 'element-plus'
+import ElementPlus, {ElLoading} from 'element-plus'
 import 'element-plus/dist/index.css'
 import * as ELIcons from '@element-plus/icons-vue'
 
@@ -34,13 +32,12 @@ for (let iconName in ELIcons)
 {
     app.component(iconName, ELIcons[iconName])
 }
-import { ElLoading } from 'element-plus'
 
 app.use(ElementPlus)
 app.use(VueAxios, axios);
 //http://localhost:3000/
-//https://renyuan-fei-code50-71182846-jjjppq54gfpgj-3000.githubpreview.dev/
-axios.defaults.baseURL = 'http://localhost:3000';
+//https://renyuan-fei-code50-71182846-jjjppq54gfpgj-8080.githubpreview.dev/
+axios.defaults.baseURL = 'https://renyuan-fei-code50-71182846-jjjppq54gfpgj-8080.githubpreview.dev/';
 
 let LoadingInstance = null
 
@@ -48,7 +45,7 @@ let LoadingInstance = null
 axios.interceptors.request.use((config) =>
 {
     //添加 loading效果
-    LoadingInstance = ElLoading.service({fullscreen:true})
+    LoadingInstance = ElLoading.service({fullscreen: true})
 
     return config
 })

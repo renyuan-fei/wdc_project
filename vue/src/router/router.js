@@ -58,6 +58,12 @@ const route = [
         name: 'calendar',
         component: () => import('../components/CALENDAR')
     },
+    //测试用临时网页
+    {
+        path: '/test',
+        name: 'test',
+        component: () => import('../components/TEST_PAGE'),
+    },
 ]
 
 const router = createRouter({

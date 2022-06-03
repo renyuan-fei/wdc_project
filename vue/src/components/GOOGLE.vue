@@ -1,22 +1,64 @@
 <template>
-  <TEST></TEST>
+  <div id="container">
 
-  <vue-google-calendar :data="calendarData"/>
+    <div class="top">
+      <TOP_BAR></TOP_BAR>
+    </div>
+
+    <div class="center-div part2">
+
+      <el-card class="calendar">
+
+        <template #header>
+          Calendar
+        </template>
+
+        <vue-google-calendar :data="calendarData" class="calendar_size"/>
+
+      </el-card>
+
+    </div>
+  </div>
 </template>
 
 <script>
+import TOP_BAR from './TOP_BAR'
 import VueGoogleCalendar from "vue-google-calendar/src/vue-google-calendar"
-import TEST from "./TEST(vue--express)"
 
 export default {
-  name: "TEST_PAGE",
+  name: "GOOGLE",
   components:
       {
         // eslint-disable-next-line vue/no-unused-components
-        TEST,
-        // eslint-disable-next-line vue/no-unused-components
         VueGoogleCalendar,
+        // eslint-disable-next-line vue/no-unused-components
+        TOP_BAR
       },
+  mounted()
+  {
+    let that = this;
+
+    that.axios({
+      method: 'get',
+      url: '/calendar_event',
+      params: {
+        username: window.sessionStorage.getItem('username'),
+        token: window.sessionStorage.getItem('token')
+      }
+    }).then(function (response)
+    {
+      console.log('请求成功')
+      console.log(response)
+
+      //将数据存入table data
+      this.calendarData = response.data
+
+    }).catch(function (error)
+    {
+      console.log('请求失败')
+      console.log(error.message)
+    })
+  },
   data()
   {
     return {
@@ -74,20 +116,71 @@ export default {
           ]
         }
       ],
-      choose_date: '',
-      Precision: 30,
     }
-  },
-  methods:
-      {
-        select()
-        {
-          this.date = new Date()
-        }
-      }
+  }
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.card-header {
+  justify-content: space-between;
+  align-items: center;
+
+  color: #E6BA95;
+  font-weight: bold;
+  font-size: 40px;
+}
+
+.calendar {
+
+  width: 80%;
+  height: 900px;
+
+  max-width: 1450px;
+  min-width: 1050px;
+
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  transform: translate(-50%, -50%);
+
+  border-radius: 20px;
+
+  text-align: center;
+}
+
+.calendar_size {
+  position: absolute;
+  left: 0;
+  transform: translate(0, -3%);
+
+  width: 100%;
+  height: 850px;
+}
+
+#container {
+  position: relative;
+
+  background-color: #B4E197;
+  background-image: url('../assets/cross.png');
+
+  height: 100%;
+  min-height: 1287px;
+
+  width: 100%;
+  min-width: 1250px;
+}
+
+.center-div {
+  margin: 0 auto;
+}
 
 </style>

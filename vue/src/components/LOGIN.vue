@@ -16,15 +16,18 @@
             <el-form ref="login_form" :model="login_data" :rules="login_rule">
 
               <el-form-item prop="username">
-                <el-input v-model="login_data.username" placeholder="username" style="margin-top:15px"></el-input>
+                <el-input v-model="login_data.username" placeholder="username or email"
+                          style="margin-top:15px"></el-input>
               </el-form-item>
 
               <el-form-item prop="password">
                 <el-input v-model="login_data.password" placeholder="password" show-password
-                          style="margin:15px 0"></el-input>
+                          style="margin-top:15px"></el-input>
               </el-form-item>
 
-              <hr style="margin-bottom:30px;">
+              <!--          第三方登录按钮-->
+              <el-form-item class="circle_button_box">
+              </el-form-item>
 
               <el-form-item>
                 <div>
@@ -34,6 +37,27 @@
                   <el-button class="login_button" type="primary" @click="login_account">login</el-button>
                 </div>
               </el-form-item>
+
+              <el-divider> OR</el-divider>
+
+              <el-form-item style="position:absolute; left:50%; transform:translate(-50%,0)">
+                <div>
+                  login with &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <el-dropdown style="margin-top:8px;">
+                    <span>
+                      <el-icon><Expand/></el-icon>
+                    </span>
+                    <template #dropdown>
+                      <el-dropdown-menu>
+                        <el-dropdown-item @click="Facebook">Facebook</el-dropdown-item>
+                        <el-dropdown-item @click="Twitter">Twitter</el-dropdown-item>
+                        <el-dropdown-item @click="Google">Google</el-dropdown-item>
+                      </el-dropdown-menu>
+                    </template>
+                  </el-dropdown>
+                </div>
+              </el-form-item>
+
 
             </el-form>
           </div>
@@ -72,7 +96,7 @@
                 <div style="margin:15px 0; width:300px">
                   <el-radio-group v-model="register_data.gender">
                     <el-radio :label="1" border>Male</el-radio>
-                    <el-radio :label="2" border>Female</el-radio>
+                    <el-radio :label="0" border>Female</el-radio>
                   </el-radio-group>
                 </div>
               </el-form-item>
@@ -98,13 +122,17 @@
 <script>
 import TOP_BAR from './TOP_BAR'
 import {ElMessage} from "element-plus";
-// import {useRouter} from "vue-router";
+import {Search, StarFilled} from "@element-plus/icons-vue";
 
 export default {
   name: "LOGIN",
   components:
       {
-        TOP_BAR
+        TOP_BAR,
+        // eslint-disable-next-line vue/no-unused-components
+        StarFilled,
+        // eslint-disable-next-line vue/no-unused-components
+        Search
       },
   data()
   {
@@ -129,8 +157,27 @@ export default {
       },
       login_rule: {
 
-        username: [{required: true, message: "please input your username", trigger: "blur"},
-          {min: 3, max: 20, message: "Username is invalid", trigger: "blur"}],
+        username: [{required: true, message: "please input your username or email", trigger: "blur"},
+          {min: 3, max: 20, message: "Username is invalid", trigger: "blur"},
+          {
+            validator: function (rule, value, callback)
+            {
+              //判断是否是用户名登录
+              if (/^\w{1,64}@[a-z\d\\-]{1,256}(\.[a-z]{2,6}){1,2}$/i.test(value) === true)
+              {
+                console.log('邮箱登录')
+                that.is_username = false
+                console.log(that.is_username)
+                callback();
+              } else
+              {
+                console.log('用户名登录')
+                that.is_username = true
+                console.log(that.is_username)
+                callback();
+              }
+            }
+          }],
 
         password: [{required: true, message: "please input your password", trigger: "blur"},
           {min: 3, max: 20, message: "invalid password", trigger: "blur"}]
@@ -149,8 +196,8 @@ export default {
             validator: function (rule, value, callback)
             {
               that.axios({
-                methods: 'get',
-                url: '/verify',
+                method: 'get',
+                url: '/verify_username',
                 params:
                     {
                       username: value,
@@ -159,19 +206,15 @@ export default {
               {
                 console.log(response)
 
-                if (response.data === 1)
+                //判断是否可用
+                if (response.data.status === 0)
                 {
                   console.log('该用户名可用')
-
-                  that.is_usable = true
 
                   callback()
                 } else
                 {
                   console.log('该用名不可用')
-
-                  //设置为不可用
-                  that.is_usable = false
 
                   callback(new Error('the username has been registered'))
                 }
@@ -221,11 +264,44 @@ export default {
               }
             },
             trigger: "blur"
+          },
+          {
+            //判断是否可用
+            validator: function (rule, value, callback)
+            {
+              that.axios({
+                method: 'get',
+                url: '/verify_email',
+                params:
+                    {
+                      email: value,
+                    }
+              }).then(function (response)
+              {
+                console.log(response)
+
+                if (response.data.status === 0)
+                {
+                  console.log('该邮箱可用')
+
+                  callback()
+                } else
+                {
+                  console.log('该邮箱不可用')
+
+                  callback(new Error('the email has been registered'))
+                }
+
+              }).catch(function (error)
+              {
+                console.log(error.message)
+              })
+            }, trigger: 'blur'
           }]
       },
 
-      //判断用户名是否可用
-      is_usable: false,
+      //判断 邮箱登录 / 用户名登录
+      is_username: true,
 
       //切换登录和注册页面
       is_login: true,
@@ -233,6 +309,18 @@ export default {
 
   },
   methods: {
+    Facebook()
+    {
+      console.log('Facebook')
+    },
+    Twitter()
+    {
+      console.log('Twitter')
+    },
+    Google()
+    {
+      console.log('Google')
+    },
 
 
     login_account()
@@ -242,7 +330,7 @@ export default {
       //表单预验证
       this.$refs.login_form.validate((valid) =>
       {
-        console.log(valid)
+        console.log(valid ? 'pass' : 'fail')
 
         if (!valid)
         {
@@ -253,81 +341,179 @@ export default {
           })
         } else
         {
-          that.axios({
-            methods: 'get',
-            url: '/login',
-            params: this.login_data
-          }).then(function (response)
+          //当使用用户名登录时
+          if (that.is_username)
           {
-            console.log(response)
-
-            if (response.data.result === "1")
+            console.log('用户名 and 密码', that.is_username)
+            that.axios({
+              method: 'get',
+              url: '/login',
+              params:
+                  {
+                    username: this.login_data.username,
+                    password: this.login_data.password
+                  }
+            }).then(function (response)
             {
+              console.log(response)
 
-              //登录成功提示
-              ElMessage({
-                message: 'login successful',
-                type: 'success',
-              })
+              //普通用户登录
+              if (response.data.permissions === 0)
+              {
 
-              //存放token
-              window.sessionStorage.setItem("token", response.data.token)
+                //登录成功提示
+                ElMessage({
+                  message: 'login successful',
+                  type: 'success',
+                })
 
-              console.log(response.data.token)
+                //存放token
+                window.localStorage.setItem("token", response.data.token)
 
-              //存放登录的用户名
-              window.sessionStorage.setItem("username", that.login_data.username)
+                console.log(response.data.token)
 
-              console.log(that.login_data.username)
+                //存放登录的用户名
+                window.localStorage.setItem("username", that.login_data.username)
 
-              //存放登录的用户权限信息
-              window.sessionStorage.setItem("permissions", '1')
+                console.log(that.login_data.username)
 
-              console.log('普通用户')
+                //存放登录的用户权限信息
+                window.localStorage.setItem("permissions", response.data.permissions)
 
-              //用户页面跳转
-              return that.$router.push({path: '/user'})
+                console.log('普通用户')
 
-              // console.log(that.$route)
-            } else if (response.data.result === "2")
+                //用户页面跳转
+                return that.$router.push({path: '/user'})
+
+                // console.log(that.$route)
+              }
+              //管理员登录
+              else if (response.data.permissions === 1)
+              {
+                //登录成功提示
+                ElMessage({
+                  message: 'login successful',
+                  type: 'success',
+                })
+
+                //存放token
+                window.localStorage.setItem("token", response.data.token)
+
+                console.log(response.data.token)
+
+                //存放登录的用户名
+                window.localStorage.setItem("username", that.login_data.username)
+
+                console.log(that.login_data.username)
+
+                //存放登录的用户权限信息
+                window.localStorage.setItem("permissions", response.data.permissions)
+
+                console.log('管理员')
+
+                //管理员后台跳转
+                return that.$router.push({path: '/user'})
+              } else
+              {
+                //发送提示，用户名或密码错误
+                //登录失败提示
+                ElMessage({
+                  message: 'Incorrect username or password',
+                  type: 'error',
+                })
+              }
+
+            }).catch(function (error)
             {
-              //登录成功提示
-              ElMessage({
-                message: 'login successful',
-                type: 'success',
-              })
-
-              //存放token
-              window.sessionStorage.setItem("token", response.data.token)
-
-              console.log(response.data.token)
-
-              //存放登录的用户名
-              window.sessionStorage.setItem("username", that.login_data.username)
-
-              console.log(that.login_data.username)
-
-              //存放登录的用户权限信息
-              window.sessionStorage.setItem("permissions", '2')
-
-              console.log('管理员')
-
-              //管理员后台跳转
-              return that.$router.push({path: '/user'})
-            } else
-            {
-              //发送提示，用户名或密码错误
-              //登录失败提示
-              ElMessage({
-                message: 'Incorrect username or password',
-                type: 'error',
-              })
-            }
-
-          }).catch(function (error)
+              console.log(error.message)
+            })
+          } else
           {
-            console.log(error.message)
-          })
+            console.log('邮箱 and 密码')
+
+            that.axios({
+              method: 'get',
+              url: '/login_email',
+              params:
+                  {
+                    email: this.login_data.username,
+                    password: this.login_data.password
+                  }
+            }).then(function (response)
+            {
+              console.log(response)
+
+              //普通用户登录
+              if (response.data.permissions === 0)
+              {
+
+                //登录成功提示
+                ElMessage({
+                  message: 'login successful',
+                  type: 'success',
+                })
+
+                //存放token
+                window.localStorage.setItem("token", response.data.token)
+
+                console.log(response.data.token)
+
+                //存放登录的用户名
+                window.localStorage.setItem("username", response.data.username)
+
+                console.log(response.data.username)
+
+                //存放登录的用户权限信息
+                window.localStorage.setItem("permissions", response.data.permissions)
+
+                console.log('普通用户')
+
+                //用户页面跳转
+                return that.$router.push({path: '/user'})
+
+                // console.log(that.$route)
+              }
+              //管理员登录
+              else if (response.data.permissions === 1)
+              {
+                //登录成功提示
+                ElMessage({
+                  message: 'login successful',
+                  type: 'success',
+                })
+
+                //存放token
+                window.localStorage.setItem("token", response.data.token)
+
+                console.log(response.data.token)
+
+                //存放登录的用户名
+                window.localStorage.setItem("username", response.data.username)
+
+                console.log(response.data.username)
+
+                //存放登录的用户权限信息
+                window.localStorage.setItem("permissions", response.data.permissions)
+
+                console.log('管理员')
+
+                //管理员后台跳转
+                return that.$router.push({path: '/user'})
+              } else
+              {
+                //发送提示，用户名或密码错误
+                //登录失败提示
+                ElMessage({
+                  message: 'Incorrect username or password',
+                  type: 'error',
+                })
+              }
+
+            }).catch(function (error)
+            {
+              console.log(error.message)
+            })
+          }
         }
       })
     },
@@ -347,10 +533,14 @@ export default {
           })
         } else
         {
+          console.log(11)
           that.axios({
-            methods: 'get',
+            method: 'post',
             url: '/register',
-            params:
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            data:
                 {
                   first_name: that.register_data.first_name,
                   last_name: that.register_data.last_name,
@@ -364,7 +554,7 @@ export default {
                 }
           }).then(function (response)
           {
-            if (response.data === 1)
+            if (response.data.status === 1)
             {
               console.log('注册成功')
 
@@ -390,7 +580,7 @@ export default {
               that.register_data.first_name = ''
               that.register_data.last_name = ''
               that.register_data.email = ''
-              that.register_data.gender = ''
+              that.register_data.gender = 1
             } else
             {
               console.log('注册失败')
@@ -436,7 +626,7 @@ export default {
   padding: 30px;
 
   width: 300px;
-  height: 350px;
+  height: 370px;
 
   //background-color:antiquewhite;
 
@@ -502,6 +692,14 @@ export default {
 
 .center-div {
   margin: 0 auto;
+}
+
+.circle_button_box {
+  text-align: center;
+}
+
+.circle_button {
+  margin-left: 17%;
 }
 
 </style>

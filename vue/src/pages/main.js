@@ -15,7 +15,8 @@ import router from '../router/router'
 import '../assets/css/global.css'
 // import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 //Element Plus
-import ElementPlus, {ElLoading} from 'element-plus'
+// eslint-disable-next-line no-unused-vars
+import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import * as ELIcons from '@element-plus/icons-vue'
 
@@ -37,15 +38,24 @@ app.use(ElementPlus)
 app.use(VueAxios, axios);
 //http://localhost:3000/
 //https://renyuan-fei-code50-71182846-jjjppq54gfpgj-8080.githubpreview.dev/
-axios.defaults.baseURL = 'https://renyuan-fei-code50-71182846-jjjppq54gfpgj-8080.githubpreview.dev/';
+axios.defaults.baseURL = 'http://localhost:3000/';
 
+// eslint-disable-next-line no-unused-vars
 let LoadingInstance = null
 
 //请求拦截器
-axios.interceptors.request.use((config) =>
+axios.interceptors.request.use(config =>
 {
-    //添加 loading效果
-    LoadingInstance = ElLoading.service({fullscreen: true})
+    //在请求头中添加token
+    if (sessionStorage.getItem('token'))
+    {
+        config.headers.token = sessionStorage.getItem('token')
+
+        //添加 loading效果
+        // LoadingInstance = ElLoading.service({fullscreen: true})
+
+        return config
+    }
 
     return config
 })
@@ -57,7 +67,14 @@ axios.interceptors.response.use((response) =>
 {
 
     //关闭 loading效果
-    LoadingInstance.close()
+    // LoadingInstance.close()
+
+    //但返回的状态码为401时，说明token过期，立刻删除token，导航到login界面
+    if (response.status === 401)
+    {
+        window.localStorage.removeItem('token')
+        this.$route.push('/login')
+    }
 
     return response
 })

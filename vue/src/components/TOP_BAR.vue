@@ -26,9 +26,16 @@
 
         <el-dropdown>
 
-        <span class="avatar" @mouseout="!is_show" @mouseover="!is_show">
+          <!--存在token则显示用户名-->
+          <span v-if="this.username !== 'no-user-loging-so-here-is-empty'" class="avatar" @mouseout="!is_show"
+                @mouseover="!is_show">
           {{ username }}
-        </span>
+          </span>
+
+          <!--否则显示临时头像-->
+          <span v-else class="avatar" @mouseout="!is_show" @mouseover="!is_show">
+            <el-icon><Avatar/></el-icon>
+          </span>
 
           <template #dropdown>
             <el-dropdown-menu>
@@ -47,7 +54,7 @@
 import {ElMessage, ElMessageBox} from 'element-plus'
 
 
-import {Calendar, HomeFilled, UserFilled} from '@element-plus/icons-vue';
+import {Avatar, Calendar, HomeFilled, UserFilled} from '@element-plus/icons-vue';
 // import {ArrowDown} from '@element-plus/icons-vue';
 
 export default {
@@ -60,7 +67,7 @@ export default {
   {
     //向前端请求用户数据
     console.log('TOP_BAR')
-    let temp = window.sessionStorage.getItem('username')
+    let temp = window.localStorage.getItem('username')
 
     if (temp)
     {
@@ -75,13 +82,14 @@ export default {
         Calendar,
         // eslint-disable-next-line vue/no-unused-components
         UserFilled,
-        // ArrowDown
+        // ArrowDown,
+        Avatar
       },
   data()
   {
     return {
-      username: 'user',
-      is_login: !window.sessionStorage.getItem('token'),
+      username: 'no-user-loging-so-here-is-empty',
+      is_login: !window.localStorage.getItem('token'),
       is_show: false,
     }
   },
@@ -89,7 +97,7 @@ export default {
       {
         sign_out()
         {
-          const token = window.sessionStorage.getItem('token')
+          const token = window.localStorage.getItem('token')
 
           ElMessageBox.confirm(
               'Are you sure you want to log out',
@@ -104,7 +112,7 @@ export default {
             if (token)
             {
               //清空token
-              window.sessionStorage.clear()
+              window.localStorage.clear()
 
               //跳转到主页面
               this.$router.push('/home')

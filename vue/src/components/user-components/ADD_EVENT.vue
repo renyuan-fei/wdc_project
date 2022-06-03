@@ -24,6 +24,7 @@
             v-model="form_data.begin_time"
             placeholder="Select date and time"
             type="datetime"
+            value-format="YYYY-MM-DD-HH:mm"
         />
       </el-form-item>
 
@@ -32,13 +33,13 @@
             v-model="form_data.end_time"
             placeholder="Select date and time"
             type="datetime"
+            value-format="YYYY-MM-DD-HH:mm"
         />
       </el-form-item>
 
 
-
-      <el-form-item label="Repeat">
-        <el-switch v-model="form_data.repeat"/>
+      <el-form-item label="Notice">
+        <el-switch v-model="form_data.notice"/>
       </el-form-item>
 
       <el-form-item label="Calendar state">
@@ -77,7 +78,7 @@
 </template>
 
 <script>
-import {Food, UploadFilled, School, CoffeeCup, More} from "@element-plus/icons-vue";
+import {CoffeeCup, Food, More, School, UploadFilled} from "@element-plus/icons-vue";
 import {ElMessage} from "element-plus";
 
 export default {
@@ -95,24 +96,39 @@ export default {
       {
         back_value: Boolean
       },
+  mounted()
+  {
+    let permissions = window.localStorage.getItem('permissions')
+
+    if (permissions === '1')
+    {
+      this.is_user = false
+    }
+  },
   data()
   {
     let that = this;
 
     return {
 
+      //用于判断 添加个人事件还是公共事件
+      is_user: true,
+
       form_data:
           {
+            permissions: window.localStorage.getItem('permissions'),
+            username: window.localStorage.getItem('username'),
+
             title: '',
             address: '',
-            All_day: false,
+            notice: true,
             // begin_date: '',
             begin_time: '',
             // end_date: '',
             end_time: '',
-            repeat: false,
+            // repeat: false,
             state: 1,
-            Note: '',
+            note: '',
           },
       form_rules:
           {
@@ -153,7 +169,33 @@ export default {
                     callback(new Error('the time is invalid'));
                   } else
                   {
-                    callback();
+                    callback()
+
+                    // that.axios({
+                    //   method: 'get',
+                    //   url: '/check_time',
+                    //   params: {
+                    //     username: window.sessionStorage.getItem('username'),
+                    //     begin_time: that.form_data.begin_time,
+                    //     end_time: value,
+                    //     token: window.sessionStorage.getItem('token')
+                    //   }
+                    // }).then(function (response)
+                    // {
+                    //
+                    //   if (response === 1)
+                    //   {
+                    //     callback();
+                    //   } else
+                    //   {
+                    //     callback(new Error('Time Conflict'));
+                    //   }
+                    //
+                    // }).catch(function (error)
+                    // {
+                    //   console.log('请求失败/check')
+                    //   console.log(error.message)
+                    // })
                   }
                 },
                 trigger: "blur"
@@ -169,44 +211,59 @@ export default {
         },
         submit()
         {
-          // let that = this;
+          let that = this;
 
           this.$refs.form.validate((valid) =>
           {
             if (!valid)
             {
-              //账号或密码没有填写，或填写格式错误
+              //有信息没有填写
               ElMessage({
                 message: 'Please fill in all information',
                 type: 'warning',
               })
             } else
             {
-              // 添加事件
-              // /add_event get
-
-              // that.axios({
-              //   methods: 'get',
-              //   url: 'http://localhost:3000/',
-              //   params: this.form
-              // }).then(function (response)
-              // {
-              //   //请求成功清空表单
-              //   that.$refs.form.resetFields()
-              //
-              //   console.log('请求成功')
-              //   console.log(response)
-              //
-              //   ElMessage({
-              //     message: 'Submitted successfully',
-              //     type: 'success',
-              //   })
-              // }).catch(function (error)
-              // {
-              //   console.log('请求失败')
-              //   console.log(error.message)
-              // })
               console.log('表单验证成功')
+
+              // 添加事件
+              // /add_event post
+              that.axios({
+                method: 'post',
+                url: '/add_event',
+                data: that.form_data,
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+              }).then(function (response)
+              {
+                if (response.data.status === 1)
+                {
+                  //请求成功清空表单
+                  that.$refs.form.resetFields()
+
+                  console.log('请求成功')
+                  console.log(response)
+
+                  ElMessage({
+                    message: 'Submitted successfully',
+                    type: 'success',
+                  })
+
+                  that.$emit("changedata", false)
+
+                } else
+                {
+                  ElMessage({
+                    message: 'Submitted failed',
+                    type: 'warning',
+                  })
+                }
+              }).catch(function (error)
+              {
+                console.log('请求失败')
+                console.log(error.message)
+              })
             }
           })
         }
@@ -226,7 +283,7 @@ export default {
   padding: 0;
 
   width: 600px;
-  height: 700px;
+  height: 650px;
 
   border-radius: 20px;
 

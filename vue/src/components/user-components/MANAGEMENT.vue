@@ -41,22 +41,23 @@
         >
           <template #default="scope">
             <el-tag
-                :type="scope.row.permission === 'Admin' ? 'warning' : 'success'"
+                :type="scope.row.permissions === 'Admin' ? 'warning' : 'success'"
                 disable-transitions
-            >{{ scope.row.permission }}
+            >{{ scope.row.permissions }}
             </el-tag>
           </template>
         </el-table-column>
 
         <el-table-column label="Option">
           <template #default="scope">
-            <el-button v-if="scope.row.permission === 'Admin'" circle size="default" type="danger" @click="Drop()">
+            <el-button v-if="scope.row.permissions === 'Admin'" circle size="default" type="danger"
+                       @click="Drop(scope.row.username)">
               <el-icon>
                 <delete/>
               </el-icon>
             </el-button>
 
-            <el-button v-else circle size="default" type="success" @click="Add()">
+            <el-button v-else circle size="default" type="success" @click="Add(scope.row.username)">
               <el-icon>
                 <Check/>
               </el-icon>
@@ -76,15 +77,37 @@ export default {
   name: "ALL_PLAN",
   mounted()
   {
-    console.log(this.$route.params.user_list)
+    let that = this;
 
-    for (let i in this.tableData)
+    that.axios({
+      method: 'get',
+      url: '/get_user_list',
+      params: {
+        permissions: window.localStorage.getItem('permissions'),
+        // token: window.sessionStorage.getItem('token')
+      }
+    }).then(function (response)
     {
-      //转换
-      this.tableData[i].gender = this.GENDER[this.tableData[i].gender]
+      console.log('请求成功')
+      console.log(response)
 
-      this.tableData[i].permission = this.PERMISSION[this.tableData[i].permission]
-    }
+      for (let i in response.data)
+      {
+        //转换
+        response.data[i].gender = that.GENDER[response.data[i].gender]
+
+        response.data[i].permissions = that.PERMISSION[response.data[i].permissions]
+        console.log(that.PERMISSION[response.data[i].permissions])
+      }
+
+      //将数据存入table data
+      that.tableData = response.data
+
+    }).catch(function (error)
+    {
+      console.log('请求失败')
+      console.log(error.message)
+    })
   },
   components:
       {
@@ -101,33 +124,6 @@ export default {
 
       PERMISSION: ['User', 'Admin'],
       GENDER: ['Female', 'Male'],
-
-      // tableData: [
-      //   {
-      //     date: '2016-05-03',
-      //     name: 'Tom',
-      //     address: 'No. 189, Grove St, Los Angeles',
-      //     tag: 'Home',
-      //   },
-      //   {
-      //     date: '2016-05-02',
-      //     name: 'Tom',
-      //     address: 'No. 189, Grove St, Los Angeles',
-      //     tag: 'Office',
-      //   },
-      //   {
-      //     date: '2016-05-04',
-      //     name: 'Tom',
-      //     address: 'No. 189, Grove St, Los Angeles',
-      //     tag: 'Home',
-      //   },
-      //   {
-      //     date: '2016-05-01',
-      //     name: 'Tom',
-      //     address: 'No. 189, Grove St, Los Angeles',
-      //     tag: 'Office',
-      //   },
-      // ]
 
       // 临时用(temp)
       tableData: [
@@ -222,27 +218,73 @@ export default {
   },
   methods:
       {
-        Add(index, row)
+        Add(username)
         {
-          console.log(index, row.event_id)
+          let that = this;
+
+          console.log(username)
 
           //弹窗确认是否添加
 
-          //将event_id发向后端，然后添加该事件
+          //将username发向后端
+          that.axios({
+            method: 'put',
+            url: '/modify_permission',
+            params: {
+              username: username,
+              token: window.sessionStorage.getItem('token')
+            }
+          }).then(function (response)
+          {
+            //后端返回添加成功后,赋值新的数据
+            console.log('请求成功')
+            console.log(response)
 
-          //后端返回添加成功后，在本地添加
-          this.tableData.splice(index, 1);
+            //将数据存入table data
+            this.tableData = response.data
 
-          //刷新页面
-          // this.$router.go(0)
+          }).catch(function (error)
+          {
+            console.log('请求失败')
+            console.log(error.message)
+          })
 
           console.log(this.tableData)
         },
 
         // eslint-disable-next-line no-unused-vars
-        Drop(index, row)
+        Drop(username)
         {
+          let that = this;
 
+          console.log(username)
+
+          //弹窗确认是否添加
+
+          //将username发向后端
+          that.axios({
+            method: 'put',
+            url: '/modify_permission',
+            params: {
+              username: username,
+              token: window.sessionStorage.getItem('token')
+            }
+          }).then(function (response)
+          {
+            //后端返回添加成功后,赋值新的数据
+            console.log('请求成功')
+            console.log(response)
+
+            //将数据存入table data
+            this.tableData = response.data
+
+          }).catch(function (error)
+          {
+            console.log('请求失败')
+            console.log(error.message)
+          })
+
+          console.log(this.tableData)
         },
 
         filterTag(value, row)

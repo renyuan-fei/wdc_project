@@ -120,10 +120,13 @@ export default {
     console.log('USER')
     console.log('username: ', this.data)
 
-    let permissions = window.sessionStorage.getItem('permissions')
+    let permissions = window.localStorage.getItem('permissions')
+
+    console.log(permissions)
 
     //验证权限
-    if (permissions === '2')
+    //判断是否是管理员登录
+    if (permissions === '1')
     {
       this.is_user = false
     }
@@ -155,7 +158,7 @@ export default {
       isCollapse: false,
       choose: 1,
       //用于向后端请求数据
-      data: window.sessionStorage.getItem('username'),
+      data: window.localStorage.getItem('username'),
       is_user: true
     }
   }

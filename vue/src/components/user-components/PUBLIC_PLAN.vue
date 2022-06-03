@@ -12,60 +12,121 @@
     </template>
 
     <div class="table-box">
-      <el-table :data="tableData" style="width: 100%">
+      <div class="container">
+        <table class="table-ui">
+          <thead>
+          <tr>
+            <th class="t1">Start</th>
+            <th class="t2">End</th>
+            <th class="t3">Title</th>
+            <th class="t4">Accept</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr v-for="event in this.tableData" :key="event.event_id">
 
-        <el-table-column label="Start" width="230">
-          <template #default="scope">
-            <div style="display: flex; align-items: center">
+            <td>
               <el-icon>
                 <clock/>
               </el-icon>
-              <span style="margin-left: 10px">{{ scope.row.start_time }}</span>
-            </div>
-          </template>
-        </el-table-column>
+              <span style="margin-left: 10px">{{ event.begin_time }}</span>
+            </td>
 
-        <el-table-column label="End" width="230">
-          <template #default="scope">
-            <div style="display: flex; align-items: center">
+            <td>
               <el-icon>
                 <clock/>
               </el-icon>
-              <span style="margin-left: 10px">{{ scope.row.end_time }}</span>
-            </div>
-          </template>
-        </el-table-column>
+              <span style="margin-left: 10px">{{ event.end_time }}</span>
+            </td>
 
-        <el-table-column label="Title" width="200">
-          <template #default="scope">
-            <el-popover effect="light" placement="top" trigger="hover" width="auto">
-              <template #default>
-                <div>title: {{ scope.row.title }}</div>
-                <div>address: {{ scope.row.address }}</div>
-                <div>note: {{ scope.row.note }}</div>
-              </template>
-              <template #reference>
-                <el-tag :type="STATE_COLOR[scope.row.state]">{{ scope.row.title }}</el-tag>
-              </template>
-            </el-popover>
-          </template>
-        </el-table-column>
+            <td>
+              <el-popover effect="light" placement="top" trigger="hover" width="auto">
+                <template #default>
+                  <div>title: {{ event.title }}</div>
+                  <div>address: {{ event.address }}</div>
+                  <div>note: {{ event.note }}</div>
+                </template>
+                <template #reference>
+                  <el-tag :type="STATE_COLOR[event.state]">{{ event.title }}</el-tag>
+                </template>
+              </el-popover>
+            </td>
 
-        <el-table-column label="Accept">
-          <template #default="scope">
-            <el-popconfirm title="Are you sure to Add this?" @confirm="Add(scope.$index, scope.row)">
-              <template #reference>
-                <el-button circle size="default">
-                  <el-icon size="default">
-                    <circle-plus-filled/>
-                  </el-icon>
-                </el-button>
-              </template>
-            </el-popconfirm>
-          </template>
-        </el-table-column>
+            <td>
+              <el-popconfirm title="Are you sure to Add this?" @confirm="Add(event.event_id)">
+                <template #reference>
+                  <el-button circle size="default">
+                    <el-icon size="default">
+                      <circle-plus-filled/>
+                    </el-icon>
+                  </el-button>
+                </template>
+              </el-popconfirm>
+            </td>
+          </tr>
+          </tbody>
+        </table>
 
-      </el-table>
+        <div v-if="this.tableData.length === 0" class="NO_DATA">
+          NO DATA
+        </div>
+
+      </div>
+
+      <!--      <el-table :data="tableData" style="width: 100%">-->
+
+      <!--        <el-table-column label="Start" width="230">-->
+      <!--          <template #default="scope">-->
+      <!--            <div style="display: flex; align-items: center">-->
+      <!--              <el-icon>-->
+      <!--                <clock/>-->
+      <!--              </el-icon>-->
+      <!--              <span style="margin-left: 10px">{{ scope.row.start_time }}</span>-->
+      <!--            </div>-->
+      <!--          </template>-->
+      <!--        </el-table-column>-->
+
+      <!--        <el-table-column label="End" width="230">-->
+      <!--          <template #default="scope">-->
+      <!--            <div style="display: flex; align-items: center">-->
+      <!--              <el-icon>-->
+      <!--                <clock/>-->
+      <!--              </el-icon>-->
+      <!--              <span style="margin-left: 10px">{{ scope.row.end_time }}</span>-->
+      <!--            </div>-->
+      <!--          </template>-->
+      <!--        </el-table-column>-->
+
+      <!--        <el-table-column label="Title" width="200">-->
+      <!--          <template #default="scope">-->
+      <!--            <el-popover effect="light" placement="top" trigger="hover" width="auto">-->
+      <!--              <template #default>-->
+      <!--                <div>title: {{ scope.row.title }}</div>-->
+      <!--                <div>address: {{ scope.row.address }}</div>-->
+      <!--                <div>note: {{ scope.row.note }}</div>-->
+      <!--              </template>-->
+      <!--              <template #reference>-->
+      <!--                <el-tag :type="STATE_COLOR[scope.row.state]">{{ scope.row.title }}</el-tag>-->
+      <!--              </template>-->
+      <!--            </el-popover>-->
+      <!--          </template>-->
+      <!--        </el-table-column>-->
+
+      <!--        <el-table-column label="Accept">-->
+      <!--          <template #default="scope">-->
+      <!--            <el-popconfirm title="Are you sure to Add this?" @confirm="Add(scope.$index)">-->
+      <!--              <template #reference>-->
+      <!--                <el-button circle size="default">-->
+      <!--                  <el-icon size="default">-->
+      <!--                    <circle-plus-filled/>-->
+      <!--                  </el-icon>-->
+      <!--                </el-button>-->
+      <!--              </template>-->
+      <!--            </el-popconfirm>-->
+      <!--          </template>-->
+      <!--        </el-table-column>-->
+
+      <!--      </el-table>-->
     </div>
 
   </el-card>
@@ -73,12 +134,55 @@
 
 <script>
 import {Check, CirclePlusFilled, Clock} from "@element-plus/icons-vue";
+import {ElMessage} from "element-plus";
 
 export default {
   name: "ALL_PLAN",
   mounted()
   {
-    console.log(this.$route.params.public_plan)
+    let that = this;
+
+    that.axios({
+      method: 'get',
+      url: '/get_public_event',
+      params: {
+        username: window.localStorage.getItem('username'),
+        permissions: window.localStorage.getItem('permissions')
+        // token: window.sessionStorage.getItem('token')
+      }
+    }).then(function (response)
+    {
+      console.log('请求成功')
+      console.log(response)
+
+      //将数据存入table data
+      if (response.data.status !== 0)
+      {
+        that.tableData = []
+        for (let i in response.data)
+        {
+          let temp = {}
+
+          temp.event_id = response.data[i].event_id
+          temp.begin_time = response.data[i].begin_time
+          temp.end_time = response.data[i].end_time
+          temp.title = response.data[i].title
+          temp.address = response.data[i].address
+          temp.state = response.data[i].state
+          temp.type = response.data[i].type
+          temp.note = response.data[i].note
+
+          that.tableData.push(temp)
+        }
+      }
+
+      console.log(that.tableData)
+
+    }).catch(function (error)
+    {
+      console.log('请求失败')
+      console.log(error.message)
+    })
   },
   components:
       {
@@ -98,98 +202,102 @@ export default {
 
       //临时用(temp)
       tableData: [
-        {
-          event_id: 'a',
-          start_time: '2016-05-03',
-          end_time: '2016-05-03',
-          title: 'test',
-          address: 'No. 189, Grove St, Los Angeles',
-          state: 0,
-          note: 'my test',
-        },
-        {
-          event_id: 'b',
-          start_time: '2016-05-03',
-          end_time: '2016-05-03',
-          title: 'test',
-          address: 'No. 189, Grove St, Los Angeles',
-          state: 1,
-          note: 'my test',
-        },
-        {
-          event_id: 'c',
-          start_time: '2016-05-03',
-          end_time: '2016-05-03',
-          title: 'test',
-          address: 'No. 189, Grove St, Los Angeles',
-          state: 2,
-          note: 'my test',
-        },
-        {
-          event_id: 'd',
-          start_time: '2016-05-03',
-          end_time: '2016-05-03',
-          title: 'test',
-          address: 'No. 189, Grove St, Los Angeles',
-          state: 0,
-          note: 'my test',
-        },
-        {
-          event_id: 'e',
-          start_time: '2016-05-03',
-          end_time: '2016-05-03',
-          title: 'test',
-          address: 'No. 189, Grove St, Los Angeles',
-          state: 2,
-          note: 'my test',
-        },
-        {
-          event_id: 'e',
-          start_time: '2016-05-03',
-          end_time: '2016-05-03',
-          title: 'test',
-          address: 'No. 189, Grove St, Los Angeles',
-          state: 2,
-          note: 'my test',
-        },
-        {
-          event_id: 'e',
-          start_time: '2016-05-03',
-          end_time: '2016-05-03',
-          title: 'test',
-          address: 'No. 189, Grove St, Los Angeles',
-          state: 2,
-          note: 'my test',
-        }, {
-          event_id: 'e',
-          start_time: '2016-05-03',
-          end_time: '2016-05-03',
-          title: 'test',
-          address: 'No. 189, Grove St, Los Angeles',
-          state: 2,
-          note: 'my test',
-        },
-
-
+        // {
+        //   event_id: 'a',
+        //   begin_time: '2016-05-03',
+        //   end_time: '2016-05-03',
+        //   title: 'test',
+        //   address: 'No. 189, Grove St, Los Angeles',
+        //   state: 0,
+        //   note: 'my test',
+        // },
+        // {
+        //   event_id: 'b',
+        //   begin_time: '2016-05-03',
+        //   end_time: '2016-05-03',
+        //   title: 'test',
+        //   address: 'No. 189, Grove St, Los Angeles',
+        //   state: 1,
+        //   note: 'my test',
+        // },
+        // {
+        //   event_id: 'c',
+        //   begin_time: '2016-05-03',
+        //   end_time: '2016-05-03',
+        //   title: 'test',
+        //   address: 'No. 189, Grove St, Los Angeles',
+        //   state: 2,
+        //   note: 'my test',
+        // }
       ]
-
     }
   },
   methods:
       {
-        Add(index, row)
+        Add(id)
         {
-          console.log(index, row.event_id)
+          let that = this
+
+          console.log(id)
 
           //弹窗确认是否添加
 
           //将event_id发向后端，然后添加该事件
+          that.axios({
+            method: 'get',
+            url: '/check_time',
+            params: {
+              username: window.sessionStorage.getItem('username'),
+              event_id: id,
+              token: window.sessionStorage.getItem('token')
+            }
+          }).then(function (response)
+          {
+            //时间可用
+            if (response.data === 1)
+            {
+              that.axios({
+                method: 'post',
+                url: '/add_public_event',
+                params: {
+                  username: window.sessionStorage.getItem('username'),
+                  event_id: id,
+                  token: window.sessionStorage.getItem('token')
+                }
+              }).then(function (response)
+              {
+                //后端返回添加成功后
+                console.log('请求成功')
+                console.log(response)
 
-          //后端返回添加成功后，在本地添加
-          this.tableData.splice(index, 1);
+                //将新的数据存入table data
+                this.tableData = response.data
 
-          //刷新页面
-          // this.$router.go(0)
+                ElMessage({
+                  message: 'Added successfully',
+                  type: 'success',
+                })
+
+              }).catch(function (error)
+              {
+                console.log('请求失败/add_public_event')
+                console.log(error.message)
+              })
+            }
+            //时间不可用
+            else
+            {
+              ElMessage({
+                message: 'Time Conflict',
+                type: 'warning',
+              })
+            }
+
+          }).catch(function (error)
+          {
+            console.log('请求失败/check')
+            console.log(error.message)
+          })
 
           console.log(this.tableData)
         }
@@ -242,6 +350,94 @@ export default {
 
   transform: translate(-50%, 0);
   left: 50%;
+}
+
+.table-box {
+  width: 97%;
+  height: 88%;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+
+  flex: 1;
+  overflow-y: auto;
+}
+
+.container {
+  background: #fff;
+  padding: 0 5px 50px;
+}
+
+.table-ui {
+  width: 99%;
+  border-collapse: collapse;
+}
+
+.table-ui tr th {
+  height: 30px;
+  padding: 0 12px;
+  font-size: 14px;
+  color: #909399;
+
+  text-align: left;
+  transform: translate(2%, 0);
+
+  border-bottom: 1px solid #ebeef5;
+}
+
+.table-ui tr td {
+  height: 30px;
+  padding: 8px 0;
+  font-size: 14px;
+  color: #606266;
+
+  text-align: left;
+  transform: translate(10%, 0);
+
+  border-bottom: 1px solid #ebeef5;
+}
+
+.table-ui .t1 {
+  width: 30%;
+  height: 40px;
+}
+
+.table-ui .t2 {
+  width: 30%;
+  height: 40px;
+}
+
+.table-ui .t3 {
+  width: 30%;
+  height: 40px;
+}
+
+.table-ui .t4 {
+  width: 10%;
+  height: 40px;
+}
+
+.table-ui tbody tr:hover {
+  background: #f5f5f5;
+  -webkit-transition: all .3s linear;
+  -moz-transition: all .3s linear;
+  -o-transition: all .3s linear;
+  -ms-transition: all .3s linear;
+  transition: all .3s linear;
+}
+
+.NO_DATA {
+  box-sizing: border-box;
+
+  width: 100%;
+  height: 60px;
+
+  line-height: 60px;
+  font-size: 12px;
+
+  color: #909399;
+
+  border-bottom: 1px solid #ebeef5;
 }
 
 </style>

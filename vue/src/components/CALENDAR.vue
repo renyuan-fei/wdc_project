@@ -48,7 +48,6 @@
 <script>
 import {ref} from 'vue'
 import TOP_BAR from './TOP_BAR'
-import google_calendar from "@/components/google_calendar";
 
 export default {
   name: "CALENDAR",
@@ -60,8 +59,6 @@ export default {
       {
         // eslint-disable-next-line vue/no-unused-components
         TOP_BAR,
-        // eslint-disable-next-line vue/no-unused-components
-        google_calendar
       },
   props:
       {

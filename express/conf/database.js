@@ -10,7 +10,6 @@ exports.connect_database = function ()
         password: '159753',
         database: 'project',
         port: '3306',
-
     })
 
     //开始链接

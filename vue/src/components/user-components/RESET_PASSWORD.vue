@@ -98,24 +98,51 @@ export default {
         },
         submit()
         {
+          let that = this;
+
           ElMessageBox.confirm(
-              'proxy will permanently delete the file. Continue?',
+              'Are you sure you want to change your password?',
               'Warning',
               {
                 confirmButtonText: 'OK',
                 cancelButtonText: 'Cancel',
                 type: 'warning',
               }
-          )
+          ).then(function ()
+          {
+            //向后端发送请求
+            // /rest_password get
 
-          //向后端发送请求
-          // /rest_password get
+            that.axios({
+              method: 'put',
+              url: '/reset_password',
+              params: {
+                username: window.sessionStorage.getItem('username'),
+                oldpassword: this.old_password,
+                newpassword: this.new_password,
+                token: window.sessionStorage.getItem('token')
+              }
+            }).then(function (response)
+            {
+              console.log('请求成功')
+              console.log(response)
 
-
-          //返回修成功则打印提示
-          ElMessage({
-            type: 'success',
-            message: 'Delete completed',
+              //返回修成功则打印提示
+              ElMessage({
+                type: 'success',
+                message: 'reset completed',
+              })
+            }).catch(function (error)
+            {
+              console.log('请求失败')
+              console.log(error.message)
+            })
+          }).catch(function ()
+          {
+            ElMessage({
+              type: 'info',
+              message: 'reset canceled',
+            })
           })
 
         }

@@ -111,9 +111,6 @@ export default {
 
     return {
 
-      //用于判断 添加个人事件还是公共事件
-      is_user: true,
-
       form_data:
           {
             permissions: window.localStorage.getItem('permissions'),
@@ -237,7 +234,7 @@ export default {
                 },
               }).then(function (response)
               {
-                if (response.data.status === 1)
+                if (response.data.status !== 0)
                 {
                   //请求成功清空表单
                   that.$refs.form.resetFields()

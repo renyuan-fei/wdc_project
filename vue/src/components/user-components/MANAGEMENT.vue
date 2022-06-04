@@ -35,8 +35,8 @@
         { text: 'ADMIN', value: 'Admin' },
       ]"
             filter-placement="bottom-end"
-            label="permission"
-            prop="permission"
+            label="permissions"
+            prop="permissions"
             width="130"
         >
           <template #default="scope">
@@ -50,18 +50,27 @@
 
         <el-table-column label="Option">
           <template #default="scope">
-            <el-button v-if="scope.row.permissions === 'Admin'" circle size="default" type="danger"
-                       @click="Drop(scope.row.username)">
-              <el-icon>
-                <delete/>
-              </el-icon>
-            </el-button>
 
-            <el-button v-else circle size="default" type="success" @click="Add(scope.row.username)">
-              <el-icon>
-                <Check/>
-              </el-icon>
-            </el-button>
+            <el-popconfirm v-if="scope.row.permissions === 'Admin'" title="common user?"
+                           @confirm="Drop(scope.row.username)">
+              <template #reference>
+                <el-button circle size="default" type="danger">
+                  <el-icon>
+                    <delete/>
+                  </el-icon>
+                </el-button>
+              </template>
+            </el-popconfirm>
+
+            <el-popconfirm v-else title="admin?" @confirm="Add(scope.row.username)">
+              <template #reference>
+                <el-button circle size="default" type="success">
+                  <el-icon>
+                    <Check/>
+                  </el-icon>
+                </el-button>
+              </template>
+            </el-popconfirm>
           </template>
         </el-table-column>
       </el-table>
@@ -72,6 +81,7 @@
 
 <script>
 import {Check, CirclePlusFilled, Clock} from "@element-plus/icons-vue";
+import {ElMessage} from "element-plus";
 
 export default {
   name: "ALL_PLAN",
@@ -84,6 +94,7 @@ export default {
       url: '/get_user_list',
       params: {
         permissions: window.localStorage.getItem('permissions'),
+        username: window.localStorage.getItem('username')
         // token: window.sessionStorage.getItem('token')
       }
     }).then(function (response)
@@ -127,91 +138,91 @@ export default {
 
       // 临时用(temp)
       tableData: [
-        {
-          username: 'user',
-          //0 用户
-          //1 管理员
-          permission: 0,
-          email: '2313131@gmail.com',
-          //0 female
-          //1 male
-          gender: 1,
-        },
-        {
-          username: 'admin',
-          //0 用户
-          //1 管理员
-          permission: 1,
-          email: '2313131@gmail.com',
-          //0 female
-          //1 male
-          gender: 0,
-        },
-        {
-          username: 'user',
-          //0 用户
-          //1 管理员
-          permission: 0,
-          email: '2313131@gmail.com',
-          //0 female
-          //1 male
-          gender: 1,
-        }, {
-          username: 'user',
-          //0 用户
-          //1 管理员
-          permission: 0,
-          email: '2313131@gmail.com',
-          //0 female
-          //1 male
-          gender: 1,
-        }, {
-          username: 'user',
-          //0 用户
-          //1 管理员
-          permission: 0,
-          email: '2313131@gmail.com',
-          //0 female
-          //1 male
-          gender: 1,
-        },
-        {
-          username: 'admin',
-          //0 用户
-          //1 管理员
-          permission: 1,
-          email: '2313131@gmail.com',
-          //0 female
-          //1 male
-          gender: 0,
-        }, {
-          username: 'admin',
-          //0 用户
-          //1 管理员
-          permission: 1,
-          email: '2313131@gmail.com',
-          //0 female
-          //1 male
-          gender: 0,
-        }, {
-          username: 'admin',
-          //0 用户
-          //1 管理员
-          permission: 1,
-          email: '2313131@gmail.com',
-          //0 female
-          //1 male
-          gender: 0,
-        }, {
-          username: 'admin',
-          //0 用户
-          //1 管理员
-          permission: 1,
-          email: '2313131@gmail.com',
-          //0 female
-          //1 male
-          gender: 0,
-        },
+        // {
+        //   username: 'user',
+        //   //0 用户
+        //   //1 管理员
+        //   permissions: 0,
+        //   email: '2313131@gmail.com',
+        //   //0 female
+        //   //1 male
+        //   gender: 1,
+        // },
+        // {
+        //   username: 'admin',
+        //   //0 用户
+        //   //1 管理员
+        //   permissions: 1,
+        //   email: '2313131@gmail.com',
+        //   //0 female
+        //   //1 male
+        //   gender: 0,
+        // },
+        // {
+        //   username: 'user',
+        //   //0 用户
+        //   //1 管理员
+        //   permission: 0,
+        //   email: '2313131@gmail.com',
+        //   //0 female
+        //   //1 male
+        //   gender: 1,
+        // }, {
+        //   username: 'user',
+        //   //0 用户
+        //   //1 管理员
+        //   permission: 0,
+        //   email: '2313131@gmail.com',
+        //   //0 female
+        //   //1 male
+        //   gender: 1,
+        // }, {
+        //   username: 'user',
+        //   //0 用户
+        //   //1 管理员
+        //   permission: 0,
+        //   email: '2313131@gmail.com',
+        //   //0 female
+        //   //1 male
+        //   gender: 1,
+        // },
+        // {
+        //   username: 'admin',
+        //   //0 用户
+        //   //1 管理员
+        //   permission: 1,
+        //   email: '2313131@gmail.com',
+        //   //0 female
+        //   //1 male
+        //   gender: 0,
+        // }, {
+        //   username: 'admin',
+        //   //0 用户
+        //   //1 管理员
+        //   permission: 1,
+        //   email: '2313131@gmail.com',
+        //   //0 female
+        //   //1 male
+        //   gender: 0,
+        // }, {
+        //   username: 'admin',
+        //   //0 用户
+        //   //1 管理员
+        //   permission: 1,
+        //   email: '2313131@gmail.com',
+        //   //0 female
+        //   //1 male
+        //   gender: 0,
+        // }, {
+        //   username: 'admin',
+        //   //0 用户
+        //   //1 管理员
+        //   permission: 1,
+        //   email: '2313131@gmail.com',
+        //   //0 female
+        //   //1 male
+        //   gender: 0,
+        // },
       ]
 
     }
@@ -228,11 +239,12 @@ export default {
 
           //将username发向后端
           that.axios({
-            method: 'put',
+            method: 'post',
             url: '/modify_permission',
-            params: {
+            data: {
               username: username,
-              token: window.sessionStorage.getItem('token')
+              admin_name: window.localStorage.getItem('username'),
+              // token: window.sessionStorage.getItem('token')
             }
           }).then(function (response)
           {
@@ -241,7 +253,27 @@ export default {
             console.log(response)
 
             //将数据存入table data
-            this.tableData = response.data
+            if (response.data.status !== 0)
+            {
+              that.tableData = []
+              for (let i in response.data)
+              {
+                let temp = {}
+
+                temp.username = response.data[i].username
+                temp.email = response.data[i].email
+                temp.gender = that.GENDER[response.data[i].gender]
+                temp.permissions = that.PERMISSION[response.data[i].permissions]
+
+                that.tableData.push(temp)
+              }
+            } else
+            {
+              ElMessage({
+                message: 'drop event fail',
+                type: 'warning',
+              })
+            }
 
           }).catch(function (error)
           {
@@ -263,12 +295,16 @@ export default {
 
           //将username发向后端
           that.axios({
-            method: 'put',
+            method: 'post',
             url: '/modify_permission',
-            params: {
+            data: {
               username: username,
-              token: window.sessionStorage.getItem('token')
-            }
+              admin_name: window.localStorage.getItem('username'),
+              // token: window.sessionStorage.getItem('token')
+            },
+            headers: {
+              'Content-Type': 'application/json'
+            },
           }).then(function (response)
           {
             //后端返回添加成功后,赋值新的数据
@@ -276,7 +312,27 @@ export default {
             console.log(response)
 
             //将数据存入table data
-            this.tableData = response.data
+            if (response.data.status !== 0)
+            {
+              that.tableData = []
+              for (let i in response.data)
+              {
+                let temp = {}
+
+                temp.username = response.data[i].username
+                temp.email = response.data[i].email
+                temp.gender = that.GENDER[response.data[i].gender]
+                temp.permissions = that.PERMISSION[response.data[i].permissions]
+
+                that.tableData.push(temp)
+              }
+            } else
+            {
+              ElMessage({
+                message: 'drop event fail',
+                type: 'warning',
+              })
+            }
 
           }).catch(function (error)
           {
@@ -291,7 +347,7 @@ export default {
         {
           console.log(row.tag, value)
 
-          return row.permission === value
+          return row.permissions === value
         }
 
       }

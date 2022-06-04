@@ -157,6 +157,7 @@
 import ADD_EVENT from './ADD_EVENT'
 
 import {Clock, Delete, OfficeBuilding, School, Star, StarFilled} from "@element-plus/icons-vue";
+import {ElMessage} from "element-plus";
 
 export default {
   name: "MY_PLAN",
@@ -219,6 +220,13 @@ export default {
           that.tableData.push(temp)
         }
       }
+      // else
+      // {
+      //   ElMessage({
+      //     message: 'get event fail',
+      //     type: 'warning',
+      //   })
+      // }
 
 
       console.log(that.tableData)
@@ -320,6 +328,12 @@ export default {
 
                 that.tableData.push(temp)
               }
+            } else
+            {
+              ElMessage({
+                message: 'update fail',
+                type: 'warning',
+              })
             }
 
             console.log(that.tableData)
@@ -343,6 +357,7 @@ export default {
             url: '/drop_event',
             data: {
               username: window.localStorage.getItem('username'),
+              permissions: window.localStorage.getItem('permissions'),
               event_id: id
               // token: window.sessionStorage.getItem('token')
             },
@@ -355,21 +370,30 @@ export default {
             console.log(response)
 
             //将数据存入table data
-            that.tableData = []
-            for (let i in response.data)
+            if (response.data.status !== 0)
             {
-              let temp = {}
+              that.tableData = []
+              for (let i in response.data)
+              {
+                let temp = {}
 
-              temp.event_id = response.data[i].event_id
-              temp.begin_time = response.data[i].begin_time
-              temp.end_time = response.data[i].end_time
-              temp.title = response.data[i].title
-              temp.address = response.data[i].address
-              temp.state = response.data[i].state
-              temp.type = response.data[i].type
-              temp.note = response.data[i].note
+                temp.event_id = response.data[i].event_id
+                temp.begin_time = response.data[i].begin_time
+                temp.end_time = response.data[i].end_time
+                temp.title = response.data[i].title
+                temp.address = response.data[i].address
+                temp.state = response.data[i].state
+                temp.type = response.data[i].type
+                temp.note = response.data[i].note
 
-              that.tableData.push(temp)
+                that.tableData.push(temp)
+              }
+            } else
+            {
+              ElMessage({
+                message: 'drop event fail',
+                type: 'warning',
+              })
             }
 
             console.log(that.tableData)

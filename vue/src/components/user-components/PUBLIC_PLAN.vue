@@ -247,23 +247,27 @@ export default {
             method: 'get',
             url: '/check_time',
             params: {
-              username: window.sessionStorage.getItem('username'),
+              username: window.localStorage.getItem('username'),
               event_id: id,
-              token: window.sessionStorage.getItem('token')
+              // token: window.sessionStorage.getItem('token')
             }
           }).then(function (response)
           {
+            console.log(response.data)
             //时间可用
             if (response.data === 1)
             {
               that.axios({
                 method: 'post',
                 url: '/add_public_event',
-                params: {
-                  username: window.sessionStorage.getItem('username'),
+                data: {
+                  username: window.localStorage.getItem('username'),
                   event_id: id,
-                  token: window.sessionStorage.getItem('token')
-                }
+                  // token: window.sessionStorage.getItem('token')
+                },
+                headers: {
+                  'Content-Type': 'application/json'
+                },
               }).then(function (response)
               {
                 //后端返回添加成功后
@@ -271,13 +275,36 @@ export default {
                 console.log(response)
 
                 //将新的数据存入table data
-                this.tableData = response.data
+                if (response.data.status !== 0)
+                {
+                  that.tableData = []
+                  for (let i in response.data)
+                  {
+                    let temp = {}
 
-                ElMessage({
-                  message: 'Added successfully',
-                  type: 'success',
-                })
+                    temp.event_id = response.data[i].event_id
+                    temp.begin_time = response.data[i].begin_time
+                    temp.end_time = response.data[i].end_time
+                    temp.title = response.data[i].title
+                    temp.address = response.data[i].address
+                    temp.state = response.data[i].state
+                    temp.type = response.data[i].type
+                    temp.note = response.data[i].note
 
+                    that.tableData.push(temp)
+                  }
+
+                  ElMessage({
+                    message: 'public event added successfully',
+                    type: 'success',
+                  })
+                } else
+                {
+                  ElMessage({
+                    message: 'drop event fail',
+                    type: 'warning',
+                  })
+                }
               }).catch(function (error)
               {
                 console.log('请求失败/add_public_event')

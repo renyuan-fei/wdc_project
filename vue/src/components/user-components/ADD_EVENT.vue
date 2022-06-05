@@ -60,7 +60,7 @@
       </el-form-item>
 
       <el-form-item label="Note">
-        <el-input v-model="form_data.Note" :rows="5" placeholder="note..." resize="none" type="textarea"/>
+        <el-input v-model="form_data.note" :rows="5" placeholder="note..." resize="none" type="textarea"/>
       </el-form-item>
 
     </el-form>
@@ -238,6 +238,7 @@ export default {
                 {
                   //请求成功清空表单
                   that.$refs.form.resetFields()
+                  that.form_data.note = ''
 
                   console.log('请求成功')
                   console.log(response)

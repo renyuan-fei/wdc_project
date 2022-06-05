@@ -20,7 +20,7 @@
               {{ data.day.split('-').slice(1).join('-') }}
             </p>
             <template v-for="(item) in calendar_data">
-              <el-row v-if="data.day === item.start_time" :key="item.event_id">
+              <el-row v-if="data.day === item.begin_time" :key="item.event_id">
                 <el-popover
                     :content="item.note"
                     :title="item.title"
@@ -53,7 +53,46 @@ export default {
   name: "CALENDAR",
   mounted()
   {
-    console.log('CALENDAR')
+    // let that = this
+    //
+    // console.log('CALENDAR')
+    //
+    // //axios请求后端
+    //
+    // that.axios({
+    //   method: 'get',
+    //   url: '/get_event',
+    //   params: {
+    //     username: window.localStorage.getItem('username'),
+    //     permissions: window.localStorage.getItem('permissions')
+    //     // token: window.sessionStorage.getItem('token')
+    //   }
+    // }).then(function (response)
+    // {
+    //   console.log('请求成功')
+    //   console.log(response)
+    //
+    //   //将数据存入table data
+    //   if (response.data.status !== 0)
+    //   {
+    //     that.calendar_data = []
+    //     for (let i in response.data)
+    //     {
+    //       let temp = {}
+    //
+    //       temp.event_id = response.data[i].event_id
+    //       temp.begin_time = response.data[i].begin_time
+    //       temp.end_time = response.data[i].end_time
+    //       temp.title = response.data[i].title
+    //       temp.address = response.data[i].address
+    //       temp.state = response.data[i].state
+    //       temp.type = response.data[i].type
+    //       temp.note = response.data[i].note
+    //
+    //       that.calendar_data.push(temp)
+    //     }
+    //   }
+    // })
   },
   components:
       {
@@ -73,8 +112,8 @@ export default {
       calendar_data: [
         {
           event_id: 'a',
-          start_time: '2022-05-03',
-          end_time: '2016-05-03',
+          begin_time: '2022-06-03',
+          end_time: '2016-06-03',
           title: 'test',
           address: 'No. 189, Grove St, Los Angeles',
           state: 0,
@@ -82,8 +121,8 @@ export default {
         },
         {
           event_id: 'a',
-          start_time: '2022-05-03',
-          end_time: '2016-05-03',
+          begin_time: '2022-06-03',
+          end_time: '2016-06-03',
           title: 'test',
           address: 'No. 189, Grove St, Los Angeles',
           state: 0,

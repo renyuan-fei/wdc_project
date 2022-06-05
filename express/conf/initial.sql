@@ -24,8 +24,8 @@ create table if not exists event
 
     title      varchar(100) NOT NULL,
     address    varchar(100) NOT NULL,
-    begin_time date         NOT NULL,
-    end_time   date         NOT NULL,
+    begin_time datetime     NOT NULL,
+    end_time   datetime     NOT NULL,
     state      INT(1)       NOT NULL,
     note       varchar(255) NOT NULL,
     notice     bool         NOT NULL,
@@ -56,27 +56,18 @@ insert into user(first_name, last_name, username, password, gender, email, permi
     ('aaa', 'bbb', 'admin', '123', 0, '2222@gmail.com', 1);
 
 insert into event (title, address, begin_time, end_time, state, note, notice, type) value
-    ('test event1', 'address', '2022-06-23-00:00', '2022-06-23-00:00', 0, 'no any note', TRUE, 0);
+    ('test event1', 'address', '2022-06-15-12:00', '2022-06-15-14:00', 0, 'no any note', TRUE, 0);
 
 INSERT INTO event_list(username, event_id)
 VALUES ('test', LAST_INSERT_ID());
 
 insert into event (title, address, begin_time, end_time, state, note, notice, type) value
-    ('public event', 'address', '2022-06-23-00:00', '2022-06-23-00:00', 1, 'no any note', TRUE, 1);
+    ('public event', 'address', '2022-06-11-07:00', '2022-06-12-08:00', 1, 'no any note', TRUE, 1);
 
 INSERT INTO event_list(username, event_id)
 VALUES ('test', LAST_INSERT_ID());
 
 insert into event (title, address, begin_time, end_time, state, note, notice, type) value
-    ('test event1', 'address', '2022-06-23-00:00', '2022-06-23-00:00', 0, 'no any note', TRUE, 1),
-    ('test event1', 'address', '2022-06-23-00:00', '2022-06-23-00:00', 0, 'no any note', TRUE, 1),
-    ('test event1', 'address', '2022-06-23-00:00', '2022-06-23-00:00', 0, 'no any note', TRUE, 1),
-    ('test event1', 'address', '2022-06-23-00:00', '2022-06-23-00:00', 0, 'no any note', TRUE, 1),
-    ('test event1', 'address', '2022-06-23-00:00', '2022-06-23-00:00', 0, 'no any note', TRUE, 1),
-    ('test event1', 'address', '2022-06-23-00:00', '2022-06-23-00:00', 0, 'no any note', TRUE, 1),
-    ('test event1', 'address', '2022-06-23-00:00', '2022-06-23-00:00', 0, 'no any note', TRUE, 1),
-    ('test event1', 'address', '2022-06-23-00:00', '2022-06-23-00:00', 0, 'no any note', TRUE, 1),
-    ('test event1', 'address', '2022-06-23-00:00', '2022-06-23-00:00', 0, 'no any note', TRUE, 1),
-    ('test event1', 'address', '2022-06-23-00:00', '2022-06-23-00:00', 0, 'no any note', TRUE, 1),
-    ('test event1', 'address', '2022-06-23-00:00', '2022-06-23-00:00', 0, 'no any note', TRUE, 1),
-    ('test event1', 'address', '2022-06-23-00:00', '2022-06-23-00:00', 0, 'no any note', TRUE, 1);
+    ('test event1', 'address', '2022-06-23-05:00', '2022-06-23-09:00', 0, 'no any note', TRUE, 1),
+    ('test event1', 'address', '2022-06-26-13:00', '2022-06-26-17:00', 1, 'no any note', TRUE, 1),
+    ('test event1', 'address', '2022-06-27-16:00', '2022-06-29-18:00', 2, 'no any note', TRUE, 1);

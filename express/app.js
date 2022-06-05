@@ -4,7 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var session = require("express-session");
 var logger = require('morgan');
-var DATABASE = require('./conf/database')
+var nodemailer = require('nodemailer')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -16,6 +16,17 @@ const mysql = require("mysql");
 
 
 var app = express();
+
+// var transporter = nodemailer.createTransport({
+//     host:'localhost',
+//     port:587,
+//     secure:false,
+//     auth:
+//         {
+//             user:'',
+//             pass:''
+//         }
+// });
 
 var dbConnectionPool = mysql.createPool({
     host: 'localhost',

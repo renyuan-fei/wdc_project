@@ -54,6 +54,12 @@ const route = [
             },
         ]
     },
+    // element ui
+    {
+        path: '/calendar',
+        name: 'calendar',
+        component: () => import('../components/FULL_CALENDAR')
+    },
 
     // element ui
     {
@@ -64,8 +70,8 @@ const route = [
 
     //google calendar
     {
-        path: '/calendar',
-        name: 'calendar',
+        path: '/temp2',
+        name: 'temp2',
         component: () => import('../components/GOOGLE')
     },
     //测试用临时网页

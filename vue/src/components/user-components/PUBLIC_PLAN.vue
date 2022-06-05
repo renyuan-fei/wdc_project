@@ -300,9 +300,10 @@ export default {
                   })
                 } else
                 {
+                  that.tableData = []
                   ElMessage({
-                    message: 'drop event fail',
-                    type: 'warning',
+                    message: 'public event added successfully',
+                    type: 'success',
                   })
                 }
               }).catch(function (error)

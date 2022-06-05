@@ -342,11 +342,11 @@ router.get('/get_event', function (req, res, next)
 
             //根据权限判断返回的值
             // 获取用户的个人事件
-            let query_line = "select DATE_FORMAT(begin_time,'%Y-%m-%d %H:%i:%s'), DATE_FORMAT(end_time,'%Y-%m-%d %H:%i:%s'),title,type,address,note,state,notice,event.event_id from event,event_list,user where user.username = event_list.username and event_list.event_id = event.event_id and event.event_id IN (select event_id from event_list where username = ?)"
+            let query_line = "select DATE_FORMAT(begin_time,'%Y-%m-%d %H:%i:%s'), DATE_FORMAT(end_time,'%Y-%m-%d %H:%i:%s'),title,type,address,note,state,notice,event.event_id from event,event_list,user where user.username = event_list.username and event_list.event_id = event.event_id and event.event_id IN (select event_id from event_list where username = ?) order by event.begin_time"
             if (body.permissions === '1')
             {
                 //获取所有公共事件
-                query_line = "select DATE_FORMAT(begin_time,'%Y-%m-%d %H:%i:%s'),DATE_FORMAT(end_time,'%Y-%m-%d %H:%i:%s'),title,type,address,note,state,notice,event_id from event where type = 1"
+                query_line = "select DATE_FORMAT(begin_time,'%Y-%m-%d %H:%i:%s'),DATE_FORMAT(end_time,'%Y-%m-%d %H:%i:%s'),title,type,address,note,state,notice,event_id from event where type = 1 order by event.begin_time"
             }
 
             connection.query(query_line, body.username, function (err, rows, fields)
@@ -418,7 +418,7 @@ router.get('/get_public_event', function (req, res, next)
 
             //根据权限判断返回的值
 
-            const query_line = "select DATE_FORMAT(begin_time,'%Y-%m-%d %H:%i:%s'),DATE_FORMAT(end_time,'%Y-%m-%d %H:%i:%s'),title,type,address,note,state,notice,event_id from event where type = 1 and event.event_id NOT IN (select event_id from event_list where username = ?)"
+            const query_line = "select DATE_FORMAT(begin_time,'%Y-%m-%d %H:%i:%s'),DATE_FORMAT(end_time,'%Y-%m-%d %H:%i:%s'),title,type,address,note,state,notice,event_id from event where type = 1 and event.event_id NOT IN (select event_id from event_list where username = ?) order by event.begin_time"
 
             connection.query(query_line, body.username, function (err, rows, fields)
             {
@@ -432,7 +432,7 @@ router.get('/get_public_event', function (req, res, next)
                 {
                     res.send({
                         status: 0,
-                        message: "user does not exist!",
+                        message: "no public event!",
                     })
                 } else
                 {
@@ -524,11 +524,11 @@ router.post('/drop_event', function (req, res, next)
                         "     user\n" +
                         "where user.username = event_list.username\n" +
                         "  and event_list.event_id = event.event_id\n" +
-                        "  and event.event_id IN (select event_id from event_list where username = ?)"
+                        "  and event.event_id IN (select event_id from event_list where username = ?) order by event.begin_time"
                     if (body.permissions === '1')
                     {
                         //获取所有公共事件
-                        query_line2 = "select DATE_FORMAT(begin_time,'%Y-%m-%d %H:%i:%s'),DATE_FORMAT(end_time,'%Y-%m-%d %H:%i:%s'),title,type,address,note,state,notice,event_id from event where type = 1"
+                        query_line2 = "select DATE_FORMAT(begin_time,'%Y-%m-%d %H:%i:%s'),DATE_FORMAT(end_time,'%Y-%m-%d %H:%i:%s'),title,type,address,note,state,notice,event_id from event where type = 1 order by event.begin_time"
                     }
 
 

@@ -231,11 +231,11 @@ export default {
           console.log(event)
           console.log(event)
           tippy(info.el, {
-            content: "<div style='width: 200px; text-align: center; border-radius: 100px'>" +
-                "<div style='border-bottom: 1px solid #CCCCCC;line-height: 20px;color:" + color + "'>"
+            content: "<div style='width: 200px; border-radius: 1px'>" +
+                "<div style='border-bottom: 1px solid #CCCCCC;line-height: 20px; color:" + color + "; padding:5px 10px;'>"
                 + info.event.title + "</div>" +
-                "<div style='color: #666666'>TYPE:" + event.extendedProps.type + "</div>" +
-                "<div style='color: #666666'>TIME:" + event.extendedProps.time + "</div>" +
+                "<div style='color: #666666; padding:5px 10px 0px 10px'>TYPE:" + event.extendedProps.type + "</div>" +
+                "<div style='color: #666666; padding:5px 10px;'>TIME:" + event.extendedProps.time + "</div>" +
 
                 "</div>",
             theme: 'light',

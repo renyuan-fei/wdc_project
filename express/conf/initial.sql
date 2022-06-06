@@ -51,7 +51,7 @@ insert into user(first_name, last_name, username, password, gender, email, permi
     ('a', 'b', 'user1', 'a1', 1, '123@gmail.com', 0),
     ('aa', 'bb', 'user2', 'a2', 0, '456@gmail.com', 0),
     ('aa', 'bb', 'user3', 'a2', 0, '789@gmail.com', 0),
-    ('aaa', 'bbb', 'test', '123', 0, '1111@gmail.com', 0),
+    ('aaa', 'bbb', 'test', '123', 0, '1140222138@qq.com', 0),
     ('aaa', 'bbb', 'admin2', '123', 0, '3333@gmail.com', 1),
     ('aaa', 'bbb', 'admin', '123', 0, '2222@gmail.com', 1);
 
@@ -68,6 +68,24 @@ INSERT INTO event_list(username, event_id)
 VALUES ('test', LAST_INSERT_ID());
 
 insert into event (title, address, begin_time, end_time, state, note, notice, type) value
+    ('expired public event', 'address', '2022-06-01-07:00', '2022-06-01-08:00', 1, 'no any note', TRUE, 1);
+
+INSERT INTO event_list(username, event_id)
+VALUES ('test', LAST_INSERT_ID());
+
+insert into event (title, address, begin_time, end_time, state, note, notice, type) value
+    ('notice test', 'address', '2022-06-06-00:00', '2022-06-06-23:20', 1, 'no any note', TRUE, 1);
+
+INSERT INTO event_list(username, event_id)
+VALUES ('test', LAST_INSERT_ID());
+
+insert into event (title, address, begin_time, end_time, state, note, notice, type) value
+    ('expired public event', 'address', '2022-06-02-05:00', '2022-06-02-09:00', 0, 'no any note', TRUE, 1),
     ('test event1', 'address', '2022-06-23-05:00', '2022-06-23-09:00', 0, 'no any note', TRUE, 1),
     ('test event1', 'address', '2022-06-26-13:00', '2022-06-26-17:00', 1, 'no any note', TRUE, 1),
-    ('test event1', 'address', '2022-06-27-16:00', '2022-06-29-18:00', 2, 'no any note', TRUE, 1);
+    ('test event1', 'address', '2022-06-27-16:00', '2022-06-29-18:00', 2, 'no any note', TRUE, 1),
+    ('time conflict test 1', 'address', '2022-06-09 13:00:00', '2022-06-12 14:00:00', 1, 'no any note', TRUE, 1),
+    ('time conflict test 2', 'address', '2022-06-07 13:00:00', '2022-06-14 14:00:00', 1, 'no any note', TRUE, 1),
+    ('time conflict test 3', 'address', '2022-06-10 13:00:00', '2022-06-17 14:00:00', 1, 'no any note', TRUE, 1),
+    ('time conflict test 4', 'address', '2022-06-07 13:00:00', '2022-06-11 14:00:00', 1, 'no any note', TRUE, 1),
+    ('time conflict test 5 pass', 'address', '2022-06-18 13:00:00', '2022-06-21 14:00:00', 1, 'no any note', TRUE, 1);

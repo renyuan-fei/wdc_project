@@ -4,7 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var session = require("express-session");
 var logger = require('morgan');
-var nodemailer = require('nodemailer')
+var schedule = require('node-schedule');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -13,20 +13,11 @@ var register = require('./routes/register');
 
 var test = require('./routes/TEST_ROUTER')
 const mysql = require("mysql");
+const nodemailer = require("nodemailer");
 
 
 var app = express();
 
-// var transporter = nodemailer.createTransport({
-//     host:'localhost',
-//     port:587,
-//     secure:false,
-//     auth:
-//         {
-//             user:'',
-//             pass:''
-//         }
-// });
 
 var dbConnectionPool = mysql.createPool({
     host: 'localhost',
@@ -100,6 +91,97 @@ app.use(function (err, req, res, next)
 app.listen(3000, () =>
 {
     console.log('app listening on port 3000.')
+
+    let transporter = nodemailer.createTransport({
+        host: 'smtp.qq.com',
+        secureConnection: true,
+        port: 465,
+        secure: true,
+        auth: {
+            user: '943493611@qq.com',
+            pass: 'vjyxlpxktetgbchj',
+        }
+    })
+
+    //创建定时任务
+    //抓取所有event
+    dbConnectionPool.getConnection(function (err, connection)
+    {
+        let get_all_event = "select DATE_FORMAT(begin_time,'%s %i %H %d %m %Y'), \n" +
+            "       DATE_FORMAT(end_time,'%s %i %H %d %m %Y'),\n" +
+            "       title,\n" +
+            "       type,\n" +
+            "       address,\n" +
+            "       note,\n" +
+            "       state,\n" +
+            "       notice,\n" +
+            "       event_id \n" +
+            "from event \n" +
+            "where end_time > now() \n" +
+            "order by begin_time"
+        connection.query(get_all_event, function (err, rows, fields)
+        {
+            if (err)
+            {
+                return console.log(err.message)
+            }
+
+            let event = rows
+
+            // console.log(rows)
+
+            for (let i in rows)
+            {
+                let user_list = []
+
+                let get_user = "select * from user where username IN (select username from event_list where event_id = ?)"
+                connection.query(get_user, rows[i].event_id, function (err, rows, fields)
+                {
+                    if (err)
+                    {
+                        return console.log(err.message)
+                    }
+
+                    user_list = rows
+                    console.log(event[i].title, user_list)
+
+                    let clock = schedule.scheduleJob(event[i]["DATE_FORMAT(end_time,'%s %i %H %d %m %Y')"], function ()
+                    {
+                        console.log(event[i].title, ' 事件结束')
+                        for (let user in user_list)
+                        {
+                            console.log(user_list[user].email, rows[i].title, rows[i].event_id,
+                                rows[i]["DATE_FORMAT(begin_time,'%s %i %H %d %m %Y')"].split("").reverse().join(""),
+                                rows[i]["DATE_FORMAT(end_time,'%s %i %H %d %m %Y')"].split("").reverse().join(""))
+                            let mailOption = {
+                                from: '943493611@qq.com',
+                                to: `${user_list[user].email}`,
+                                subject: 'Public event added successfully',
+                                text: `You have successfully added the event
+                               
+                               Event information:
+                               
+                               Title: ${rows[i].title}
+                               ID   : ${rows[i].event_id}
+                               Start: ${rows[i]["DATE_FORMAT(begin_time,'%s %i %H %d %m %Y')"].split("").reverse().join("")}
+                               End  : ${rows[i]["DATE_FORMAT(end_time,'%s %i %H %d %m %Y')"].split("").reverse().join("")}`,
+                            }
+                            transporter.sendMail(mailOption, function (err, info)
+                            {
+                                if (err)
+                                {
+                                    console.log(err)
+                                } else
+                                {
+                                    console.log(info.response)
+                                }
+                            })
+                        }
+                    });
+                })
+            }
+        })
+    })
 })
 
 module.exports = app;

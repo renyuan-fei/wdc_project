@@ -255,7 +255,7 @@ export default {
           {
             console.log(response.data)
             //时间可用
-            if (response.data === 1)
+            if (response.data.status !== 0)
             {
               that.axios({
                 method: 'post',

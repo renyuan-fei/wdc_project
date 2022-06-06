@@ -166,33 +166,31 @@ export default {
                     callback(new Error('the time is invalid'));
                   } else
                   {
-                    callback()
+                    that.axios({
+                      method: 'get',
+                      url: '/check_time',
+                      params: {
+                        username: window.localStorage.getItem('username'),
+                        begin_time: that.form_data.begin_time,
+                        end_time: value,
+                        // token: window.sessionStorage.getItem('token')
+                      }
+                    }).then(function (response)
+                    {
+                      console.log(response.data)
+                      if (response.data.status !== 0)
+                      {
+                        callback();
+                      } else
+                      {
+                        callback(new Error('Time Conflict'));
+                      }
 
-                    // that.axios({
-                    //   method: 'get',
-                    //   url: '/check_time',
-                    //   params: {
-                    //     username: window.sessionStorage.getItem('username'),
-                    //     begin_time: that.form_data.begin_time,
-                    //     end_time: value,
-                    //     token: window.sessionStorage.getItem('token')
-                    //   }
-                    // }).then(function (response)
-                    // {
-                    //
-                    //   if (response === 1)
-                    //   {
-                    //     callback();
-                    //   } else
-                    //   {
-                    //     callback(new Error('Time Conflict'));
-                    //   }
-                    //
-                    // }).catch(function (error)
-                    // {
-                    //   console.log('请求失败/check')
-                    //   console.log(error.message)
-                    // })
+                    }).catch(function (error)
+                    {
+                      console.log('请求失败/check')
+                      console.log(error.message)
+                    })
                   }
                 },
                 trigger: "blur"

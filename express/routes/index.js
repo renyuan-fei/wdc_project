@@ -25,7 +25,7 @@ function get_user(req, res, connection, username)
 }
 
 /* GET home page. */
-router.get('/', function (req, res, next)
+router.get('/home', function (req, res, next)
 {
     //重定向到index.html
     res.redirect('/index.html');
@@ -112,7 +112,6 @@ router.get('/login', async function (req, res, next)
             }
 
             const check = 'select * from user where username = ?'
-            const insert = 'insert user_'
 
             connection.query(check, query.username, function (err, result)
             {
@@ -129,14 +128,13 @@ router.get('/login', async function (req, res, next)
                 {
                     if (query.username === result[0].username && query.password === result[0].password)
                     {
-                        const token = jwt.sign({
-                            username: result[0].username
-                        }, 'secret', {expiresIn: 1000 * 60 * 60 * 24 * 7})
+                        // 设置session
+                        // console.log(req)
+                        req.session.user = result[0]
 
                         res.send({
                             permissions: result[0].permissions,
                             status: 0,
-                            token,
                         })
                     }
                 }
@@ -178,14 +176,13 @@ router.get('/login_email', async function (req, res, next)
                 {
                     if (query.email === result[0].email && query.password === result[0].password)
                     {
-                        const token = jwt.sign({
-                            email: result[0].email
-                        }, 'secret', {expiresIn: 1000 * 60 * 60 * 24 * 7})
+                        // 设置session
+                        req.session.user = result[0]
+
                         res.send({
                             username: result[0].username,
                             permissions: result[0].permissions,
                             status: 0,
-                            token,
                         })
                     }
                 }
@@ -1018,7 +1015,7 @@ router.get('/get_user_list', function (req, res, next)
                     if (err)
                     {
                         res.sendStatus(500)
-                        return
+                        return console.log(err.message)
                     }
                     if (rows.length === 0)
                     {
@@ -1322,6 +1319,14 @@ router.get('/check_time', function (req, res, next)
             message: error,
         })
     }
+})
+
+router.get('/logout', function (req, res)
+{
+    req.session.destroy(function ()
+    {
+        res.send({status: 1, message: "登出成功"})
+    })
 })
 
 module.exports = router;

@@ -89,3 +89,5 @@ insert into event (title, address, begin_time, end_time, state, note, notice, ty
     ('time conflict test 3', 'address', '2022-06-10 13:00:00', '2022-06-17 14:00:00', 1, 'no any note', TRUE, 1),
     ('time conflict test 4', 'address', '2022-06-07 13:00:00', '2022-06-11 14:00:00', 1, 'no any note', TRUE, 1),
     ('time conflict test 5 pass', 'address', '2022-06-18 13:00:00', '2022-06-21 14:00:00', 1, 'no any note', TRUE, 1);
+
+# select * from user where username != 'test';

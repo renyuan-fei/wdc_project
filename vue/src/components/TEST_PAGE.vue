@@ -1,10 +1,43 @@
 <template>
   <TEST></TEST>
 
-  <vue-google-calendar :data="calendarData"/>
+  <div>
+
+    <a class="twitter-share-button"
+       data-size="Default"
+       href=" ">
+      Twitter
+    </a>
+    <div class="fb-login-button" data-auto-logout-link="false" data-button-type="login_with" data-layout="rounded"
+         data-size="small" data-use-continue-as="false" data-width=""></div>
+
+  </div>
+
+  <!--  <vue-google-calendar :data="calendarData"/>-->
 </template>
 
 <script>
+
+window.twttr = (function (d, s, id)
+{
+  var js, fjs = d.getElementsByTagName(s)[0],
+      t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  fjs.parentNode.insertBefore(js, fjs);
+
+  t._e = [];
+  t.ready = function (f)
+  {
+    t._e.push(f);
+  };
+
+  return t;
+}(document, "script", "twitter-wjs"));
+
+
 import VueGoogleCalendar from "vue-google-calendar/src/vue-google-calendar"
 import TEST from "./TEST(vue--express)"
 

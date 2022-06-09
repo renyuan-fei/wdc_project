@@ -52,7 +52,7 @@
 
 <script>
 import {ElMessage, ElMessageBox} from 'element-plus'
-
+import cookies from "vue-cookies";
 
 import {Avatar, Calendar, HomeFilled, UserFilled} from '@element-plus/icons-vue';
 // import {ArrowDown} from '@element-plus/icons-vue';
@@ -89,7 +89,7 @@ export default {
   {
     return {
       username: 'no-user-loging-so-here-is-empty',
-      is_login: !window.localStorage.getItem('token'),
+      is_login: !window.localStorage.getItem('username'),
       is_show: false,
     }
   },
@@ -97,7 +97,9 @@ export default {
       {
         sign_out()
         {
-          const token = window.localStorage.getItem('token')
+          const cookie = this.$cookies
+
+          let that = this;
 
           ElMessageBox.confirm(
               'Are you sure you want to log out',
@@ -109,18 +111,29 @@ export default {
               }
           ).then(() =>
           {
-            if (token)
+            if (cookie)
             {
-              //清空token
-              window.localStorage.clear()
+              that.axios({
+                url: '/Logout',
+                method: 'get',
+              }).then(function (response)
+              {
+                if (response.data.status === 1)
+                {
+                  //清空本地的数据
+                  window.localStorage.clear()
 
-              //跳转到主页面
-              this.$router.push('/home')
+                  cookies.remove("Tree")
 
-              //提示退出登录的信息
-              ElMessage({
-                message: 'successfully logged out',
-                type: 'warning',
+                  //跳转到主页面
+                  that.$router.push('/home')
+
+                  //提示退出登录的信息
+                  ElMessage({
+                    message: 'successfully logged out',
+                    type: 'warning',
+                  })
+                }
               })
             }
           })

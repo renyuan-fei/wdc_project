@@ -43,18 +43,9 @@
               <el-form-item style="position:absolute; left:50%; transform:translate(-50%,0)">
                 <div>
                   login with &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <el-dropdown style="margin-top:8px;">
-                    <span>
-                      <el-icon><Expand/></el-icon>
-                    </span>
-                    <template #dropdown>
-                      <el-dropdown-menu>
-                        <el-dropdown-item @click="Facebook">Facebook</el-dropdown-item>
-                        <el-dropdown-item @click="Twitter">Twitter</el-dropdown-item>
-                        <el-dropdown-item @click="Google">Google</el-dropdown-item>
-                      </el-dropdown-menu>
-                    </template>
-                  </el-dropdown>
+                  <button :disabled="!Vue3GoogleOauth.isInit || Vue3GoogleOauth.isAuthorized" class="google_button"
+                          @click="handleClickSignIn">Google
+                  </button>
                 </div>
               </el-form-item>
 
@@ -123,6 +114,8 @@
 import TOP_BAR from './TOP_BAR'
 import {ElMessage} from "element-plus";
 import {Search, StarFilled} from "@element-plus/icons-vue";
+import {inject, toRefs} from "vue";
+
 
 export default {
   name: "LOGIN",
@@ -134,6 +127,20 @@ export default {
         // eslint-disable-next-line vue/no-unused-components
         Search
       },
+  setup(props)
+  {
+    const {isSignIn} = toRefs(props);
+    const Vue3GoogleOauth = inject("Vue3GoogleOauth");
+
+    const handleClickLogin = () =>
+    {
+    };
+    return {
+      Vue3GoogleOauth,
+      handleClickLogin,
+      isSignIn,
+    };
+  },
   data()
   {
     let that = this;
@@ -368,7 +375,7 @@ export default {
                 })
 
                 //存放token
-                window.localStorage.setItem("token", response.data.token)
+                // window.localStorage.setItem("token", response.data.token)
 
                 console.log(response.data.token)
 
@@ -397,9 +404,9 @@ export default {
                 })
 
                 //存放token
-                window.localStorage.setItem("token", response.data.token)
-
-                console.log(response.data.token)
+                // window.localStorage.setItem("token", response.data.token)
+                //
+                // console.log(response.data.token)
 
                 //存放登录的用户名
                 window.localStorage.setItem("username", that.login_data.username)
@@ -454,9 +461,9 @@ export default {
                 })
 
                 //存放token
-                window.localStorage.setItem("token", response.data.token)
-
-                console.log(response.data.token)
+                // window.localStorage.setItem("token", response.data.token)
+                //
+                // console.log(response.data.token)
 
                 //存放登录的用户名
                 window.localStorage.setItem("username", response.data.username)
@@ -483,7 +490,7 @@ export default {
                 })
 
                 //存放token
-                window.localStorage.setItem("token", response.data.token)
+                // window.localStorage.setItem("token", response.data.token)
 
                 console.log(response.data.token)
 
@@ -601,6 +608,32 @@ export default {
         }
       })
     },
+    async handleClickSignIn()
+    {
+      try
+      {
+        const googleUser = await this.$gAuth.signIn();
+        if (!googleUser)
+        {
+          return null;
+        }
+        console.log("googleUser", googleUser);
+        this.user = googleUser.getBasicProfile().getEmail();
+        console.log("getId", this.user);
+        console.log("getBasicProfile", googleUser.getBasicProfile());
+        console.log("getAuthResponse", googleUser.getAuthResponse());
+        console.log(
+            "getAuthResponse",
+            this.$gAuth.instance.currentUser.get().getAuthResponse()
+        );
+
+      } catch (error)
+      {
+        //on fail do something
+        console.error(error);
+        return null;
+      }
+    },
   }
 }
 </script>
@@ -700,6 +733,29 @@ export default {
 
 .circle_button {
   margin-left: 17%;
+}
+
+.google_button {
+  display: inline-block;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  background: #fff;
+  border: 1px solid #dcdfe6;
+  color: #606266;
+  -webkit-appearance: none;
+  text-align: center;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  outline: 0;
+  margin-left: 4px;
+  -webkit-transition: 0.1s;
+  transition: 0.1s;
+  font-weight: 500;
+  padding: 6px 10px;
+  font-size: 12px;
+  border-radius: 4px;
+  margin-right: 1em;
 }
 
 </style>

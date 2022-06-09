@@ -1,6 +1,8 @@
 import {createRouter, createWebHashHistory} from 'vue-router';
 import {ElMessage} from 'element-plus'
 // eslint-disable-next-line no-unused-vars
+// eslint-disable-next-line no-unused-vars
+import cookies from "vue-cookies";
 
 const route = [
     // {
@@ -99,13 +101,14 @@ router.beforeEach((to, from, next) =>
     }
 
     //获取token
-    const token = window.localStorage.getItem('token');
+    const cookie = cookies.get("Tree")
 
-    // console.log(token)
+    console.log('cookie', cookie)
 
     //当没有token时，强制跳转到login
-    if (!token)
+    if (!cookie)
     {
+        window.localStorage.clear()
         ElMessage({
             message: 'Please log in to access',
             type: 'warning',

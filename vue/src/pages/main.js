@@ -17,8 +17,13 @@ import '../assets/css/global.css'
 //Element Plus
 // eslint-disable-next-line no-unused-vars
 import ElementPlus from 'element-plus'
+// import { ElLoading } from 'element-plus'
 import 'element-plus/dist/index.css'
 import * as ELIcons from '@element-plus/icons-vue'
+
+import VueCookies from 'vue-cookies'
+
+import GAuth from 'vue3-google-oauth2'
 
 // const instance = axios.create({
 //     baseURL: '/api',
@@ -36,9 +41,21 @@ for (let iconName in ELIcons)
 
 app.use(ElementPlus)
 app.use(VueAxios, axios);
+app.config.globalProperties.$cookies = VueCookies
+app.use(VueCookies)
+
+const gAuthOptions = {
+    clientId: "838240831147-j70si1j81gofhs7hf4pajslaug4udcgh.apps.googleusercontent.com",
+    scope: 'email',
+    prompt: 'consent',
+    fetch_basic_profile: false
+}
+app.use(GAuth, gAuthOptions)
+
 //http://localhost:3000/
 //https://renyuan-fei-code50-71182846-jjjppq54gfpgj-8080.githubpreview.dev/
-axios.defaults.baseURL = 'http://localhost:3000/';
+// axios.defaults.baseURL = 'http://localhost:3000/';
+axios.defaults.withCredentials = true
 
 // eslint-disable-next-line no-unused-vars
 let LoadingInstance = null
@@ -47,15 +64,15 @@ let LoadingInstance = null
 axios.interceptors.request.use(config =>
 {
     //在请求头中添加token
-    if (sessionStorage.getItem('token'))
-    {
-        config.headers.token = sessionStorage.getItem('token')
-
-        //添加 loading效果
-        // LoadingInstance = ElLoading.service({fullscreen: true})
-
-        return config
-    }
+    // if (sessionStorage.getItem('token'))
+    // {
+    //     config.headers.token = sessionStorage.getItem('token')
+    //
+    //     //添加 loading效果
+    //     // LoadingInstance = ElLoading.service({fullscreen: true})
+    //
+    //     return config
+    // }
 
     return config
 })
@@ -72,8 +89,7 @@ axios.interceptors.response.use((response) =>
     //但返回的状态码为401时，说明token过期，立刻删除token，导航到login界面
     if (response.status === 401)
     {
-        window.localStorage.removeItem('token')
-        this.$route.push('/login')
+        this.$router.push('/login')
     }
 
     return response

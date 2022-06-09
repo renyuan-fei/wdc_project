@@ -38,16 +38,69 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 //跨域配置
-app.all('*', function (req, res, next)
-{
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
-    res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
-    res.header("X-Powered-By", ' 3.2.1')
-    res.header("Content-Type", "application/json;charset=utf-8");
-    next();
-});
+// app.all('*', function (req, res, next)
+// {
+//     res.header("Access-Control-Allow-Origin", "http://localhost:8080");
+//     res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
+//     res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+//     res.header("X-Powered-By", ' 3.2.1')
+//     res.header("Content-Type", "application/json;charset=utf-8");
+//     res.header('Access-Control-Allow-Credentials', 'true');//允许携带cookie
+//     next();
+// });
 
+// app.all('*',function (req, res, next) {
+//     res.header('Access-Control-Allow-Origin', 'http://localhost:8080');
+//     res.header('Access-Control-Allow-Headers', 'Content-Type, X-Requested-With');
+//     res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+//     res.header('Access-Control-Allow-Credentials', 'true');//允许携带cookie
+//
+//     next();
+//
+// });
+
+//设置session
+app.use(session({
+    name: "Tree",
+    secret: "fdafieadfbabihlvtgta",
+    cookie:
+        {
+            maxAge: 1000 * 60,
+            secure: false,
+            httpOnly: false,
+        },
+    resave: false,
+    saveUninitialized: false,
+}))
+
+//检验session
+// noinspection JSCheckFunctionSignatures
+app.use(function (req, res, next)
+{
+    if (req.url.includes("login") || req.url.includes("verify") || req.url.includes("register") || req.url.includes("home") || req.url.includes("index.html")
+        || req.url.includes("js") || req.url.includes("tree") || req.url.includes("css"))
+    {
+        console.log(req.session.user)
+
+        console.log('无需验证的路由')
+        next();
+    } else
+    {
+        console.log('需要验证的路由')
+        console.log(req.url)
+        console.log(req.session.user)
+        if (req.session.user)
+        {
+            console.log('验证成功')
+            next();
+        } else
+        {
+            console.log('验证失败')
+            res.status(401);
+            res.send('失效')
+        }
+    }
+})
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -56,7 +109,7 @@ app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.use('/', indexRouter);
+app.use(indexRouter);
 // app.use('/users', usersRouter);
 app.use(test);
 // app.use(login);
@@ -143,7 +196,7 @@ app.listen(3000, () =>
                     }
 
                     user_list = rows
-                    console.log(event[i].title, user_list)
+                    // console.log(event[i].title, user_list)
 
                     let clock = schedule.scheduleJob(event[i]["DATE_FORMAT(end_time,'%s %i %H %d %m %Y')"], function ()
                     {

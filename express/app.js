@@ -19,9 +19,6 @@ var app = express();
 var dbConnectionPool = mysql.createPool({
     host: 'localhost',
     database: 'project',
-    user: 'root',
-    password: '159753',
-    port: '3306',
 });
 
 app.use(function (req, res, next)

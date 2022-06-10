@@ -80,6 +80,7 @@
 <script>
 import {CoffeeCup, Food, More, School, UploadFilled} from "@element-plus/icons-vue";
 import {ElMessage} from "element-plus";
+import {format} from 'date-fns';
 
 export default {
   name: "ADD_EVENT",
@@ -142,6 +143,8 @@ export default {
                   console.log(value)
 
                   let date = new Date();
+                  date = format(date, "yyyy-MM-dd-hh:mm")
+                  console.log(date)
 
                   if (value < date)
                   {
@@ -160,6 +163,8 @@ export default {
                 validator: function (rule, value, callback)
                 {
                   let date = new Date();
+
+                  date = format(date, "yyyy-MM-dd-hh:mm")
 
                   if (value < date || value < that.form_data.begin_time)
                   {
@@ -225,7 +230,7 @@ export default {
               // /add_event post
               that.axios({
                 method: 'post',
-                url: '/',
+                url: '/add_event',
                 data: that.form_data,
                 headers: {
                   'Content-Type': 'application/json'

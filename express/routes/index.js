@@ -116,12 +116,14 @@ router.get('/login', async function (req, res, next)
             connection.query(check, query.username, function (err, result)
             {
                 connection.release()
-                // console.log(result)
+                console.log(result)
 
                 if (result.length === 0)
                 {
+                    console.log('login failed')
                     return res.send({
                         status: 0,
+                        permissions: -1,
                         message: "username does not exist!",
                     })
                 } else
@@ -134,7 +136,15 @@ router.get('/login', async function (req, res, next)
 
                         res.send({
                             permissions: result[0].permissions,
+                            status: 1,
+                        })
+                    } else
+                    {
+                        console.log('login failed')
+                        return res.send({
                             status: 0,
+                            permissions: -1,
+                            message: "password wrong",
                         })
                     }
                 }
@@ -170,6 +180,7 @@ router.get('/login_email', async function (req, res, next)
                 {
                     return res.send({
                         status: 0,
+                        permissions: -1,
                         message: "email does not exist!",
                     })
                 } else
@@ -183,6 +194,13 @@ router.get('/login_email', async function (req, res, next)
                             username: result[0].username,
                             permissions: result[0].permissions,
                             status: 0,
+                        })
+                    } else
+                    {
+                        return res.send({
+                            status: 0,
+                            permissions: -1,
+                            message: "password wrong",
                         })
                     }
                 }
@@ -330,7 +348,7 @@ router.get('/get_event', function (req, res, next)
     try
     {
         const body = req.query
-        // console.log(body)
+        console.log(body)
         req.pool.getConnection(function (err, connection)
         {
             if (err)
@@ -347,6 +365,8 @@ router.get('/get_event', function (req, res, next)
                 //
                 query_line = "select DATE_FORMAT(begin_time,'%Y-%m-%d %H:%i:%s'),DATE_FORMAT(end_time,'%Y-%m-%d %H:%i:%s'),title,type,address,note,state,notice,event_id from event where type = 1 and event.end_time > now() order by event.begin_time"
             }
+
+            console.log(query_line)
 
             connection.query(query_line, body.username, function (err, rows, fields)
             {
@@ -501,8 +521,9 @@ router.post('/drop_event', function (req, res, next)
                     })
                 } else
                 {
-                    let start_time = rows[0].begin_time
-                    let end_time = rows[0].end_time
+
+                    let start_time = rows[0]["DATE_FORMAT(begin_time,'%Y-%m-%d %H:%i:%s')"]
+                    let end_time = rows[0]["DATE_FORMAT(end_time,'%Y-%m-%d %H:%i:%s')"]
                     let event_title = rows[0].title
 
 
@@ -648,14 +669,14 @@ router.post('/drop_event', function (req, res, next)
                                             from: '943493611@qq.com',
                                             to: `${user_list[i].email}`,
                                             subject: 'Cancellation of public events',
-                                            text: `The public event you added has been canceled
-                                                                   
-                                                    Event information:
-                                                    
-                                                    Title: ${event_title}
-                                                    ID   : ${body.event_id}
-                                                    Start: ${start_time}
-                                                    End  : ${end_time}`,
+                                            text: `The public event you added has been cancelled
+                                            
+                                                   Event information:
+                                                   
+                                                   Title: ${event_title}
+                                                   ID   : ${body.event_id}
+                                                   Start: ${start_time}
+                                                   End  : ${end_time}`,
                                         }
                                         transporter.sendMail(mailOption, function (err, info)
                                         {
@@ -754,7 +775,7 @@ router.post('/add_event', function (req, res, next)
     try
     {
         const body = req.body
-        // console.log(body.permissions)
+        console.log(body.permissions)
         req.pool.getConnection(function (err, connection)
         {
             if (err)

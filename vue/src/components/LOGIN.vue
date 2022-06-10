@@ -450,8 +450,7 @@ export default {
                 return that.$router.push({path: '/user'})
               } else
               {
-                //，
-                //
+                console.log('login failed')
                 ElMessage({
                   message: 'Incorrect username or password',
                   type: 'error',
@@ -501,8 +500,6 @@ export default {
                 //
                 window.localStorage.setItem("permissions", response.data.permissions)
 
-                console.log('')
-
                 //
                 return that.$router.push({path: '/user'})
 
@@ -536,8 +533,8 @@ export default {
                 return that.$router.push({path: '/user'})
               } else
               {
-                //，
-                //
+                console.log('login failed')
+
                 ElMessage({
                   message: 'Incorrect username or password',
                   type: 'error',

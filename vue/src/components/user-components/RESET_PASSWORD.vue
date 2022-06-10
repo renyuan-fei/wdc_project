@@ -127,10 +127,13 @@ export default {
               },
             }).then(function (response)
             {
-              console.log('222')
+              // console.log('222')
               if (response.data.status !== 0)
               {
                 console.log(response)
+
+                that.reset_data.new_password = ''
+                that.reset_data.confirm_new_password = ''
 
                 //
                 ElMessage({

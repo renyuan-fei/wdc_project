@@ -7,9 +7,6 @@ var logger = require('morgan');
 var schedule = require('node-schedule');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var login = require('./routes/login');
-var register = require('./routes/register');
 
 var test = require('./routes/TEST_ROUTER')
 const mysql = require("mysql");
@@ -97,7 +94,7 @@ app.use(function (req, res, next)
         {
             console.log('verify failed')
             res.status(401);
-            res.send('invalid')
+            res.redirect("home")
         }
     }
 })
@@ -141,9 +138,9 @@ app.use(function (err, req, res, next)
     res.render('error');
 });
 
-app.listen(3000, () =>
+app.listen(8080, () =>
 {
-    console.log('app listening on port 3000.')
+    console.log('app listening on port 8080.')
 
     let transporter = nodemailer.createTransport({
         host: 'smtp.qq.com',

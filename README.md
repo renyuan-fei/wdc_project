@@ -16,7 +16,7 @@ Github URL: https://github.com/renyuan-fei/wdc_project.git
 
 #### Xuhui Wang(a1809872)
 
-#### Weihao Xia(a1791563)
+#### ~~Weihao Xia(a1791563)~~
 
 
 ----

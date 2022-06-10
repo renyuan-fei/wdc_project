@@ -172,13 +172,13 @@ export default {
               //判断是否是用户名登录
               if (/^\w{1,64}@[a-z\d\\-]{1,256}(\.[a-z]{2,6}){1,2}$/i.test(value) === true)
               {
-                console.log('邮箱登录')
+                console.log('login by email')
                 that.is_username = false
                 console.log(that.is_username)
                 callback();
               } else
               {
-                console.log('用户名登录')
+                console.log('login by username')
                 that.is_username = true
                 console.log(that.is_username)
                 callback();
@@ -187,7 +187,20 @@ export default {
           }],
 
         password: [{required: true, message: "please input your password", trigger: "blur"},
-          {min: 3, max: 20, message: "invalid password", trigger: "blur"}]
+          {min: 3, max: 20, message: "invalid password", trigger: "blur"},
+          {
+            trigger: 'blur',
+            validator: (rule, value, callback) =>
+            {
+              if (!/(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).{8,20}/.test(value))
+              {
+                callback(new Error('Password must be a combination of numbers, letters and special characters, please enter 3-20 digits'))
+              } else
+              {
+                callback()
+              }
+            }
+          }]
 
       },
       register_rule: {
@@ -216,12 +229,12 @@ export default {
                 //判断是否可用
                 if (response.data.status === 0)
                 {
-                  console.log('该用户名可用')
+                  console.log('username is available')
 
                   callback()
                 } else
                 {
-                  console.log('该用名不可用')
+                  console.log('username is unavailable')
 
                   callback(new Error('the username has been registered'))
                 }
@@ -289,12 +302,12 @@ export default {
 
                 if (response.data.status === 0)
                 {
-                  console.log('该邮箱可用')
+                  console.log('Email is available')
 
                   callback()
                 } else
                 {
-                  console.log('该邮箱不可用')
+                  console.log('Email is unavailable')
 
                   callback(new Error('the email has been registered'))
                 }
@@ -351,7 +364,7 @@ export default {
           //当使用用户名登录时
           if (that.is_username)
           {
-            console.log('用户名 and 密码', that.is_username)
+            console.log('username and password', that.is_username)
             that.axios({
               method: 'get',
               url: '/login',
@@ -387,7 +400,7 @@ export default {
                 //存放登录的用户权限信息
                 window.localStorage.setItem("permissions", response.data.permissions)
 
-                console.log('普通用户')
+                console.log('common user')
 
                 //用户页面跳转
                 return that.$router.push({path: '/user'})
@@ -416,7 +429,7 @@ export default {
                 //存放登录的用户权限信息
                 window.localStorage.setItem("permissions", response.data.permissions)
 
-                console.log('管理员')
+                console.log('admin')
 
                 //管理员后台跳转
                 return that.$router.push({path: '/user'})
@@ -436,7 +449,7 @@ export default {
             })
           } else
           {
-            console.log('邮箱 and 密码')
+            console.log('email and password')
 
             that.axios({
               method: 'get',

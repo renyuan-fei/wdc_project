@@ -416,7 +416,6 @@ router.get('/get_public_event', function (req, res, next)
             }
 
             //根据权限判断返回的值
-
             const query_line = "select DATE_FORMAT(begin_time,'%Y-%m-%d %H:%i:%s'),DATE_FORMAT(end_time,'%Y-%m-%d %H:%i:%s'),title,type,address,note,state,notice,event_id from event where type = 1 and event.event_id NOT IN (select event_id from event_list where username = ?) and event.end_time > now() order by event.begin_time"
 
             connection.query(query_line, body.username, function (err, rows, fields)
@@ -610,7 +609,7 @@ router.post('/drop_event', function (req, res, next)
                             console.log(rows.affectedRows)
                             if (rows.affectedRows >= 1)
                             {
-                                console.log('删除成功')
+                                console.log('successfully deleted')
 
                                 if (body.permissions === '1')
                                 {
@@ -624,10 +623,10 @@ router.post('/drop_event', function (req, res, next)
                                         {
                                             if (rows.affectedRows >= 1)
                                             {
-                                                console.log('event_list 中的该事件已被清除')
+                                                console.log('event_list successfully deleted')
                                             } else
                                             {
-                                                console.log('该事件从未被添加过')
+                                                console.log('The event has never been added')
                                             }
                                         }
                                     })
@@ -717,7 +716,7 @@ router.post('/drop_event', function (req, res, next)
                             //删除失败
                             else
                             {
-                                console.log('权限不足')
+                                console.log('Insufficient permissions')
                                 //重新关联外键
                                 connection.query(KEY, function (err, rows, fields)
                                 {
@@ -727,7 +726,7 @@ router.post('/drop_event', function (req, res, next)
                                         return console.log(err.message)
                                     } else
                                     {
-                                        console.log('删除失败，已经重新关联外键')
+                                        console.log('Delete failed, foreign key has been re-associated')
                                         res.send({
                                             status: 1,
                                             message: "failed",
@@ -1267,7 +1266,7 @@ router.get('/check_time', function (req, res, next)
                     //   2___2
                     if (begin_time >= rows[i]["DATE_FORMAT(begin_time,'%Y-%m-%d %H:%i:%s')"] && end_time <= rows[i]["DATE_FORMAT(end_time,'%Y-%m-%d %H:%i:%s')"])
                     {
-                        console.log('冲突:处于某个时间段中间')
+                        console.log('event conflict')
                         return res.send({
                             status: 0,
                             message: "Not available!",
@@ -1277,7 +1276,7 @@ router.get('/check_time', function (req, res, next)
                     // 2______2
                     if (begin_time <= rows[i]["DATE_FORMAT(begin_time,'%Y-%m-%d %H:%i:%s')"] && end_time >= rows[i]["DATE_FORMAT(begin_time,'%Y-%m-%d %H:%i:%s')"])
                     {
-                        console.log('冲突:开始的时间小于某事件，结束的事件大于某事件')
+                        console.log('event conflict')
                         return res.send({
                             status: 0,
                             message: "Not available!",
@@ -1287,7 +1286,7 @@ router.get('/check_time', function (req, res, next)
                     // 2______2
                     if (end_time >= rows[i]["DATE_FORMAT(begin_time,'%Y-%m-%d %H:%i:%s')"] && end_time <= rows[i]["DATE_FORMAT(end_time,'%Y-%m-%d %H:%i:%s')"])
                     {
-                        console.log('冲突:结束时间处于某个时间段中间')
+                        console.log('event conflict')
                         return res.send({
                             status: 0,
                             message: "Not available!",
@@ -1298,7 +1297,7 @@ router.get('/check_time', function (req, res, next)
 
                     if (begin_time <= rows[i]["DATE_FORMAT(end_time,'%Y-%m-%d %H:%i:%s')"] && end_time >= rows[i]["DATE_FORMAT(end_time,'%Y-%m-%d %H:%i:%s')"])
                     {
-                        console.log('冲突:开始时间处于某个时间段中间')
+                        console.log('event conflict')
                         return res.send({
                             status: 0,
                             message: "Not available!",
@@ -1325,7 +1324,8 @@ router.get('/logout', function (req, res)
 {
     req.session.destroy(function ()
     {
-        res.send({status: 1, message: "登出成功"})
+        console.log('session end')
+        res.send({status: 1, message: "Logout succeeded"})
     })
 })
 

@@ -219,7 +219,7 @@ export default {
               })
             } else
             {
-              console.log('表单验证成功')
+              console.log('Form validation succeeded')
 
               // 添加事件
               // /add_event post
@@ -238,7 +238,7 @@ export default {
                   that.$refs.form.resetFields()
                   that.form_data.note = ''
 
-                  console.log('请求成功')
+                  console.log('request successful')
                   console.log(response)
 
                   ElMessage({
@@ -257,7 +257,7 @@ export default {
                 }
               }).catch(function (error)
               {
-                console.log('请求失败')
+                console.log('request failed')
                 console.log(error.message)
               })
             }

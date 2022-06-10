@@ -97,7 +97,7 @@ export default {
       {
         sign_out()
         {
-          const cookie = this.$cookies
+          const cookie = cookies.get("Tree")
 
           let that = this;
 
@@ -134,6 +134,14 @@ export default {
                     type: 'warning',
                   })
                 }
+              })
+            } else
+            {
+              that.$router.push('/home')
+              window.localStorage.clear()
+              ElMessage({
+                message: 'successfully logged out',
+                type: 'warning',
               })
             }
           })

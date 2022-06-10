@@ -197,7 +197,7 @@ export default {
       }
     }).then(function (response)
     {
-      console.log('请求成功')
+      console.log('request successful')
       console.log(response)
 
       //将数据存入table data
@@ -233,7 +233,7 @@ export default {
 
     }).catch(function (error)
     {
-      console.log('请求失败')
+      console.log('request failed')
       console.log(error.message)
     })
   },

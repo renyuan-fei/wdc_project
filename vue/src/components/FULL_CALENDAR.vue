@@ -56,7 +56,7 @@ export default {
       }
     }).then(function (response)
     {
-      console.log('请求成功')
+      console.log('request successful')
       console.log(response)
 
       //将数据存入table data
@@ -171,12 +171,10 @@ export default {
           this.form.endDate = this.dealWithTime(endDate);
           this.form.endTime = this.getHoursMin(endDate);
         },
-        // 获取时分时间
         getHoursMin(value)
         {
           return value.substring(11, 16);
         },
-        // 处理会议时间格式
         dealWithTime(date)
         {
           console.log(/\d{4}-\d{1,2}-\d{1,2}/g.exec(date))

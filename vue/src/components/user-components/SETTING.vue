@@ -90,7 +90,7 @@ export default {
       }
     }).then(function (response)
     {
-      console.log('请求成功')
+      console.log('request successful')
       console.log(response)
       that.username = window.localStorage.getItem('username')
 
@@ -106,7 +106,7 @@ export default {
 
     }).catch(function (error)
     {
-      console.log('请求失败')
+      console.log('request failed')
       console.log(error.message)
     })
   },

@@ -21,7 +21,7 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import * as ELIcons from '@element-plus/icons-vue'
 
-import VueCookies from 'vue-cookies'
+import cookies from "vue-cookies";
 
 import GAuth from 'vue3-google-oauth2'
 
@@ -41,8 +41,8 @@ for (let iconName in ELIcons)
 
 app.use(ElementPlus)
 app.use(VueAxios, axios);
-app.config.globalProperties.$cookies = VueCookies
-app.use(VueCookies)
+app.config.globalProperties.$cookies = cookies
+app.use(cookies)
 
 const gAuthOptions = {
     clientId: "838240831147-j70si1j81gofhs7hf4pajslaug4udcgh.apps.googleusercontent.com",
@@ -74,6 +74,17 @@ axios.interceptors.request.use(config =>
     //     return config
     // }
 
+    // if (!cookies.get("Tree"))
+    // {
+    //     ElMessage({
+    //         message: 'Please log in to access',
+    //         type: 'warning',
+    //     })
+    //     console.log('未登录')
+    //     window.localStorage.clear()
+    //     this.$router.push('/login')
+    // }
+
     return config
 })
 
@@ -87,9 +98,12 @@ axios.interceptors.response.use((response) =>
     // LoadingInstance.close()
 
     //但返回的状态码为401时，说明token过期，立刻删除token，导航到login界面
+    console.log(response.status)
     if (response.status === 401)
     {
-        this.$router.push('/login')
+        window.localStorage.clear()
+        cookies.remove("Tree")
+        this.router.push('/login')
     }
 
     return response

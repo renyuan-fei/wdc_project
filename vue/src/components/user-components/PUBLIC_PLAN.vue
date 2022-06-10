@@ -271,7 +271,7 @@ export default {
               }).then(function (response)
               {
                 //后端返回添加成功后
-                console.log('请求成功')
+                console.log('request successful')
                 console.log(response)
 
                 //将新的数据存入table data
@@ -308,7 +308,7 @@ export default {
                 }
               }).catch(function (error)
               {
-                console.log('请求失败/add_public_event')
+                console.log('request failed/add_public_event')
                 console.log(error.message)
               })
             }
@@ -323,7 +323,7 @@ export default {
 
           }).catch(function (error)
           {
-            console.log('请求失败/check')
+            console.log('request failed/check')
             console.log(error.message)
           })
 

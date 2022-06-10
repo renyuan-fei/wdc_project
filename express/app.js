@@ -82,22 +82,22 @@ app.use(function (req, res, next)
     {
         console.log(req.session.user)
 
-        console.log('无需验证的路由')
+        console.log('whitelist')
         next();
     } else
     {
-        console.log('需要验证的路由')
+        console.log('verify')
         console.log(req.url)
         console.log(req.session.user)
         if (req.session.user)
         {
-            console.log('验证成功')
+            console.log('verify successfully')
             next();
         } else
         {
-            console.log('验证失败')
+            console.log('verify failed')
             res.status(401);
-            res.send('失效')
+            res.send('invalid')
         }
     }
 })
@@ -200,7 +200,7 @@ app.listen(3000, () =>
 
                     let clock = schedule.scheduleJob(event[i]["DATE_FORMAT(end_time,'%s %i %H %d %m %Y')"], function ()
                     {
-                        console.log(event[i].title, ' 事件结束')
+                        console.log(event[i].title, ' event end')
                         for (let user in user_list)
                         {
                             console.log(user_list[user].email, rows[i].title, rows[i].event_id,

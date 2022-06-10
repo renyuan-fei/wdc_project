@@ -37,7 +37,7 @@ app.use(function (req, res, next)
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-//跨域配置
+//
 // app.all('*', function (req, res, next)
 // {
 //     res.header("Access-Control-Allow-Origin", "http://localhost:8080");
@@ -45,7 +45,7 @@ app.set('view engine', 'jade');
 //     res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
 //     res.header("X-Powered-By", ' 3.2.1')
 //     res.header("Content-Type", "application/json;charset=utf-8");
-//     res.header('Access-Control-Allow-Credentials', 'true');//允许携带cookie
+//     res.header('Access-Control-Allow-Credentials', 'true');//cookie
 //     next();
 // });
 
@@ -53,19 +53,19 @@ app.set('view engine', 'jade');
 //     res.header('Access-Control-Allow-Origin', 'http://localhost:8080');
 //     res.header('Access-Control-Allow-Headers', 'Content-Type, X-Requested-With');
 //     res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
-//     res.header('Access-Control-Allow-Credentials', 'true');//允许携带cookie
+//     res.header('Access-Control-Allow-Credentials', 'true');//cookie
 //
 //     next();
 //
 // });
 
-//设置session
+//session
 app.use(session({
     name: "Tree",
     secret: "fdafieadfbabihlvtgta",
     cookie:
         {
-            maxAge: 1000 * 60,
+            maxAge: 5000 * 60,
             secure: false,
             httpOnly: false,
         },
@@ -73,7 +73,7 @@ app.use(session({
     saveUninitialized: false,
 }))
 
-//检验session
+//session
 // noinspection JSCheckFunctionSignatures
 app.use(function (req, res, next)
 {
@@ -115,10 +115,10 @@ app.use(test);
 // app.use(login);
 // app.use(register)
 
-// // vue-router history模式引入connect-history-api-fallback中间件
+// // vue-router historyconnect-history-api-fallback
 // const history = require('connect-history-api-fallback')
 //
-// // 这句代码需要放在express.static上面
+// // express.static
 // app.use(history())
 
 app.use(express.static(path.join(__dirname, 'dist')));
@@ -156,8 +156,8 @@ app.listen(3000, () =>
         }
     })
 
-    //创建定时任务
-    //抓取所有event
+    //
+    //event
     dbConnectionPool.getConnection(function (err, connection)
     {
         let get_all_event = "select DATE_FORMAT(begin_time,'%s %i %H %d %m %Y'), \n" +

@@ -9,7 +9,7 @@
 
       <div id="login_box">
         <div v-bind:class="{'login_box':is_login,'register_box':!is_login}">
-          <!--            登录页面-->
+          <!--            -->
 
           <div v-show="is_login" class="login_box">
             <img alt="tree" src="../assets/像素_玫瑰花.png"><br>
@@ -25,7 +25,7 @@
                           style="margin-top:15px"></el-input>
               </el-form-item>
 
-              <!--          第三方登录按钮-->
+              <!--          -->
               <el-form-item class="circle_button_box">
               </el-form-item>
 
@@ -53,7 +53,7 @@
             </el-form>
           </div>
 
-          <!--            注册页面-->
+          <!--            -->
 
           <div v-show="!is_login" class="register_box">
             <img alt="tree" src="../assets/像素_玫瑰花.png"><br>
@@ -169,7 +169,7 @@ export default {
           {
             validator: function (rule, value, callback)
             {
-              //判断是否是用户名登录
+              //
               if (/^\w{1,64}@[a-z\d\\-]{1,256}(\.[a-z]{2,6}){1,2}$/i.test(value) === true)
               {
                 console.log('login by email')
@@ -192,9 +192,10 @@ export default {
             trigger: 'blur',
             validator: (rule, value, callback) =>
             {
-              if (!/(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).{8,20}/.test(value))
+              let testrule = /(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).{3,20}/
+              if (!testrule.test(value))
               {
-                callback(new Error('Password must be a combination of numbers, letters and special characters, please enter 3-20 digits'))
+                callback(new Error('wrong password format'))
               } else
               {
                 callback()
@@ -226,7 +227,7 @@ export default {
               {
                 console.log(response)
 
-                //判断是否可用
+                //
                 if (response.data.status === 0)
                 {
                   console.log('username is available')
@@ -249,7 +250,21 @@ export default {
         // render: [{required: true, message: "please choose your render", trigger: "change"}],
 
         password: [{required: true, message: "please input your password", trigger: "blur"},
-          {min: 3, max: 20, message: "invalid password", trigger: "blur"}],
+          {min: 3, max: 20, message: "invalid password", trigger: "blur"},
+          {
+            trigger: 'blur',
+            validator: (rule, value, callback) =>
+            {
+              let testrule = /(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).{3,20}/
+              if (!testrule.test(value))
+              {
+                callback(new Error('Password must be a combination of numbers, letters and special characters, please enter 3-20 digits'))
+              } else
+              {
+                callback()
+              }
+            }
+          }],
 
         confirm_password: [{required: true, message: "please input your password again", trigger: "blur"},
           {
@@ -272,7 +287,7 @@ export default {
 
         email: [{required: true, message: "please input your email", trigger: "blur"},
           {
-            //邮箱验证
+            //
             validator: function (rule, value, callback)
             {
               if (/^\w{1,64}@[a-z\d\\-]{1,256}(\.[a-z]{2,6}){1,2}$/i.test(value) === false)
@@ -286,7 +301,7 @@ export default {
             trigger: "blur"
           },
           {
-            //判断是否可用
+            //
             validator: function (rule, value, callback)
             {
               that.axios({
@@ -320,10 +335,10 @@ export default {
           }]
       },
 
-      //判断 邮箱登录 / 用户名登录
+      //  / 
       is_username: true,
 
-      //切换登录和注册页面
+      //
       is_login: true,
     }
 
@@ -347,21 +362,21 @@ export default {
     {
       let that = this;
 
-      //表单预验证
+      //
       this.$refs.login_form.validate((valid) =>
       {
         console.log(valid ? 'pass' : 'fail')
 
         if (!valid)
         {
-          //账号或密码没有填写，或填写格式错误
+          //，
           ElMessage({
             message: 'Incomplete username or password',
             type: 'warning',
           })
         } else
         {
-          //当使用用户名登录时
+          //
           if (that.is_username)
           {
             console.log('username and password', that.is_username)
@@ -377,66 +392,66 @@ export default {
             {
               console.log(response)
 
-              //普通用户登录
+              //
               if (response.data.permissions === 0)
               {
 
-                //登录成功提示
+                //
                 ElMessage({
                   message: 'login successful',
                   type: 'success',
                 })
 
-                //存放token
+                //token
                 // window.localStorage.setItem("token", response.data.token)
 
                 console.log(response.data.token)
 
-                //存放登录的用户名
+                //
                 window.localStorage.setItem("username", that.login_data.username)
 
                 console.log(that.login_data.username)
 
-                //存放登录的用户权限信息
+                //
                 window.localStorage.setItem("permissions", response.data.permissions)
 
                 console.log('common user')
 
-                //用户页面跳转
+                //
                 return that.$router.push({path: '/user'})
 
                 // console.log(that.$route)
               }
-              //管理员登录
+              //
               else if (response.data.permissions === 1)
               {
-                //登录成功提示
+                //
                 ElMessage({
                   message: 'login successful',
                   type: 'success',
                 })
 
-                //存放token
+                //token
                 // window.localStorage.setItem("token", response.data.token)
                 //
                 // console.log(response.data.token)
 
-                //存放登录的用户名
+                //
                 window.localStorage.setItem("username", that.login_data.username)
 
                 console.log(that.login_data.username)
 
-                //存放登录的用户权限信息
+                //
                 window.localStorage.setItem("permissions", response.data.permissions)
 
                 console.log('admin')
 
-                //管理员后台跳转
+                //
                 return that.$router.push({path: '/user'})
               } else
               {
-                //发送提示，用户名或密码错误
-                //登录失败提示
+                //，
+                //
                 ElMessage({
                   message: 'Incorrect username or password',
                   type: 'error',
@@ -463,66 +478,66 @@ export default {
             {
               console.log(response)
 
-              //普通用户登录
+              //
               if (response.data.permissions === 0)
               {
 
-                //登录成功提示
+                //
                 ElMessage({
                   message: 'login successful',
                   type: 'success',
                 })
 
-                //存放token
+                //token
                 // window.localStorage.setItem("token", response.data.token)
                 //
                 // console.log(response.data.token)
 
-                //存放登录的用户名
+                //
                 window.localStorage.setItem("username", response.data.username)
 
                 console.log(response.data.username)
 
-                //存放登录的用户权限信息
+                //
                 window.localStorage.setItem("permissions", response.data.permissions)
 
-                console.log('普通用户')
+                console.log('')
 
-                //用户页面跳转
+                //
                 return that.$router.push({path: '/user'})
 
                 // console.log(that.$route)
               }
-              //管理员登录
+              //
               else if (response.data.permissions === 1)
               {
-                //登录成功提示
+                //
                 ElMessage({
                   message: 'login successful',
                   type: 'success',
                 })
 
-                //存放token
+                //token
                 // window.localStorage.setItem("token", response.data.token)
 
                 console.log(response.data.token)
 
-                //存放登录的用户名
+                //
                 window.localStorage.setItem("username", response.data.username)
 
                 console.log(response.data.username)
 
-                //存放登录的用户权限信息
+                //
                 window.localStorage.setItem("permissions", response.data.permissions)
 
-                console.log('管理员')
+                console.log('')
 
-                //管理员后台跳转
+                //
                 return that.$router.push({path: '/user'})
               } else
               {
-                //发送提示，用户名或密码错误
-                //登录失败提示
+                //，
+                //
                 ElMessage({
                   message: 'Incorrect username or password',
                   type: 'error',
@@ -546,7 +561,7 @@ export default {
 
         if (!valid)
         {
-          //有信息未填写或填写错误
+          //
           ElMessage({
             message: 'Information is missing or incorrect',
             type: 'warning',
@@ -576,24 +591,24 @@ export default {
           {
             if (response.data.status === 1)
             {
-              console.log('注册成功')
+              console.log('')
 
-              //注册成功提示
+              //
               ElMessage({
                 message: 'registration success',
                 type: 'success',
               })
 
-              //跳转到登录页面
+              //
               that.is_login = true
 
-              //自动填充账号
+              //
               that.login_data.username = that.register_data.username
 
-              //原有密码清空
+              //
               that.login_data.password = ''
 
-              //清空注册列表
+              //
               that.register_data.username = ''
               that.register_data.password = ''
               that.register_data.confirm_password = ''
@@ -603,9 +618,9 @@ export default {
               that.register_data.gender = 1
             } else
             {
-              console.log('注册失败')
+              console.log('')
 
-              //重新加载页面
+              //
               ElMessage({
                 message: 'registration failed, please try again later',
                 type: 'warning',
@@ -615,8 +630,8 @@ export default {
           {
             console.log(error.message)
 
-            console.log('注册失败')
-            //重新加载页面
+            console.log('')
+            //
           })
         }
       })

@@ -109,11 +109,11 @@ export default {
   name: "USER",
   mounted()
   {
-    //请求后端关于 user 的所有数据
+    // user 
 
 
-    //个人信息
-    //日常安排
+    //
+    //
     // /get_information post
 
 
@@ -124,8 +124,8 @@ export default {
 
     console.log(permissions)
 
-    //验证权限
-    //判断是否是管理员登录
+    //
+    //
     if (permissions === '1')
     {
       this.is_user = false
@@ -157,7 +157,7 @@ export default {
     return {
       isCollapse: false,
       choose: 1,
-      //用于向后端请求数据
+      //
       data: window.localStorage.getItem('username'),
       is_user: true
     }

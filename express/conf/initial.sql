@@ -51,9 +51,9 @@ insert into user(first_name, last_name, username, password, gender, email, permi
     ('a', 'b', 'user1', 'a1', 1, '123@gmail.com', 0),
     ('aa', 'bb', 'user2', 'a2', 0, '456@gmail.com', 0),
     ('aa', 'bb', 'user3', 'a2', 0, '789@gmail.com', 0),
-    ('aaa', 'bbb', 'test', '123', 0, '1140222138@qq.com', 0),
-    ('aaa', 'bbb', 'admin2', '123', 0, '3333@gmail.com', 1),
-    ('aaa', 'bbb', 'admin', '123', 0, '2222@gmail.com', 1);
+    ('aaa', 'bbb', 'test', 'asd123@123', 0, '1140222138@qq.com', 0),
+    ('aaa', 'bbb', 'admin2', 'asd123@123', 0, '3333@gmail.com', 1),
+    ('aaa', 'bbb', 'admin', 'asd123@123', 0, '2222@gmail.com', 1);
 
 insert into event (title, address, begin_time, end_time, state, note, notice, type) value
     ('test event1', 'address', '2022-06-15-12:00', '2022-06-15-14:00', 0, 'no any note', TRUE, 0);

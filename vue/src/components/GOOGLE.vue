@@ -47,15 +47,15 @@ export default {
       }
     }).then(function (response)
     {
-      console.log('请求成功')
+      console.log('')
       console.log(response)
 
-      //将数据存入table data
+      //table data
       this.calendarData = response.data
 
     }).catch(function (error)
     {
-      console.log('请求失败')
+      console.log('')
       console.log(error.message)
     })
   },

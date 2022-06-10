@@ -152,10 +152,10 @@ export default {
       }
     }).then(function (response)
     {
-      console.log('请求成功')
+      console.log('')
       console.log(response)
 
-      //将数据存入table data
+      //table data
       if (response.data.status !== 0)
       {
         that.tableData = []
@@ -180,7 +180,7 @@ export default {
 
     }).catch(function (error)
     {
-      console.log('请求失败')
+      console.log('')
       console.log(error.message)
     })
   },
@@ -200,7 +200,7 @@ export default {
       MY_STATE: ['work', 'rest', 'other'],
       STATE_COLOR: ["danger", "success", "warning"],
 
-      //临时用(temp)
+      //(temp)
       tableData: [
         // {
         //   event_id: 'a',
@@ -240,9 +240,9 @@ export default {
 
           console.log(id)
 
-          //弹窗确认是否添加
+          //
 
-          //将event_id发向后端，然后添加该事件
+          //event_id，
           that.axios({
             method: 'get',
             url: '/check_time',
@@ -254,7 +254,7 @@ export default {
           }).then(function (response)
           {
             console.log(response.data)
-            //时间可用
+            //
             if (response.data.status !== 0)
             {
               that.axios({
@@ -270,11 +270,11 @@ export default {
                 },
               }).then(function (response)
               {
-                //后端返回添加成功后
+                //
                 console.log('request successful')
                 console.log(response)
 
-                //将新的数据存入table data
+                //table data
                 if (response.data.status !== 0)
                 {
                   that.tableData = []
@@ -312,7 +312,7 @@ export default {
                 console.log(error.message)
               })
             }
-            //时间不可用
+            //
             else
             {
               ElMessage({

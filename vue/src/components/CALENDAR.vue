@@ -57,7 +57,7 @@ export default {
     //
     // console.log('CALENDAR')
     //
-    // //axios请求后端
+    // //axios
     //
     // that.axios({
     //   method: 'get',
@@ -69,10 +69,10 @@ export default {
     //   }
     // }).then(function (response)
     // {
-    //   console.log('请求成功')
+    //   console.log('')
     //   console.log(response)
     //
-    //   //将数据存入table data
+    //   //table data
     //   if (response.data.status !== 0)
     //   {
     //     that.calendar_data = []

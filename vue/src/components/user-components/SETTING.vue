@@ -78,7 +78,7 @@ export default {
   {
     let that = this
 
-    //向后端请求用户信息
+    //
     console.log('SETTING')
 
     that.axios({
@@ -94,8 +94,8 @@ export default {
       console.log(response)
       that.username = window.localStorage.getItem('username')
 
-      //0 用户
-      //1 管理员
+      //0 
+      //1 
       that.permissions = response.data.permissions
       that.email = response.data.email
       //0 female
@@ -127,13 +127,13 @@ export default {
       PERMISSIONS: ['user', 'administrator'],
       GENDER: ['female', 'male'],
 
-      //暂时无用
+      //
       COLOR: ["danger", "default"],
 
       username: '#',
       password: '#',
-      //0 用户
-      //1 管理员
+      //0 
+      //1 
       permissions: 0,
       email: '#',
       //0 female

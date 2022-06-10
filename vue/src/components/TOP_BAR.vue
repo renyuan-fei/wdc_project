@@ -26,13 +26,13 @@
 
         <el-dropdown>
 
-          <!--存在token则显示用户名-->
+          <!--token-->
           <span v-if="this.username !== 'no-user-loging-so-here-is-empty'" class="avatar" @mouseout="!is_show"
                 @mouseover="!is_show">
           {{ username }}
           </span>
 
-          <!--否则显示临时头像-->
+          <!---->
           <span v-else class="avatar" @mouseout="!is_show" @mouseover="!is_show">
             <el-icon><Avatar/></el-icon>
           </span>
@@ -65,7 +65,7 @@ export default {
       },
   mounted()
   {
-    //向前端请求用户数据
+    //
     console.log('TOP_BAR')
     let temp = window.localStorage.getItem('username')
 
@@ -120,15 +120,15 @@ export default {
               {
                 if (response.data.status === 1)
                 {
-                  //清空本地的数据
+                  //
                   window.localStorage.clear()
 
                   cookies.remove("Tree")
 
-                  //跳转到主页面
+                  //
                   that.$router.push('/home')
 
-                  //提示退出登录的信息
+                  //
                   ElMessage({
                     message: 'successfully logged out',
                     type: 'warning',

@@ -104,14 +104,14 @@ export default {
 
       for (let i in response.data)
       {
-        //转换
+        //
         response.data[i].gender = that.GENDER[response.data[i].gender]
 
         response.data[i].permissions = that.PERMISSION[response.data[i].permissions]
         console.log(that.PERMISSION[response.data[i].permissions])
       }
 
-      //将数据存入table data
+      //table data
       that.tableData = response.data
 
     }).catch(function (error)
@@ -136,12 +136,12 @@ export default {
       PERMISSION: ['User', 'Admin'],
       GENDER: ['Female', 'Male'],
 
-      // 临时用(temp)
+      // (temp)
       tableData: [
         // {
         //   username: 'user',
-        //   //0 用户
-        //   //1 管理员
+        //   //0 
+        //   //1 
         //   permissions: 0,
         //   email: '2313131@gmail.com',
         //   //0 female
@@ -150,8 +150,8 @@ export default {
         // },
         // {
         //   username: 'admin',
-        //   //0 用户
-        //   //1 管理员
+        //   //0 
+        //   //1 
         //   permissions: 1,
         //   email: '2313131@gmail.com',
         //   //0 female
@@ -160,8 +160,8 @@ export default {
         // },
         // {
         //   username: 'user',
-        //   //0 用户
-        //   //1 管理员
+        //   //0 
+        //   //1 
         //   permission: 0,
         //   email: '2313131@gmail.com',
         //   //0 female
@@ -169,8 +169,8 @@ export default {
         //   gender: 1,
         // }, {
         //   username: 'user',
-        //   //0 用户
-        //   //1 管理员
+        //   //0 
+        //   //1 
         //   permission: 0,
         //   email: '2313131@gmail.com',
         //   //0 female
@@ -178,8 +178,8 @@ export default {
         //   gender: 1,
         // }, {
         //   username: 'user',
-        //   //0 用户
-        //   //1 管理员
+        //   //0 
+        //   //1 
         //   permission: 0,
         //   email: '2313131@gmail.com',
         //   //0 female
@@ -188,8 +188,8 @@ export default {
         // },
         // {
         //   username: 'admin',
-        //   //0 用户
-        //   //1 管理员
+        //   //0 
+        //   //1 
         //   permission: 1,
         //   email: '2313131@gmail.com',
         //   //0 female
@@ -197,8 +197,8 @@ export default {
         //   gender: 0,
         // }, {
         //   username: 'admin',
-        //   //0 用户
-        //   //1 管理员
+        //   //0 
+        //   //1 
         //   permission: 1,
         //   email: '2313131@gmail.com',
         //   //0 female
@@ -206,8 +206,8 @@ export default {
         //   gender: 0,
         // }, {
         //   username: 'admin',
-        //   //0 用户
-        //   //1 管理员
+        //   //0 
+        //   //1 
         //   permission: 1,
         //   email: '2313131@gmail.com',
         //   //0 female
@@ -215,8 +215,8 @@ export default {
         //   gender: 0,
         // }, {
         //   username: 'admin',
-        //   //0 用户
-        //   //1 管理员
+        //   //0 
+        //   //1 
         //   permission: 1,
         //   email: '2313131@gmail.com',
         //   //0 female
@@ -235,9 +235,9 @@ export default {
 
           console.log(username)
 
-          //弹窗确认是否添加
+          //
 
-          //将username发向后端
+          //username
           that.axios({
             method: 'post',
             url: '/modify_permission',
@@ -248,11 +248,11 @@ export default {
             }
           }).then(function (response)
           {
-            //后端返回添加成功后,赋值新的数据
+            //,
             console.log('request successful')
             console.log(response)
 
-            //将数据存入table data
+            //table data
             if (response.data.status !== 0)
             {
               that.tableData = []
@@ -291,9 +291,9 @@ export default {
 
           console.log(username)
 
-          //弹窗确认是否添加
+          //
 
-          //将username发向后端
+          //username
           that.axios({
             method: 'post',
             url: '/modify_permission',
@@ -307,11 +307,11 @@ export default {
             },
           }).then(function (response)
           {
-            //后端返回添加成功后,赋值新的数据
+            //,
             console.log('request successful')
             console.log(response)
 
-            //将数据存入table data
+            //table data
             if (response.data.status !== 0)
             {
               that.tableData = []

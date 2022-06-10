@@ -134,7 +134,7 @@ export default {
 
             address: [{required: true, message: "please enter address", trigger: "blur"}],
 
-            //begin大于当前日期 //发送到后端验证时间是否冲突
+            //begin //
             begin_time: [{required: true, message: "Please select a start time", trigger: "blur"},
               {
                 validator: function (rule, value, callback)
@@ -154,7 +154,7 @@ export default {
                 trigger: "blur"
               }],
 
-            //end大于当前日期，end大于begin //发送到后端验证时间是否冲突
+            //end，endbegin //
             end_time: [{required: true, message: "Please choose a end time", trigger: "blur"},
               {
                 validator: function (rule, value, callback)
@@ -188,7 +188,7 @@ export default {
 
                     }).catch(function (error)
                     {
-                      console.log('请求失败/check')
+                      console.log('/check')
                       console.log(error.message)
                     })
                   }
@@ -212,7 +212,7 @@ export default {
           {
             if (!valid)
             {
-              //有信息没有填写
+              //
               ElMessage({
                 message: 'Please fill in all information',
                 type: 'warning',
@@ -221,11 +221,11 @@ export default {
             {
               console.log('Form validation succeeded')
 
-              // 添加事件
+              // 
               // /add_event post
               that.axios({
                 method: 'post',
-                url: '/add_event',
+                url: '/',
                 data: that.form_data,
                 headers: {
                   'Content-Type': 'application/json'
@@ -234,7 +234,7 @@ export default {
               {
                 if (response.data.status !== 0)
                 {
-                  //请求成功清空表单
+                  //
                   that.$refs.form.resetFields()
                   that.form_data.note = ''
 

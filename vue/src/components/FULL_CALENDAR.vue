@@ -26,7 +26,7 @@
 // eslint-disable-next-line no-unused-vars
 import TOP_BAR from './TOP_BAR'
 
-// 引入日历组件
+// 
 import FullCalendar from "@fullcalendar/vue3";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
@@ -44,7 +44,7 @@ export default {
 
     console.log('CALENDAR')
 
-    //axios请求后端
+    //axios
 
     that.axios({
       method: 'get',
@@ -59,7 +59,7 @@ export default {
       console.log('request successful')
       console.log(response)
 
-      //将数据存入table data
+      //table data
       if (response.data.status !== 0)
       {
         that.getReservationList(response.data)
@@ -83,7 +83,7 @@ export default {
       TYPE: ['[PERSONAL]', '[PUBLIC]'],
 
       calendarOptions: {
-        //   timeGridPlugin  可显示每日时间段
+        //   timeGridPlugin  
         height: 800,
         plugins: [dayGridPlugin, interactionPlugin],
         headerToolbar: {
@@ -93,7 +93,7 @@ export default {
           // right: 'agendaWeek,dayGridWeek,dayGrid'
         },
         buttonText: {
-          // 设置按钮
+          // 
           today: "TODAY",
           month: "MONTH",
           week: "WEEK",
@@ -103,19 +103,19 @@ export default {
         editable: true,
         selectable: true,
         navLinks: true,
-        // displayEventEnd: true,//所有视图显示结束时间
-        initialView: "dayGridMonth", // 设置默认显示月，可选周、日
+        // displayEventEnd: true,//
+        initialView: "dayGridMonth", // ，、
         dateClick: this.handleDateClick,
         // eventClick: this.handleEventClick,
         eventsSet: this.handleEvents,
         // select: this.handleDateSelect,
         eventMouseEnter: this.mouseover,
         // timezone
-        // 设置日程
+        // 
         events: [],
-        eventColor: "#f08f00", // 修改日程背景色
-        locale: "fr", // 设置语言
-        weekNumberCalculation: "ISO", // 周数
+        eventColor: "#f08f00", // 
+        locale: "fr", // 
+        weekNumberCalculation: "ISO", // 
         customButtons: {
           prev: { // this overrides the prev button
             text: "PREV",
@@ -148,12 +148,12 @@ export default {
         {
           this.calendarApi.prev();
         },
-        // 切换下一个按钮事件
+        // 
         next()
         {
           this.calendarApi.next();
         },
-        // 点击今天按钮
+        // 
         today()
         {
           this.calendarApi.today();
@@ -162,7 +162,7 @@ export default {
         handleDateClick: function (arg)
         {
           this.$forceUpdate();
-          console.log(arg, '事件1')
+          console.log(arg, '1')
         },
         getShowTime(beginDate, endDate)
         {

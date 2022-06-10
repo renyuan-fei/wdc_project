@@ -6,7 +6,7 @@
     <template #header>
       <div class="card-header">
 
-<!--    管理员 与 用户的不同显示-->
+<!--      -->
         <span v-if="is_user" style="font-weight: bold; font-size:20px;"> MY  PLAN </span>
         <span v-else style="font-weight: bold; font-size:20px;"> ADMIN  PLAN </span>
 
@@ -176,16 +176,16 @@ export default {
 
     console.log('MY_PLAN')
 
-    //获取权限信息
+    //
     let permissions = window.localStorage.getItem('permissions')
 
-    //判断是否是管理员登录
+    //
     if (permissions === '1')
     {
       this.is_user = false
     }
 
-    //axios请求后端
+    //axios
 
     that.axios({
       method: 'get',
@@ -200,7 +200,7 @@ export default {
       console.log('request successful')
       console.log(response)
 
-      //将数据存入table data
+      //table data
       if (response.data.status !== 0)
       {
         that.tableData = []
@@ -246,7 +246,7 @@ export default {
       MY_STATE: ['work', 'rest', 'other'],
       STATE_COLOR: ["danger", "success", "warning"],
 
-      //临时用(temp)
+      //(temp)
       tableData: [
         // {
         //   event_id: 'a',
@@ -306,10 +306,10 @@ export default {
             }
           }).then(function (response)
           {
-            console.log('请求成功')
+            console.log('')
             console.log(response)
 
-            //将数据存入table data
+            //table data
             if (response.data.status !== 0)
             {
               that.tableData = []
@@ -340,7 +340,7 @@ export default {
 
           }).catch(function (error)
           {
-            console.log('请求失败')
+            console.log('')
             console.log(error.message)
           })
         },
@@ -349,9 +349,9 @@ export default {
           let that = this;
           console.log(id)
 
-          //弹窗确认是否删除
+          //
 
-          //将event_id发向后端，然后删除该事件
+          //event_id，
           that.axios({
             method: 'post',
             url: '/drop_event',
@@ -366,10 +366,10 @@ export default {
             },
           }).then(function (response)
           {
-            console.log('请求成功')
+            console.log('')
             console.log(response)
 
-            //将数据存入table data
+            //table data
             if (response.data.status !== 0)
             {
               that.tableData = []
@@ -400,12 +400,12 @@ export default {
 
           }).catch(function (error)
           {
-            console.log('请求失败')
+            console.log('')
             console.log(error.message)
           })
-          //后端返回删除成功
+          //
 
-          //刷新页面
+          //
           // this.$router.go(0)
 
           // console.log(this.tableData)

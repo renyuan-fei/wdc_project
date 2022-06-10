@@ -60,17 +60,18 @@ export default {
             new_password: [{required: true, message: "please input your new password", trigger: "blur"},
               {min: 3, max: 20, message: "invalid password", trigger: "blur"},
               {
-                validator: function (rule, value, callback)
+                trigger: 'blur',
+                validator: (rule, value, callback) =>
                 {
-                  if (value === that.reset_data.old_password)
+                  let testrule = /(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).{3,20}/
+                  if (!testrule.test(value))
                   {
-                    callback(new Error('The same password cannot be reset'))
+                    callback(new Error('Password must be a combination of numbers, letters and special characters, please enter 3-20 digits'))
                   } else
                   {
-                    callback();
+                    callback()
                   }
-                },
-                trigger: "blur"
+                }
               }],
 
             confirm_new_password: [{required: true, message: "please input your new password again", trigger: "blur"},
@@ -110,31 +111,42 @@ export default {
               }
           ).then(function ()
           {
-            //向后端发送请求
+            console.log(1111)
+            //
             // /rest_password get
 
             that.axios({
-              method: 'put',
+              method: 'post',
               url: '/reset_password',
-              params: {
-                username: window.sessionStorage.getItem('username'),
-                oldpassword: this.old_password,
-                newpassword: this.new_password,
-                token: window.sessionStorage.getItem('token')
-              }
+              data: {
+                username: window.localStorage.getItem('username'),
+                password: that.reset_data.new_password
+              },
+              headers: {
+                'Content-Type': 'application/json'
+              },
             }).then(function (response)
             {
-              console.log('请求成功')
-              console.log(response)
+              console.log('222')
+              if (response.data.status !== 0)
+              {
+                console.log(response)
 
-              //返回修成功则打印提示
-              ElMessage({
-                type: 'success',
-                message: 'reset completed',
-              })
+                //
+                ElMessage({
+                  type: 'success',
+                  message: 'reset password completed',
+                })
+              } else
+              {
+                ElMessage({
+                  type: 'warning',
+                  message: 'reset password failed',
+                })
+              }
+
             }).catch(function (error)
             {
-              console.log('请求失败')
               console.log(error.message)
             })
           }).catch(function ()

@@ -25,6 +25,7 @@ Github URL: https://github.com/renyuan-fei/wdc_project.git
 
 #### Install
 ```
+cd express
 npm install
 ```
 #### Start
